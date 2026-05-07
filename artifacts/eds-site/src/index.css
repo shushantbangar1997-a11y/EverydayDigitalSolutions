@@ -103,9 +103,13 @@
   transition: background 0.3s, border-color 0.3s;
 }
 .kn-header--scrolled {
-  background: rgba(10, 9, 8, 0.85);
-  backdrop-filter: blur(12px);
+  background: rgba(250, 250, 248, 0.92);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
   border-bottom: 1px solid var(--border-default);
+}
+.dark .kn-header--scrolled {
+  background: rgba(10, 9, 8, 0.90);
 }
 
 .kn-container {
@@ -135,7 +139,7 @@
   text-decoration: none;
 }
 .kn-logo-img {
-  height: 2.75rem;
+  height: 3.6rem;
   width: auto;
   filter: none;
   flex-shrink: 0;
@@ -146,22 +150,22 @@
 .kn-logo-wordmark {
   display: flex;
   flex-direction: column;
-  gap: 0;
+  gap: 0.1rem;
 }
 .kn-logo-name {
   font-family: 'Boska', serif;
-  font-size: 1.05rem;
+  font-size: 1.2rem;
   font-weight: 500;
   color: var(--text-primary);
   line-height: 1.15;
-  letter-spacing: -0.01em;
+  letter-spacing: -0.015em;
 }
 .kn-logo-sub {
   font-family: 'Satoshi', sans-serif;
-  font-size: 0.65rem;
-  font-weight: 500;
+  font-size: 0.68rem;
+  font-weight: 600;
   color: var(--accent);
-  letter-spacing: 0.1em;
+  letter-spacing: 0.12em;
   text-transform: uppercase;
 }
 /* Hide wordmark on very small screens */
