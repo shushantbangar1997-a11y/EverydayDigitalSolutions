@@ -115,6 +115,30 @@ export default function BlogPost() {
           ))}
         </article>
 
+        {/* Explore further — internal links to service/solution/location pages */}
+        {post.relatedLinks.length > 0 && (
+          <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 pb-10">
+            <div className="border border-border/40 bg-card p-6">
+              <h2 className="text-sm font-bold uppercase tracking-widest text-muted-foreground mb-4">Explore further</h2>
+              <div className="flex flex-col gap-3">
+                {post.relatedLinks.map((link) => (
+                  <Link
+                    key={link.href}
+                    href={link.href}
+                    className="group flex items-start gap-3 hover:text-primary transition-colors"
+                  >
+                    <span className="w-1.5 h-1.5 rounded-full bg-primary mt-1.5 flex-shrink-0" />
+                    <div>
+                      <span className="text-sm font-medium text-foreground group-hover:text-primary transition-colors block">{link.label}</span>
+                      <span className="text-xs text-muted-foreground">{link.description}</span>
+                    </div>
+                  </Link>
+                ))}
+              </div>
+            </div>
+          </div>
+        )}
+
         {/* Author bio */}
         <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 pb-16">
           <div className="border-t border-border/40 pt-8 flex gap-4 items-start">

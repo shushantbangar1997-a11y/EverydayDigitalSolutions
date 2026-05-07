@@ -3,6 +3,12 @@ export interface BlogSection {
   body: string;
 }
 
+export interface BlogRelatedLink {
+  label: string;
+  href: string;
+  description: string;
+}
+
 export interface BlogPost {
   slug: string;
   title: string;
@@ -13,6 +19,7 @@ export interface BlogPost {
   sections: BlogSection[];
   author: { name: string; role: string };
   relatedSlugs: string[];
+  relatedLinks: BlogRelatedLink[];
 }
 
 export const blogPosts: BlogPost[] = [
@@ -28,6 +35,11 @@ export const blogPosts: BlogPost[] = [
     relatedSlugs: [
       "business-automation-service-businesses-punjab",
       "app-development-cost-india-2025",
+    ],
+    relatedLinks: [
+      { label: "AI Voice Agents — Service Page", href: "/services/ai-voice-agents", description: "Full detail on how we deploy AI voice agents — languages, CRM integration, and cost." },
+      { label: "Real Estate Solutions", href: "/solutions/real-estate", description: "Our end-to-end solution for real estate developers: AI calling, WhatsApp drip, and portal integration." },
+      { label: "Serving Jalandhar", href: "/jalandhar", description: "We work with real estate businesses across Jalandhar and Punjab from our Jalandhar office." },
     ],
     sections: [
       {
@@ -73,6 +85,11 @@ export const blogPosts: BlogPost[] = [
       "app-development-cost-india-2025",
       "salon-booking-automation-case-study",
     ],
+    relatedLinks: [
+      { label: "Custom Mobile App Development", href: "/services/mobile-app-development", description: "Our service page: what we build, how long it takes, and what it costs." },
+      { label: "Salon & Spa App Solutions", href: "/solutions/salons-and-spas", description: "A concrete example of custom vs off-the-shelf — the Quasar Salon app we built in 30 days." },
+      { label: "Serving Chandigarh", href: "/chandigarh", description: "We work with growing businesses across Chandigarh and Tricity from our Mohali studio." },
+    ],
     sections: [
       {
         heading: "The Question Every Growing Business Asks",
@@ -116,6 +133,11 @@ export const blogPosts: BlogPost[] = [
     relatedSlugs: [
       "custom-app-vs-off-the-shelf-chandigarh",
       "salon-booking-automation-case-study",
+    ],
+    relatedLinks: [
+      { label: "Custom Mobile App Development", href: "/services/mobile-app-development", description: "Our service page — scoping, timeline, what's included, and how we price projects." },
+      { label: "Clinics & Healthcare Solutions", href: "/solutions/clinics-and-healthcare", description: "A look at what a clinic management system costs and what it delivers." },
+      { label: "Serving All of Punjab", href: "/punjab", description: "We work with businesses across Punjab from our Mohali and Jalandhar offices." },
     ],
     sections: [
       {
@@ -165,6 +187,11 @@ export const blogPosts: BlogPost[] = [
       "custom-app-vs-off-the-shelf-chandigarh",
       "business-automation-service-businesses-punjab",
     ],
+    relatedLinks: [
+      { label: "Custom Mobile App Development", href: "/services/mobile-app-development", description: "Our service page — everything that goes into building a custom salon or service-business app." },
+      { label: "Salon & Spa App Solutions", href: "/solutions/salons-and-spas", description: "Features, process, and FAQ for salon apps — booking, loyalty, push notifications, and POS." },
+      { label: "Serving Mohali", href: "/mohali", description: "We built the Quasar app from our Mohali studio. We're 15 minutes from most Tricity salons." },
+    ],
     sections: [
       {
         heading: "The Problem: Premium Brand, Chaotic Operations",
@@ -204,6 +231,11 @@ export const blogPosts: BlogPost[] = [
     relatedSlugs: [
       "ai-voice-agents-real-estate-india",
       "custom-app-vs-off-the-shelf-chandigarh",
+    ],
+    relatedLinks: [
+      { label: "Automation & AI Systems", href: "/services/automation-systems", description: "Our automation service page — n8n, WhatsApp API, CRM integration, and managed operations." },
+      { label: "Real Estate Automation Solutions", href: "/solutions/real-estate", description: "How automation integrates with AI voice agents for real estate lead flow in Punjab." },
+      { label: "Serving All of Punjab", href: "/punjab", description: "We serve businesses across Punjab from our Mohali and Jalandhar offices." },
     ],
     sections: [
       {
