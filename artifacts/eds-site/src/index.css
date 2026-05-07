@@ -411,4 +411,44 @@
   margin: 0;
 }
 
+/* Nav sub-sections (Services / Solutions / Learn links inside overlay) */
+.kn-nav-sub-sections {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.5rem 2.5rem;
+  padding: 1.25rem 0 0.5rem;
+  border-top: 1px solid var(--border-subtle);
+  margin-top: 0.5rem;
+}
+.kn-nav-sub-col {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  min-width: 120px;
+}
+.kn-nav-sub-heading {
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  margin: 0 0 0.35rem;
+}
+.kn-nav-sub-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+.kn-nav-sub-link {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  text-decoration: none;
+  transition: color 0.2s;
+  white-space: nowrap;
+}
+.kn-nav-sub-link:hover { color: var(--accent); }
+
 /* ─── End Kinetic Navigation ─────────────────────────────────────────────── */

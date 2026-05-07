@@ -168,6 +168,19 @@ export default function QuasarCaseStudy() {
           </blockquote>
         </div>
 
+        {/* Salons & Spas solution link */}
+        <div className="max-w-xl mx-auto px-4 sm:px-6 lg:px-8 mb-10 text-center">
+          <div className="bg-card border border-border/40 p-6 text-left flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+            <div>
+              <p className="text-xs font-mono text-muted-foreground mb-1">Related Solution</p>
+              <p className="text-sm font-medium text-foreground">Salon & Spa App Development — features, pricing, and what we build.</p>
+            </div>
+            <Link href="/solutions/salons-and-spas" className="shrink-0 text-sm font-medium text-primary hover:text-primary/80 transition-colors whitespace-nowrap">
+              See the solution →
+            </Link>
+          </div>
+        </div>
+
         {/* Bottom CTA */}
         <div className="max-w-xl mx-auto px-4 sm:px-6 lg:px-8 text-center bg-card border border-border/40 p-8 sm:p-12 rounded-xl">
           <h2 className="text-2xl sm:text-3xl font-serif mb-6 sm:mb-8">Ready for your version?</h2>
@@ -175,8 +188,8 @@ export default function QuasarCaseStudy() {
             <Link href="/contact" className="bg-primary text-black px-8 py-4 rounded-sm font-medium hover:bg-primary/90 transition-colors w-full sm:w-auto text-center">
               Let's talk
             </Link>
-            <Link href="/" className="border border-border bg-transparent text-foreground px-8 py-4 rounded-sm font-medium hover:bg-muted transition-colors w-full sm:w-auto text-center">
-              Back to home
+            <Link href="/services/mobile-app-development" className="border border-border bg-transparent text-foreground px-8 py-4 rounded-sm font-medium hover:bg-muted transition-colors w-full sm:w-auto text-center">
+              Our app service
             </Link>
           </div>
         </div>

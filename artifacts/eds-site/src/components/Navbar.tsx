@@ -289,6 +289,34 @@ export function Navbar() {
                 ))}
               </ul>
 
+              {/* Services + Solutions sub-sections */}
+              <div className="kn-nav-sub-sections" data-menu-fade>
+                <div className="kn-nav-sub-col">
+                  <p className="kn-nav-sub-heading">Services</p>
+                  <ul className="kn-nav-sub-list">
+                    <li><Link href="/services/mobile-app-development" className="kn-nav-sub-link" onClick={closeMenu}>Mobile Apps</Link></li>
+                    <li><Link href="/services/ai-voice-agents" className="kn-nav-sub-link" onClick={closeMenu}>AI Voice Agents</Link></li>
+                    <li><Link href="/services/automation-systems" className="kn-nav-sub-link" onClick={closeMenu}>Automation Systems</Link></li>
+                  </ul>
+                </div>
+                <div className="kn-nav-sub-col">
+                  <p className="kn-nav-sub-heading">Solutions</p>
+                  <ul className="kn-nav-sub-list">
+                    <li><Link href="/solutions/salons-and-spas" className="kn-nav-sub-link" onClick={closeMenu}>Salons &amp; Spas</Link></li>
+                    <li><Link href="/solutions/real-estate" className="kn-nav-sub-link" onClick={closeMenu}>Real Estate</Link></li>
+                    <li><Link href="/solutions/clinics-and-healthcare" className="kn-nav-sub-link" onClick={closeMenu}>Clinics &amp; Healthcare</Link></li>
+                    <li><Link href="/solutions/restaurants-and-cafes" className="kn-nav-sub-link" onClick={closeMenu}>Restaurants &amp; Cafes</Link></li>
+                  </ul>
+                </div>
+                <div className="kn-nav-sub-col">
+                  <p className="kn-nav-sub-heading">Learn</p>
+                  <ul className="kn-nav-sub-list">
+                    <li><Link href="/blog" className="kn-nav-sub-link" onClick={closeMenu}>Blog</Link></li>
+                    <li><Link href="/punjab" className="kn-nav-sub-link" onClick={closeMenu}>Serving Punjab</Link></li>
+                  </ul>
+                </div>
+              </div>
+
               <div className="kn-overlay-footer" data-menu-fade>
                 <Link href="/contact" className="kn-cta-btn kn-cta-btn--large" onClick={closeMenu}>
                   Get a Free Quote

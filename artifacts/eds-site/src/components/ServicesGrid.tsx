@@ -57,10 +57,16 @@ export function ServicesGrid() {
             <p className="text-xs text-muted-foreground mb-6">Best for: {service.bestFor}</p>
 
             <Link
-              href="/contact"
+              href={
+                service.id === "01"
+                  ? "/services/mobile-app-development"
+                  : service.id === "02"
+                  ? "/services/ai-voice-agents"
+                  : "/services/automation-systems"
+              }
               className="inline-flex items-center gap-2 bg-primary text-black px-5 py-2.5 rounded-sm text-sm font-medium hover:bg-primary/90 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background group-hover:gap-3"
             >
-              Start a Project
+              Learn More
               <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-0.5" />
             </Link>
           </motion.div>

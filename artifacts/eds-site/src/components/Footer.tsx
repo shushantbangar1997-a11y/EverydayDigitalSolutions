@@ -7,8 +7,8 @@ export function Footer() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
         {/* Top grid */}
-        <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-8 sm:gap-12 mb-12 lg:mb-20">
-          <div className="col-span-2 sm:col-span-2 lg:col-span-2">
+        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-8 sm:gap-10 mb-12 lg:mb-20">
+          <div className="col-span-2 sm:col-span-3 lg:col-span-2">
             <Link href="/" className="flex items-start gap-3 mb-5 group w-fit">
               <img
                 src="/logo.png"
@@ -26,18 +26,37 @@ export function Footer() {
 
           <div>
             <h4 className="font-serif text-base lg:text-lg mb-5">Studio</h4>
-            <ul className="flex flex-col gap-3 lg:gap-4">
-              <li><a href="/#services" className="text-sm text-muted-foreground hover:text-foreground transition-colors">Services</a></li>
+            <ul className="flex flex-col gap-3">
               <li><a href="/#work" className="text-sm text-muted-foreground hover:text-foreground transition-colors">Work</a></li>
               <li><a href="/#process" className="text-sm text-muted-foreground hover:text-foreground transition-colors">Process</a></li>
               <li><a href="/#about" className="text-sm text-muted-foreground hover:text-foreground transition-colors">About</a></li>
+              <li><Link href="/blog" className="text-sm text-muted-foreground hover:text-foreground transition-colors">Blog</Link></li>
               <li><a href="/#faq" className="text-sm text-muted-foreground hover:text-foreground transition-colors">FAQ</a></li>
             </ul>
           </div>
 
           <div>
+            <h4 className="font-serif text-base lg:text-lg mb-5">Services</h4>
+            <ul className="flex flex-col gap-3">
+              <li><Link href="/services/mobile-app-development" className="text-sm text-muted-foreground hover:text-foreground transition-colors">Mobile Apps</Link></li>
+              <li><Link href="/services/ai-voice-agents" className="text-sm text-muted-foreground hover:text-foreground transition-colors">AI Voice Agents</Link></li>
+              <li><Link href="/services/automation-systems" className="text-sm text-muted-foreground hover:text-foreground transition-colors">Automation</Link></li>
+            </ul>
+          </div>
+
+          <div>
+            <h4 className="font-serif text-base lg:text-lg mb-5">Solutions</h4>
+            <ul className="flex flex-col gap-3">
+              <li><Link href="/solutions/salons-and-spas" className="text-sm text-muted-foreground hover:text-foreground transition-colors">Salons &amp; Spas</Link></li>
+              <li><Link href="/solutions/real-estate" className="text-sm text-muted-foreground hover:text-foreground transition-colors">Real Estate</Link></li>
+              <li><Link href="/solutions/clinics-and-healthcare" className="text-sm text-muted-foreground hover:text-foreground transition-colors">Clinics</Link></li>
+              <li><Link href="/solutions/restaurants-and-cafes" className="text-sm text-muted-foreground hover:text-foreground transition-colors">Restaurants</Link></li>
+            </ul>
+          </div>
+
+          <div>
             <h4 className="font-serif text-base lg:text-lg mb-5">Get in touch</h4>
-            <ul className="flex flex-col gap-3 lg:gap-4">
+            <ul className="flex flex-col gap-3">
               <li>
                 <Link href="/contact" className="text-sm text-primary font-medium hover:text-primary/80 transition-colors">
                   Start a Project
