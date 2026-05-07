@@ -13,13 +13,14 @@ import { Footer } from "@/components/Footer";
 export default function Home() {
   useEffect(() => {
     document.title = "Everyday Digital Solutions — AI & Custom Software Studio · Mohali, India";
+    const desc = "Senior-led custom software, AI voice agents, and automation systems for ambitious service businesses. Studio based in Mohali — built with precision, shipped in 30 days.";
     const metaDesc = document.querySelector('meta[name="description"]');
     if (metaDesc) {
-      metaDesc.setAttribute("content", "Custom mobile apps, AI voice agents, and automation systems for ambitious service businesses. Studio based in Mohali and Jalandhar, shipping in 30 days at one-tenth of agency cost.");
+      metaDesc.setAttribute("content", desc);
     } else {
       const meta = document.createElement('meta');
       meta.name = "description";
-      meta.content = "Custom mobile apps, AI voice agents, and automation systems for ambitious service businesses. Studio based in Mohali and Jalandhar, shipping in 30 days at one-tenth of agency cost.";
+      meta.content = desc;
       document.head.appendChild(meta);
     }
   }, []);

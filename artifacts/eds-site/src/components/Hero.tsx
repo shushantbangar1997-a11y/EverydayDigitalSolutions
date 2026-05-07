@@ -28,14 +28,14 @@ export function Hero() {
             The technology partner for <em className="text-primary font-serif italic">Tricity's</em> most ambitious businesses.
           </motion.h1>
           <motion.p variants={variants} className="text-lg text-muted-foreground mb-10 max-w-2xl leading-relaxed">
-            We design and ship custom software, AI voice agents, and automation systems for service businesses across Chandigarh, Mohali, and Panchkula — at one-tenth of agency cost, in 30 days.
+            We design and ship custom software, AI voice agents, and automation systems — crafted with senior-level precision for service businesses across Chandigarh, Mohali, and Panchkula.
           </motion.p>
           <motion.div variants={variants} className="flex flex-wrap items-center gap-4">
             <Link
               href="/contact"
               className="bg-primary text-black px-6 py-3 rounded-sm font-medium hover:bg-primary/90 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background"
             >
-              Get a Free Quote
+              Start a Project
             </Link>
             <a
               href="#work"
@@ -48,12 +48,12 @@ export function Hero() {
         <motion.div variants={variants} className="flex flex-col gap-6 lg:pl-10 lg:border-l border-border/40">
           <div className="flex flex-col gap-2">
             <span className="text-3xl font-serif text-primary">30 days</span>
-            <span className="text-sm text-muted-foreground">Average build time</span>
+            <span className="text-sm text-muted-foreground">Average delivery</span>
           </div>
           <div className="h-[1px] w-12 bg-border/40"></div>
           <div className="flex flex-col gap-2">
-            <span className="text-3xl font-serif text-primary">1/10×</span>
-            <span className="text-sm text-muted-foreground">Of typical agency cost</span>
+            <span className="text-3xl font-serif text-primary">Senior</span>
+            <span className="text-sm text-muted-foreground">Talent on every project</span>
           </div>
           <div className="h-[1px] w-12 bg-border/40"></div>
           <div className="flex flex-col gap-2">

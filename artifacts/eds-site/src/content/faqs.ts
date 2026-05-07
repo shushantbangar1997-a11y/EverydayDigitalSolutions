@@ -1,30 +1,30 @@
 export const faqs = [
   {
-    q: "How can you build for one-tenth the price of an agency?",
-    a: "Honest answer: AI-assisted development, no agency overhead, no junior devs learning on your project. The same quality of code, faster, cheaper, by an experienced builder. The savings come from cutting waste, not corners."
+    q: "What makes EDS different from a larger agency?",
+    a: "Depth and directness. We keep our active project count intentionally small so every engagement gets senior-level attention from day one. No handoffs, no junior developers, no account managers between you and the work. You talk directly to the person building your product — every step of the way."
   },
   {
     q: "What happens after the project goes live?",
-    a: "Every project includes 30 days of free post-launch support. After that, you can either go solo, or stay on a simple monthly retainer for updates, new features, and ongoing support. No long-term lock-in."
+    a: "Every project includes 30 days of post-launch support. After that, you can operate independently, or stay on a monthly retainer for ongoing improvements and new features. No lock-in, no pressure."
   },
   {
     q: "What if I need scope changes mid-build?",
-    a: "The first two scope changes are free. After that, we quote any new work separately so you stay fully in control of cost. No surprise invoices."
+    a: "The first two scope changes are included. Beyond that, we scope and quote any new work separately so you stay fully in control. No surprises, no vague invoices."
   },
   {
     q: "Can you integrate with our existing systems?",
-    a: "Most likely yes. We work with virtually every common SaaS tool, payment gateway, CRM, and messaging platform. If something custom needs building, we'll quote it transparently up front."
+    a: "Almost certainly. We work with virtually every common SaaS tool, payment gateway, CRM, and messaging platform. If something bespoke needs building, we quote it clearly before touching a line of code."
   },
   {
     q: "Do you sign NDAs and proper agreements?",
-    a: "Always. Every project starts with a signed agreement covering scope, timeline, payment, IP ownership, and data handling. Your code and your data are yours — full stop."
+    a: "Always. Every engagement starts with a signed agreement covering scope, timeline, payment, IP ownership, and data handling. Your code and your data are yours — full stop."
   },
   {
-    q: "Why work with a focused studio over a large agency?",
-    a: "Speed, cost, and direct access. No account managers. No junior devs. No handoffs between teams. You talk to the person actually building your product — every day, on WhatsApp, in your timezone."
+    q: "How do you ensure the quality of what you ship?",
+    a: "Every deliverable goes through a structured review: code quality, performance benchmarks, cross-device testing, and a final walkthrough with you before handover. We don't ship work we wouldn't put our name on."
   },
   {
     q: "What if we're not in Tricity?",
-    a: "We work remotely with clients worldwide. Tricity clients get the in-person bonus — we'll come to your office and close the project face-to-face. The same speed and price applies anywhere else."
+    a: "We work with clients across India and internationally. Tricity clients get the added benefit of in-person sessions — we'll come to your office at any stage of the project. Remote engagements get the same rigour and responsiveness."
   }
 ];

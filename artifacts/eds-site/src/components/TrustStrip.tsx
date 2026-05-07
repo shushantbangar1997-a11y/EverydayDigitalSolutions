@@ -18,7 +18,7 @@ export function TrustStrip() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex flex-col md:flex-row items-center justify-between gap-6 md:gap-12">
           <p className="text-xs font-medium tracking-widest text-muted-foreground uppercase whitespace-nowrap shrink-0">
-            Trusted by Tricity's leading service brands
+            Trusted by Tricity's most ambitious brands
           </p>
           <div className="flex items-center gap-8 md:gap-12 opacity-60 overflow-x-auto w-full md:w-auto">
             {clients.map((client) => (

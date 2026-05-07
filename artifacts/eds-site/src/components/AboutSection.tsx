@@ -73,7 +73,7 @@ export function AboutSection() {
                 For seven years, I helped service businesses grow through digital marketing, lead generation, and custom systems. I ran offices, managed teams, and learned every part of the customer acquisition stack from the inside.
               </p>
               <p>
-                In 2024, I rebuilt the company from the ground up around AI. Today, I run a focused studio — backed by a stack of AI agents and modern automation tools — that ships custom software, voice agents, and AI systems in 30 days, at prices traditional agencies can't match.
+                In 2024, I rebuilt the company from the ground up around AI. Today, EDS is a focused, senior-led studio — backed by modern automation tools and purpose-built AI agents — that ships custom software, voice agents, and AI systems with the quality and speed that most agencies can only promise.
               </p>
               <p>
                 Based in Mohali and Jalandhar. Working with ambitious service businesses across Tricity, India, and beyond.

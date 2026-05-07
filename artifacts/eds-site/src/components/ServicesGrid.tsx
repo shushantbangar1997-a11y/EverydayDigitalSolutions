@@ -19,10 +19,10 @@ export function ServicesGrid() {
         className="max-w-3xl mb-16"
       >
         <motion.h2 variants={variants} className="text-4xl md:text-5xl font-serif mb-6">
-          Three ways we help your business <em className="text-primary italic">run on autopilot</em>.
+          Three ways we build <em className="text-primary italic">competitive advantage</em> into your business.
         </motion.h2>
         <motion.p variants={variants} className="text-lg text-muted-foreground">
-          From customer-facing apps to behind-the-scenes AI agents that work 24/7. Pick one. Or stack them — most clients do.
+          From customer-facing products to the AI systems running behind the scenes. Each one engineered to perform — not just to ship.
         </motion.p>
       </motion.div>
 
@@ -60,7 +60,7 @@ export function ServicesGrid() {
               href="/contact"
               className="inline-flex items-center gap-2 bg-primary text-black px-5 py-2.5 rounded-sm text-sm font-medium hover:bg-primary/90 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background group-hover:gap-3"
             >
-              Get a Quote
+              Start a Project
               <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-0.5" />
             </Link>
           </motion.div>
