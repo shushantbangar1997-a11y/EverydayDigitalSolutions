@@ -10,23 +10,35 @@ import QuasarCaseStudy from "@/pages/quasar-case-study";
 
 /**
  * Static router hook for SSR — returns a fixed path with a no-op navigator.
- * All `useEffect` hooks that call GSAP / window APIs are skipped by renderToString.
+ * All `useEffect` hooks (GSAP, window APIs) are skipped by renderToString.
  */
 function makeStaticHook(path: string): BaseLocationHook {
   return () => [path, () => {}];
 }
 
+export interface RenderResult {
+  appHtml: string;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  helmet: Record<string, any>;
+}
+
 /**
- * Render a route's full React tree to an HTML string.
+ * Render a route to HTML and capture all Helmet head tags.
+ *
  * Called by build-scripts/prerender.mjs after `vite build --config vite.ssr.config.ts`.
+ * The caller uses `helmet.title/meta/link/script.toString()` to inject the
+ * full per-route head (OG, Twitter, canonical, JSON-LD) into the static HTML.
  */
-export function render(url: string): string {
+export function render(url: string): RenderResult {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const helmetContext: Record<string, any> = {};
+
   const queryClient = new QueryClient({
     defaultOptions: { queries: { retry: false, staleTime: Infinity } },
   });
 
-  return renderToString(
-    <HelmetProvider>
+  const appHtml = renderToString(
+    <HelmetProvider context={helmetContext}>
       <QueryClientProvider client={queryClient}>
         <TooltipProvider>
           <WouterRouter hook={makeStaticHook(url)}>
@@ -40,4 +52,6 @@ export function render(url: string): string {
       </QueryClientProvider>
     </HelmetProvider>
   );
+
+  return { appHtml, helmet: helmetContext.helmet ?? {} };
 }
