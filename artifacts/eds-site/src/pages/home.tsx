@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { SEO } from "@/components/SEO";
 import { Navbar } from "@/components/Navbar";
 import { Hero } from "@/components/Hero";
 import { TrustStrip } from "@/components/TrustStrip";
@@ -9,25 +9,120 @@ import { AboutSection } from "@/components/AboutSection";
 import { FAQ } from "@/components/FAQ";
 import { FinalCTA } from "@/components/FinalCTA";
 import { Footer } from "@/components/Footer";
+import { faqs } from "@/content/faqs";
+
+const localBusinessSchema = {
+  "@context": "https://schema.org",
+  "@type": "ProfessionalService",
+  "@id": "https://everydaydigitalsolutions.com/#organization",
+  "name": "Everyday Digital Solutions",
+  "url": "https://everydaydigitalsolutions.com",
+  "logo": "https://everydaydigitalsolutions.com/logo.png",
+  "image": "https://everydaydigitalsolutions.com/opengraph.jpg",
+  "description": "Senior-led custom software, AI voice agents, and automation systems for ambitious service businesses. Studio based in Mohali, Punjab — built with precision, shipped in 30 days.",
+  "telephone": "+91-9056066006",
+  "email": "admin@everydaydigitalsolutions.com",
+  "priceRange": "₹₹",
+  "openingHoursSpecification": [
+    {
+      "@type": "OpeningHoursSpecification",
+      "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+      "opens": "10:00",
+      "closes": "19:00"
+    }
+  ],
+  "foundingDate": "2018",
+  "founder": {
+    "@type": "Person",
+    "name": "Shushant Bangar"
+  },
+  "areaServed": [
+    { "@type": "City", "name": "Chandigarh" },
+    { "@type": "City", "name": "Mohali" },
+    { "@type": "City", "name": "Panchkula" },
+    { "@type": "City", "name": "Jalandhar" },
+    { "@type": "AdministrativeArea", "name": "Punjab" }
+  ],
+  "address": [
+    {
+      "@type": "PostalAddress",
+      "streetAddress": "Tecfin Tower, 264-265, Phase 8B, Sector 74, Sahibzada Ajit Singh Nagar",
+      "addressLocality": "Mohali",
+      "addressRegion": "Punjab",
+      "postalCode": "140307",
+      "addressCountry": "IN"
+    },
+    {
+      "@type": "PostalAddress",
+      "streetAddress": "SCO 210, Silver Plaza Complex, Sodal Road",
+      "addressLocality": "Jalandhar",
+      "addressRegion": "Punjab",
+      "postalCode": "144004",
+      "addressCountry": "IN"
+    }
+  ],
+  "hasOfferCatalog": {
+    "@type": "OfferCatalog",
+    "name": "Software & AI Services",
+    "itemListElement": [
+      {
+        "@type": "Offer",
+        "itemOffered": {
+          "@type": "Service",
+          "name": "Custom Mobile App Development",
+          "description": "Native iOS & Android mobile apps for service businesses — bookings, payments, loyalty programmes, push notifications. App Store & Play Store deployment handled end-to-end."
+        }
+      },
+      {
+        "@type": "Offer",
+        "itemOffered": {
+          "@type": "Service",
+          "name": "AI Voice Agents",
+          "description": "Automated inbound and outbound AI calling agents in Hindi, English & Punjabi with CRM and calendar integration. Never miss a lead again."
+        }
+      },
+      {
+        "@type": "Offer",
+        "itemOffered": {
+          "@type": "Service",
+          "name": "Business Automation & AI Systems",
+          "description": "Custom workflow automation connecting WhatsApp, CRM, email, and calendar with AI agents. Built on n8n, Twilio, and OpenAI."
+        }
+      }
+    ]
+  },
+  "sameAs": [
+    "https://www.linkedin.com/company/everyday-digital-solutions",
+    "https://wa.me/919056066006"
+  ]
+};
+
+const faqSchema = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": faqs.map((faq) => ({
+    "@type": "Question",
+    "name": faq.q,
+    "acceptedAnswer": {
+      "@type": "Answer",
+      "text": faq.a,
+    },
+  })),
+};
 
 export default function Home() {
-  useEffect(() => {
-    document.title = "Everyday Digital Solutions — AI & Custom Software Studio · Mohali, India";
-    const desc = "Senior-led custom software, AI voice agents, and automation systems for ambitious service businesses. Studio based in Mohali — built with precision, shipped in 30 days.";
-    const metaDesc = document.querySelector('meta[name="description"]');
-    if (metaDesc) {
-      metaDesc.setAttribute("content", desc);
-    } else {
-      const meta = document.createElement('meta');
-      meta.name = "description";
-      meta.content = desc;
-      document.head.appendChild(meta);
-    }
-  }, []);
-
   return (
     <>
-      <a href="#main-content" className="sr-only focus:not-sr-only focus:absolute focus:z-[100] focus:p-4 focus:bg-background focus:text-foreground">
+      <SEO
+        title="Everyday Digital Solutions — AI & Custom Software Studio · Mohali, India"
+        description="Senior-led custom software, AI voice agents, and automation systems for ambitious service businesses across Chandigarh, Mohali & Jalandhar. Shipped in 30 days. Senior talent on every project."
+        canonical="/"
+        jsonLd={[localBusinessSchema, faqSchema]}
+      />
+      <a
+        href="#main-content"
+        className="sr-only focus:not-sr-only focus:absolute focus:z-[100] focus:p-4 focus:bg-background focus:text-foreground"
+      >
         Skip to content
       </a>
       <Navbar />

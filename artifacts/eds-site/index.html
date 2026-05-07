@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <!-- Theme: apply before paint to prevent flash -->
+    <!-- Theme: apply class before paint to prevent flash -->
     <script>
       (function () {
         var t = localStorage.getItem('eds-theme');
@@ -12,48 +12,19 @@
       })();
     </script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1" />
-    <title>Everyday Digital Solutions</title>
+    <!-- Default title & description; react-helmet-async overrides these per page -->
+    <title>Everyday Digital Solutions — AI & Custom Software Studio · Mohali, India</title>
+    <meta name="description" content="Senior-led custom software, AI voice agents, and automation systems for ambitious service businesses across Chandigarh, Mohali & Jalandhar. Shipped in 30 days." />
+    <meta name="theme-color" content="#0f0e08" />
+    <!-- Favicons -->
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Preconnect for font performance -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
   </head>
   <body>
     <div id="root"></div>
-    <script type="application/ld+json">
-      {
-        "@context": "https://schema.org",
-        "@type": "Organization",
-        "name": "Everyday Digital Solutions",
-        "url": "https://everydaydigitalsolutions.com",
-        "logo": "https://everydaydigitalsolutions.com/logo.png",
-        "contactPoint": [
-          {
-            "@type": "ContactPoint",
-            "telephone": "+91-90560-66006",
-            "contactType": "customer service"
-          }
-        ],
-        "address": [
-          {
-            "@type": "PostalAddress",
-            "addressLocality": "Mohali",
-            "addressRegion": "Punjab",
-            "postalCode": "140307",
-            "streetAddress": "Tecfin Tower, 264-265, Phase 8B, Sector 74, Sahibzada Ajit Singh Nagar",
-            "addressCountry": "IN"
-          },
-          {
-            "@type": "PostalAddress",
-            "addressLocality": "Jalandhar",
-            "addressRegion": "Punjab",
-            "postalCode": "144004",
-            "streetAddress": "SCO 210, Silver Plaza Complex, Sodal Road",
-            "addressCountry": "IN"
-          }
-        ]
-      }
-    </script>
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>

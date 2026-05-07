@@ -1,6 +1,6 @@
-import { useEffect } from "react";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
+import { SEO } from "@/components/SEO";
 import { site } from "@/lib/constants";
 import { Phone, Mail, MessageCircle, MapPin } from "lucide-react";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -35,12 +35,33 @@ const formSchema = z.object({
   budget: z.string({ required_error: "Please select a budget range" }),
 });
 
+const contactPageSchema = {
+  "@context": "https://schema.org",
+  "@type": "ContactPage",
+  "name": "Start a Project — Everyday Digital Solutions",
+  "url": "https://everydaydigitalsolutions.com/contact",
+  "description": "Get in touch with Everyday Digital Solutions to discuss your custom software, AI voice agent, or automation project. Based in Mohali and Jalandhar, Punjab.",
+  "breadcrumb": {
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      {
+        "@type": "ListItem",
+        "position": 1,
+        "name": "Home",
+        "item": "https://everydaydigitalsolutions.com/"
+      },
+      {
+        "@type": "ListItem",
+        "position": 2,
+        "name": "Start a Project",
+        "item": "https://everydaydigitalsolutions.com/contact"
+      }
+    ]
+  }
+};
+
 export default function Contact() {
   const { toast } = useToast();
-  
-  useEffect(() => {
-    document.title = "Start a Project — Everyday Digital Solutions";
-  }, []);
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -54,7 +75,7 @@ export default function Contact() {
     },
   });
 
-  function onSubmit(values: z.infer<typeof formSchema>) {
+  function onSubmit(_values: z.infer<typeof formSchema>) {
     setTimeout(() => {
       toast({
         title: "Message sent",
@@ -66,6 +87,12 @@ export default function Contact() {
 
   return (
     <>
+      <SEO
+        title="Start a Project"
+        description="Tell us what you're building. We'll scope it on a 15-minute call and send a clear, fixed proposal. Custom apps, AI voice agents, and automation systems — based in Mohali & Jalandhar, Punjab."
+        canonical="/contact"
+        jsonLd={contactPageSchema}
+      />
       <Navbar />
       <main className="pt-8 pb-16 sm:pt-12 lg:pt-28 lg:pb-32 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 min-h-[100dvh]">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-24">
@@ -149,7 +176,7 @@ export default function Contact() {
                     )}
                   />
                 </div>
-                
+
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                   <FormField
                     control={form.control}
@@ -211,10 +238,10 @@ export default function Contact() {
                     <FormItem>
                       <FormLabel>Tell us about your project</FormLabel>
                       <FormControl>
-                        <Textarea 
-                          placeholder="What are you looking to build?" 
-                          className="min-h-[120px] bg-background border-border focus-visible:ring-primary rounded-sm resize-y" 
-                          {...field} 
+                        <Textarea
+                          placeholder="What are you looking to build?"
+                          className="min-h-[120px] bg-background border-border focus-visible:ring-primary rounded-sm resize-y"
+                          {...field}
                         />
                       </FormControl>
                       <FormMessage />
