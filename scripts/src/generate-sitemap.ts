@@ -14,35 +14,9 @@ interface SitemapEntry {
 }
 
 const routes: SitemapEntry[] = [
-  { path: "/",                              changefreq: "weekly",  priority: "1.0" },
-  { path: "/contact",                       changefreq: "monthly", priority: "0.9" },
-  { path: "/work/quasar-salon",            changefreq: "monthly", priority: "0.7" },
-
-  // Service pages (added by Task #6)
-  { path: "/services/mobile-app-development", changefreq: "monthly", priority: "0.9" },
-  { path: "/services/ai-voice-agents",         changefreq: "monthly", priority: "0.9" },
-  { path: "/services/automation-systems",      changefreq: "monthly", priority: "0.9" },
-
-  // Location pages
-  { path: "/chandigarh", changefreq: "monthly", priority: "0.85" },
-  { path: "/mohali",     changefreq: "monthly", priority: "0.85" },
-  { path: "/panchkula",  changefreq: "monthly", priority: "0.8"  },
-  { path: "/jalandhar",  changefreq: "monthly", priority: "0.85" },
-  { path: "/punjab",     changefreq: "monthly", priority: "0.8"  },
-
-  // Industry / solution pages
-  { path: "/solutions/salons-and-spas",        changefreq: "monthly", priority: "0.85" },
-  { path: "/solutions/real-estate",             changefreq: "monthly", priority: "0.85" },
-  { path: "/solutions/clinics-and-healthcare",  changefreq: "monthly", priority: "0.85" },
-  { path: "/solutions/restaurants-and-cafes",   changefreq: "monthly", priority: "0.85" },
-
-  // Blog index + posts
-  { path: "/blog",                                                         changefreq: "weekly",  priority: "0.8"  },
-  { path: "/blog/ai-voice-agents-real-estate-india",                       changefreq: "monthly", priority: "0.7"  },
-  { path: "/blog/custom-app-vs-off-the-shelf-chandigarh",                  changefreq: "monthly", priority: "0.7"  },
-  { path: "/blog/app-development-cost-india-2025",                         changefreq: "monthly", priority: "0.7"  },
-  { path: "/blog/salon-booking-automation-case-study",                     changefreq: "monthly", priority: "0.7"  },
-  { path: "/blog/business-automation-service-businesses-punjab",           changefreq: "monthly", priority: "0.7"  },
+  { path: "/",                   changefreq: "weekly",  priority: "1.0" },
+  { path: "/contact",            changefreq: "monthly", priority: "0.9" },
+  { path: "/work/quasar-salon",  changefreq: "monthly", priority: "0.7" },
 ];
 
 function buildSitemap(entries: SitemapEntry[]): string {
