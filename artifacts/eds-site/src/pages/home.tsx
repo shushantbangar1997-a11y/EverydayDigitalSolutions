@@ -31,7 +31,7 @@ export default function Home() {
         Skip to content
       </a>
       <Navbar />
-      <main id="main-content" className="pt-20">
+      <main id="main-content" className="pt-[4.5rem]">
         <Hero />
         <TrustStrip />
         <ServicesGrid />

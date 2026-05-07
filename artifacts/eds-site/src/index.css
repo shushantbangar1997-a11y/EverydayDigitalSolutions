@@ -348,8 +348,11 @@
   flex-direction: column;
   justify-content: space-between;
   flex: 1;
-  padding: 2rem;
+  padding: 1.25rem;
   overflow: hidden;
+}
+@media (min-width: 480px) {
+  .menu-content-wrapper { padding: 2rem; }
 }
 
 .menu-list {

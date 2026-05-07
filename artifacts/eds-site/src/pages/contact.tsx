@@ -39,7 +39,7 @@ export default function Contact() {
   const { toast } = useToast();
   
   useEffect(() => {
-    document.title = "Get a Free Quote — Everyday Digital Solutions";
+    document.title = "Start a Project — Everyday Digital Solutions";
   }, []);
 
   const form = useForm<z.infer<typeof formSchema>>({
@@ -67,42 +67,40 @@ export default function Contact() {
   return (
     <>
       <Navbar />
-      <main className="pt-32 pb-24 lg:pt-48 lg:pb-32 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 min-h-[100dvh]">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-24">
+      <main className="pt-8 pb-16 sm:pt-12 lg:pt-28 lg:pb-32 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 min-h-[100dvh]">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-24">
           <div>
-            <h1 className="text-5xl md:text-6xl font-serif mb-8 leading-tight">
-              Get a <em className="text-primary italic">free quote</em> in 24 hours.
+            <h1 className="text-4xl sm:text-5xl md:text-6xl font-serif mb-6 lg:mb-8 leading-tight">
+              Start a <em className="text-primary italic">project</em>.
             </h1>
-            <p className="text-lg text-muted-foreground mb-12 leading-relaxed">
-              Tell us what you're building. We'll scope it on a 15-minute call and send you a fixed price — no agency markup, no junior devs, no surprises.
+            <p className="text-base lg:text-lg text-muted-foreground mb-10 leading-relaxed">
+              Tell us what you're building. We'll scope it on a 15-minute call and send you a clear, fixed proposal — no surprises.
             </p>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
-              <div className="flex flex-col gap-8">
-                <div className="flex items-start gap-4">
-                  <Phone className="w-5 h-5 text-primary mt-1" />
-                  <div>
-                    <h3 className="font-medium text-sm text-muted-foreground mb-1">Call us</h3>
-                    <a href={`tel:${site.phone}`} className="text-foreground hover:text-primary transition-colors">{site.phone}</a>
-                  </div>
-                </div>
-                <div className="flex items-start gap-4">
-                  <Mail className="w-5 h-5 text-primary mt-1" />
-                  <div>
-                    <h3 className="font-medium text-sm text-muted-foreground mb-1">Email us</h3>
-                    <a href={`mailto:${site.email}`} className="text-foreground hover:text-primary transition-colors">{site.email}</a>
-                  </div>
-                </div>
-                <div className="flex items-start gap-4">
-                  <MessageCircle className="w-5 h-5 text-primary mt-1" />
-                  <div>
-                    <h3 className="font-medium text-sm text-muted-foreground mb-1">WhatsApp</h3>
-                    <a href={site.whatsapp} target="_blank" rel="noopener noreferrer" className="text-foreground hover:text-primary transition-colors">Message us</a>
-                  </div>
+            <div className="flex flex-col gap-6 mb-10">
+              <div className="flex items-start gap-4">
+                <Phone className="w-5 h-5 text-primary mt-1 flex-shrink-0" />
+                <div>
+                  <h3 className="font-medium text-sm text-muted-foreground mb-1">Call us</h3>
+                  <a href={`tel:${site.phone}`} className="text-foreground hover:text-primary transition-colors">{site.phone}</a>
                 </div>
               </div>
-              
-              <div className="flex flex-col gap-8">
+              <div className="flex items-start gap-4">
+                <Mail className="w-5 h-5 text-primary mt-1 flex-shrink-0" />
+                <div>
+                  <h3 className="font-medium text-sm text-muted-foreground mb-1">Email us</h3>
+                  <a href={`mailto:${site.email}`} className="text-foreground hover:text-primary transition-colors break-all">{site.email}</a>
+                </div>
+              </div>
+              <div className="flex items-start gap-4">
+                <MessageCircle className="w-5 h-5 text-primary mt-1 flex-shrink-0" />
+                <div>
+                  <h3 className="font-medium text-sm text-muted-foreground mb-1">WhatsApp</h3>
+                  <a href={site.whatsapp} target="_blank" rel="noopener noreferrer" className="text-foreground hover:text-primary transition-colors">Message us directly</a>
+                </div>
+              </div>
+
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 pt-2">
                 {site.offices.map((office: typeof site.offices[number], idx: number) => (
                   <div key={idx} className="flex items-start gap-4">
                     <MapPin className="w-5 h-5 text-primary mt-1 flex-shrink-0" />
@@ -120,10 +118,10 @@ export default function Contact() {
             </div>
           </div>
 
-          <div className="bg-card border border-border/40 rounded-md p-8 lg:p-10">
+          <div className="bg-card border border-border/40 rounded-md p-6 sm:p-8 lg:p-10">
             <Form {...form}>
               <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                   <FormField
                     control={form.control}
                     name="name"
@@ -152,7 +150,7 @@ export default function Contact() {
                   />
                 </div>
                 
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                   <FormField
                     control={form.control}
                     name="phone"
@@ -195,8 +193,8 @@ export default function Contact() {
                         </FormControl>
                         <SelectContent className="bg-popover border-border rounded-sm">
                           <SelectItem value="<₹50K">&lt;₹50K</SelectItem>
-                          <SelectItem value="₹50K-1L">₹50K - ₹1L</SelectItem>
-                          <SelectItem value="₹1L-3L">₹1L - ₹3L</SelectItem>
+                          <SelectItem value="₹50K-1L">₹50K – ₹1L</SelectItem>
+                          <SelectItem value="₹1L-3L">₹1L – ₹3L</SelectItem>
                           <SelectItem value="₹3L+">₹3L+</SelectItem>
                           <SelectItem value="Not sure yet">Not sure yet</SelectItem>
                         </SelectContent>
@@ -211,7 +209,7 @@ export default function Contact() {
                   name="message"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Message</FormLabel>
+                      <FormLabel>Tell us about your project</FormLabel>
                       <FormControl>
                         <Textarea 
                           placeholder="What are you looking to build?" 
@@ -225,7 +223,7 @@ export default function Contact() {
                 />
 
                 <Button type="submit" className="w-full bg-primary text-black hover:bg-primary/90 font-medium py-6 rounded-sm text-base">
-                  Request Free Quote
+                  Send Enquiry
                 </Button>
               </form>
             </Form>

@@ -21,19 +21,18 @@ export function AboutSection() {
   };
 
   return (
-    <section id="about" className="py-24 lg:py-32 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <section id="about" className="py-16 lg:py-32 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <motion.div
         initial="hidden"
         whileInView="visible"
         viewport={{ once: true, margin: "-100px" }}
         variants={variants}
-        className="bg-card border border-border/40 rounded-md p-8 lg:p-12"
+        className="bg-card border border-border/40 rounded-md p-6 sm:p-8 lg:p-12"
       >
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-start">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 items-start">
 
-          {/* Founder card — styled brand block in place of photo */}
-          <div className="relative aspect-[4/5] bg-gradient-to-b from-[#111008] to-background border border-border/60 rounded-sm overflow-hidden flex flex-col items-center justify-center gap-6 p-8">
-            {/* Large EDS monogram */}
+          {/* Brand block — hidden on mobile to save space, shown on desktop */}
+          <div className="hidden lg:flex relative aspect-[4/5] bg-gradient-to-b from-[#111008] to-background border border-border/60 rounded-sm overflow-hidden flex-col items-center justify-center gap-6 p-8">
             <div className="flex flex-col items-center gap-2">
               <img
                 src="/logo.png"
@@ -44,11 +43,7 @@ export function AboutSection() {
                 Everyday Digital Solutions
               </span>
             </div>
-
-            {/* Divider */}
             <div className="w-12 h-[1px] bg-primary/40"></div>
-
-            {/* Stats grid */}
             <div className="grid grid-cols-2 gap-6 w-full">
               {stats.map((s) => (
                 <div key={s.label} className="flex flex-col items-center text-center">
@@ -57,18 +52,26 @@ export function AboutSection() {
                 </div>
               ))}
             </div>
-
-            {/* Subtle yellow glow */}
             <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_bottom,var(--accent-soft)_0%,transparent_60%)] opacity-30 pointer-events-none"></div>
           </div>
 
+          {/* Stats strip — mobile only */}
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 lg:hidden">
+            {stats.map((s) => (
+              <div key={s.label} className="flex flex-col items-center text-center p-3 bg-background/60 border border-border/40 rounded-sm">
+                <span className="text-xl font-serif text-primary">{s.value}</span>
+                <span className="text-[10px] uppercase tracking-widest text-muted-foreground mt-1">{s.label}</span>
+              </div>
+            ))}
+          </div>
+
           <div className="flex flex-col">
-            <span className="text-xs font-bold uppercase tracking-widest text-muted-foreground mb-6">About the studio</span>
-            <h2 className="text-3xl lg:text-4xl font-serif mb-8 leading-tight">
+            <span className="text-xs font-bold uppercase tracking-widest text-muted-foreground mb-4 lg:mb-6">About the studio</span>
+            <h2 className="text-2xl sm:text-3xl lg:text-4xl font-serif mb-6 lg:mb-8 leading-tight">
               Hi, I'm Shushant. I founded Everyday Digital Solutions in <em className="text-primary italic">2018</em>.
             </h2>
 
-            <div className="flex flex-col gap-6 text-muted-foreground leading-relaxed mb-10">
+            <div className="flex flex-col gap-5 text-muted-foreground leading-relaxed mb-8 lg:mb-10 text-sm lg:text-base">
               <p>
                 For seven years, I helped service businesses grow through digital marketing, lead generation, and custom systems. I ran offices, managed teams, and learned every part of the customer acquisition stack from the inside.
               </p>
