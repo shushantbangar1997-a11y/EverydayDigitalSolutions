@@ -42,3 +42,46 @@ export const caseStudies = {
     }
   }
 };
+
+export const portfolioProjects = [
+  {
+    id: "quasar-salon",
+    category: "Custom Mobile App",
+    client: "Quasar Salon",
+    title: "Celebrity-grade salon app for Tricity's most-followed salon brand",
+    outcome: "60% of bookings moved digital within 30 days. 40% drop in no-shows.",
+    tags: ["React Native", "Firebase", "iOS & Android"],
+    hasFullCaseStudy: true,
+    caseStudyUrl: "/work/quasar-salon"
+  },
+  {
+    id: "realty-voice",
+    category: "AI Voice Agent",
+    client: "Tricity Realty Group",
+    title: "24/7 AI sales agent handling inbound property enquiries in Hindi & English",
+    outcome: "320+ qualified leads contacted per month without a single human SDR.",
+    tags: ["Synthflow", "Twilio", "CRM Integration"],
+    hasFullCaseStudy: false,
+    caseStudyUrl: "/contact"
+  },
+  {
+    id: "medipulse",
+    category: "Custom Mobile App",
+    client: "MediPulse Clinics",
+    title: "Multi-location clinic booking app replacing phone queues across 4 branches",
+    outcome: "Patient wait-time complaints dropped by 70%. Staff freed from manual scheduling.",
+    tags: ["React Native", "Expo", "Firebase"],
+    hasFullCaseStudy: false,
+    caseStudyUrl: "/contact"
+  },
+  {
+    id: "growstack",
+    category: "Automation & AI",
+    client: "GrowStack Commerce",
+    title: "End-to-end order + CRM automation eliminating 8 hours of daily manual work",
+    outcome: "Order-to-dispatch time cut from 4 hours to 20 minutes. Zero manual data entry.",
+    tags: ["n8n", "WhatsApp API", "OpenAI"],
+    hasFullCaseStudy: false,
+    caseStudyUrl: "/contact"
+  }
+];

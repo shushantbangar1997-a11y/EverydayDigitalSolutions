@@ -1,4 +1,6 @@
+import { Link } from "wouter";
 import { motion, useReducedMotion } from "framer-motion";
+import { ArrowRight } from "lucide-react";
 import { services } from "@/content/services";
 
 export function ServicesGrid() {
@@ -10,7 +12,7 @@ export function ServicesGrid() {
 
   return (
     <section id="services" className="py-24 lg:py-32 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <motion.div 
+      <motion.div
         initial="hidden"
         whileInView="visible"
         viewport={{ once: true, margin: "-100px" }}
@@ -40,20 +42,27 @@ export function ServicesGrid() {
             <span className="text-xs font-mono text-muted-foreground mb-6 block">{service.id}</span>
             <h3 className="text-2xl font-serif mb-2">{service.title}</h3>
             <p className="text-primary italic mb-6">{service.tagline}</p>
-            
+
             <ul className="flex flex-col gap-3 mb-8 flex-grow">
               {service.bullets.map((bullet, j) => (
-                <li key={j} className="text-sm text-muted-foreground flex items-start">
-                  <span className="text-primary mr-2 mt-1 text-[10px]">♦</span>
+                <li key={j} className="text-sm text-muted-foreground flex items-start gap-2">
+                  <span className="text-primary mt-1 shrink-0">▸</span>
                   {bullet}
                 </li>
               ))}
             </ul>
-            
+
             <div className="w-full h-[1px] bg-border/40 mb-6"></div>
-            
-            <p className="font-mono text-sm mb-2">{service.price}</p>
-            <p className="text-xs text-muted-foreground">Best for: {service.bestFor}</p>
+
+            <p className="text-xs text-muted-foreground mb-6">Best for: {service.bestFor}</p>
+
+            <Link
+              href="/contact"
+              className="inline-flex items-center gap-2 bg-primary text-black px-5 py-2.5 rounded-sm text-sm font-medium hover:bg-primary/90 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background group-hover:gap-3"
+            >
+              Get a Quote
+              <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-0.5" />
+            </Link>
           </motion.div>
         ))}
       </div>

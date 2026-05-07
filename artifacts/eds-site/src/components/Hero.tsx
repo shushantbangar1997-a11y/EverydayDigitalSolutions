@@ -14,7 +14,7 @@ export function Hero() {
 
   return (
     <section className="pt-32 pb-24 lg:pt-48 lg:pb-32 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <motion.div 
+      <motion.div
         className="grid grid-cols-1 lg:grid-cols-[1.7fr_1fr] gap-12 lg:gap-16 items-start"
         variants={container}
         initial="hidden"
@@ -31,33 +31,39 @@ export function Hero() {
             We design and ship custom software, AI voice agents, and automation systems for service businesses across Chandigarh, Mohali, and Panchkula — at one-tenth of agency cost, in 30 days.
           </motion.p>
           <motion.div variants={variants} className="flex flex-wrap items-center gap-4">
-            <a href="#work" className="bg-primary text-black px-6 py-3 rounded-sm font-medium hover:bg-primary/90 transition-colors focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background">
+            <Link
+              href="/contact"
+              className="bg-primary text-black px-6 py-3 rounded-sm font-medium hover:bg-primary/90 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background"
+            >
+              Get Free Quote
+            </Link>
+            <a
+              href="#work"
+              className="border border-border bg-transparent text-foreground px-6 py-3 rounded-sm font-medium hover:bg-muted transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background"
+            >
               See our work
             </a>
-            <Link href="/contact" className="border border-border bg-transparent text-foreground px-6 py-3 rounded-sm font-medium hover:bg-muted transition-colors focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background">
-              Book a 15-min call
-            </Link>
           </motion.div>
         </div>
         <motion.div variants={variants} className="flex flex-col gap-6 lg:pl-10 lg:border-l border-border/40">
           <div className="flex flex-col gap-2">
             <span className="text-3xl font-serif text-primary">30 days</span>
-            <span className="text-sm text-muted-foreground">From idea to live product</span>
+            <span className="text-sm text-muted-foreground">Average build time</span>
           </div>
           <div className="h-[1px] w-12 bg-border/40"></div>
           <div className="flex flex-col gap-2">
             <span className="text-3xl font-serif text-primary">1/10×</span>
-            <span className="text-sm text-muted-foreground">The cost of traditional agencies</span>
+            <span className="text-sm text-muted-foreground">Of typical agency cost</span>
           </div>
           <div className="h-[1px] w-12 bg-border/40"></div>
           <div className="flex flex-col gap-2">
             <span className="text-3xl font-serif text-primary">Mohali</span>
-            <span className="text-sm text-muted-foreground">Local studio, global standards</span>
+            <span className="text-sm text-muted-foreground">Studio &amp; home base</span>
           </div>
           <div className="h-[1px] w-12 bg-border/40"></div>
           <div className="flex flex-col gap-2">
             <span className="text-3xl font-serif text-primary">2018</span>
-            <span className="text-sm text-muted-foreground">Year established</span>
+            <span className="text-sm text-muted-foreground">Founded · 7 years building</span>
           </div>
         </motion.div>
       </motion.div>

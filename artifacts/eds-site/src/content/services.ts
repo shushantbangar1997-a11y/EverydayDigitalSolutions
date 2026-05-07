@@ -8,7 +8,6 @@ export const services = [
       "Bookings, payments, loyalty, push notifications",
       "Live in 30 days, App Store + Play Store deployment"
     ],
-    price: "Starting from ₹99,000",
     bestFor: "Salons, clinics, gyms, restaurants, wellness brands"
   },
   {
@@ -20,7 +19,6 @@ export const services = [
       "Inbound + outbound dialing",
       "Direct CRM and calendar integration"
     ],
-    price: "₹50,000 setup + ₹15,000/month",
     bestFor: "Real estate, insurance, coaching, high-volume sales"
   },
   {
@@ -32,7 +30,6 @@ export const services = [
       "Custom AI agents",
       "Fully managed"
     ],
-    price: "Starting from ₹25,000",
     bestFor: "Growing businesses drowning in manual admin"
   }
 ];

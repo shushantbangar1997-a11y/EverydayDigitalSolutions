@@ -39,7 +39,7 @@ export default function Contact() {
   const { toast } = useToast();
   
   useEffect(() => {
-    document.title = "Contact — Everyday Digital Solutions";
+    document.title = "Get a Free Quote — Everyday Digital Solutions";
   }, []);
 
   const form = useForm<z.infer<typeof formSchema>>({
@@ -71,10 +71,10 @@ export default function Contact() {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-24">
           <div>
             <h1 className="text-5xl md:text-6xl font-serif mb-8 leading-tight">
-              Let's build <em className="text-primary italic">something</em>.
+              Get a <em className="text-primary italic">free quote</em> in 24 hours.
             </h1>
             <p className="text-lg text-muted-foreground mb-12 leading-relaxed">
-              Whether you need a full mobile app, an AI voice agent, or a complex automation workflow, we're ready to help. Reach out and we'll get back to you within 24 hours.
+              Tell us what you're building. We'll scope it on a 15-minute call and send you a fixed price — no agency markup, no junior devs, no surprises.
             </p>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
@@ -225,7 +225,7 @@ export default function Contact() {
                 />
 
                 <Button type="submit" className="w-full bg-primary text-black hover:bg-primary/90 font-medium py-6 rounded-sm text-base">
-                  Send message
+                  Request Free Quote
                 </Button>
               </form>
             </Form>
