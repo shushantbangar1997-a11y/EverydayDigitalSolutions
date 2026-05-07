@@ -1,5 +1,8 @@
 # ── Stage 1: Build ──────────────────────────────────────────────────────────
-FROM node:20-alpine AS builder
+# node:20-slim is Debian-based (glibc/gnu). The pnpm-workspace.yaml overrides
+# exclude musl variants of rollup, @tailwindcss/oxide, and lightningcss —
+# Alpine uses musl and would break. Debian uses gnu, which is kept.
+FROM node:20-slim AS builder
 
 ENV PNPM_HOME="/pnpm"
 ENV PATH="$PNPM_HOME:$PATH"
@@ -23,7 +26,7 @@ RUN pnpm install --frozen-lockfile
 RUN pnpm --filter @workspace/eds-site run build
 
 # ── Stage 2: Serve ──────────────────────────────────────────────────────────
-FROM node:20-alpine
+FROM node:20-slim
 
 RUN npm install -g serve
 
