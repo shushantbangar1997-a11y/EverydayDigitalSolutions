@@ -45,23 +45,27 @@
   --radius-xl: 0.75rem;
 }
 
+/* ── Light mode (default) ── */
 :root {
-  color-scheme: dark;
-  
-  --bg-base: #0A0908;
-  --bg-elevated: #141210;
-  --bg-card: #1A1714;
-  --border-subtle: #2A2520;
-  --border-default: #3A332C;
-  --text-primary: #FAF6EC;
-  --text-secondary: #B5AB99;
+  color-scheme: light;
+
+  --bg-base: #FAFAF8;
+  --bg-elevated: #F2EFE9;
+  --bg-card: #E9E6DE;
+  --border-subtle: #DDDAD2;
+  --border-default: #C9C5BB;
+  --text-primary: #1A1714;
+  --text-secondary: #4A4540;
   --text-muted: #7A7164;
-  --accent: #F5D424;
-  --accent-deep: #E0BE15;
-  --accent-soft: rgba(245, 212, 36, 0.12);
+  --accent: #B89000;
+  --accent-deep: #9A7800;
+  --accent-soft: rgba(184, 144, 0, 0.10);
 }
 
+/* ── Dark mode ── */
 .dark {
+  color-scheme: dark;
+
   --bg-base: #0A0908;
   --bg-elevated: #141210;
   --bg-card: #1A1714;
@@ -133,8 +137,11 @@
 .kn-logo-img {
   height: 2.75rem;
   width: auto;
-  filter: invert(1) brightness(1.05);
+  filter: none;
   flex-shrink: 0;
+}
+.dark .kn-logo-img {
+  filter: invert(1) brightness(1.05);
 }
 .kn-logo-wordmark {
   display: flex;
@@ -181,6 +188,31 @@
   font-size: 1rem;
   padding: 0.875rem 2rem;
   border-radius: 2px;
+}
+
+/* Theme toggle */
+.kn-theme-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.25rem;
+  height: 2.25rem;
+  background: var(--bg-card);
+  border: 1px solid var(--border-default);
+  border-radius: 50%;
+  cursor: pointer;
+  color: var(--text-secondary);
+  transition: background 0.2s, color 0.2s, border-color 0.2s;
+  flex-shrink: 0;
+}
+.kn-theme-btn:hover {
+  background: var(--bg-elevated);
+  color: var(--text-primary);
+  border-color: var(--accent);
+}
+.kn-theme-icon {
+  width: 1rem;
+  height: 1rem;
 }
 
 /* Hamburger / close button */
@@ -265,10 +297,10 @@
 .backdrop-layer {
   position: absolute;
   inset: 0;
-  background: var(--bg-elevated, #141210);
+  background: var(--bg-elevated);
 }
-.backdrop-layer.first  { background: rgba(10, 9, 8, 0.95); }
-.backdrop-layer.second { background: var(--bg-card, #1A1714); }
+.backdrop-layer.first  { background: var(--bg-base); }
+.backdrop-layer.second { background: var(--bg-card); }
 
 /* Ambient shapes */
 .ambient-background-shapes {

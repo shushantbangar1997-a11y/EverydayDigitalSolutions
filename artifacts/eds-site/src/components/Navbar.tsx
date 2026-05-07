@@ -2,6 +2,8 @@ import { useEffect, useRef, useState } from "react";
 import { Link } from "wouter";
 import gsap from "gsap";
 import { CustomEase } from "gsap/CustomEase";
+import { Sun, Moon } from "lucide-react";
+import { useTheme } from "@/hooks/useTheme";
 
 if (typeof window !== "undefined") {
   gsap.registerPlugin(CustomEase);
@@ -20,6 +22,7 @@ export function Navbar() {
   const containerRef = useRef<HTMLDivElement>(null);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const { isDark, toggle: toggleTheme } = useTheme();
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 30);
@@ -159,6 +162,15 @@ export function Navbar() {
               </Link>
 
               <div className="kn-nav-row-right">
+                {/* Theme toggle */}
+                <button
+                  className="kn-theme-btn"
+                  onClick={toggleTheme}
+                  aria-label={isDark ? "Switch to light mode" : "Switch to dark mode"}
+                >
+                  {isDark ? <Sun className="kn-theme-icon" /> : <Moon className="kn-theme-icon" />}
+                </button>
+
                 {/* Hamburger button — only item in header besides logo */}
                 <button className="nav-close-btn" onClick={toggleMenu} aria-label="Toggle menu">
                   <div className="menu-button-text">
