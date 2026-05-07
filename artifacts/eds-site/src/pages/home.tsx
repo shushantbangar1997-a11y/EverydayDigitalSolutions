@@ -43,22 +43,40 @@ const localBusinessSchema = {
     { "@type": "City", "name": "Jalandhar" },
     { "@type": "AdministrativeArea", "name": "Punjab" }
   ],
-  "address": [
+  "location": [
     {
-      "@type": "PostalAddress",
-      "streetAddress": "Tecfin Tower, 264-265, Phase 8B, Sector 74, Sahibzada Ajit Singh Nagar",
-      "addressLocality": "Mohali",
-      "addressRegion": "Punjab",
-      "postalCode": "140307",
-      "addressCountry": "IN"
+      "@type": "Place",
+      "name": "Everyday Digital Solutions — Mohali",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "Tecfin Tower, 264-265, Phase 8B, Sector 74, Sahibzada Ajit Singh Nagar",
+        "addressLocality": "Mohali",
+        "addressRegion": "Punjab",
+        "postalCode": "140307",
+        "addressCountry": "IN"
+      },
+      "geo": {
+        "@type": "GeoCoordinates",
+        "latitude": "30.7046",
+        "longitude": "76.7207"
+      }
     },
     {
-      "@type": "PostalAddress",
-      "streetAddress": "SCO 210, Silver Plaza Complex, Sodal Road",
-      "addressLocality": "Jalandhar",
-      "addressRegion": "Punjab",
-      "postalCode": "144004",
-      "addressCountry": "IN"
+      "@type": "Place",
+      "name": "Everyday Digital Solutions — Jalandhar",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "SCO 210, Silver Plaza Complex, Sodal Road",
+        "addressLocality": "Jalandhar",
+        "addressRegion": "Punjab",
+        "postalCode": "144004",
+        "addressCountry": "IN"
+      },
+      "geo": {
+        "@type": "GeoCoordinates",
+        "latitude": "31.3256",
+        "longitude": "75.5727"
+      }
     }
   ],
   "hasOfferCatalog": {
