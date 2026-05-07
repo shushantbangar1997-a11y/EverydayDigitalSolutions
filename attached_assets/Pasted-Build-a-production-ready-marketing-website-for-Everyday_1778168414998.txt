@@ -1,0 +1,382 @@
+Build a production-ready marketing website for "Everyday Digital Solutions" 
+— an AI and custom software studio based in Mohali and Jalandhar, India. 
+This is a real business launching in May 2026. The site needs to be live, 
+fast, and ship-ready.
+
+═══════════════════════════════════════════════════════════════════
+TECH STACK
+═══════════════════════════════════════════════════════════════════
+- Next.js 14 (App Router) + TypeScript (strict mode)
+- Tailwind CSS with custom design tokens
+- shadcn/ui for buttons, accordions, forms
+- Framer Motion for subtle scroll animations only (NO parallax, NO 3D)
+- next/font loading Boska + Satoshi from Fontshare
+  (Fallback to Playfair Display + Manrope from Google Fonts if Fontshare fails)
+- Lucide-react for icons
+
+═══════════════════════════════════════════════════════════════════
+DESIGN SYSTEM
+═══════════════════════════════════════════════════════════════════
+Colors (use these EXACT hex values in tailwind.config.ts):
+  bg.base:        #0A0908   (near-black, slightly warm)
+  bg.elevated:    #141210
+  bg.card:        #1A1714
+  border.subtle:  #2A2520
+  border.default: #3A332C
+  text.primary:   #FAF6EC   (warm off-white)
+  text.secondary: #B5AB99
+  text.muted:     #7A7164
+  accent.DEFAULT: #F5D424   (bright yellow — brand accent)
+  accent.deep:    #E0BE15
+  accent.soft:    rgba(245, 212, 36, 0.12)
+
+Typography:
+  Display font: Boska (Fontshare) — for hero, headlines, section titles
+  Body font: Satoshi (Fontshare) — for everything else
+  Use Boska italic strategically for accent words within headlines, colored 
+  in the yellow accent.
+
+Aesthetic direction: warm dark editorial-modern. Generous whitespace. Strong 
+typographic contrast. Yellow accents used sparingly as punctuation, not 
+decoration.
+
+ABSOLUTELY DO NOT use: purple gradients, generic SaaS purple/blue palettes, 
+3D animations, parallax scrolling, hero video backgrounds, glassmorphism 
+cards, neumorphism, animated mesh gradients, hero carousels, or any other 
+"AI website cliché" patterns.
+
+═══════════════════════════════════════════════════════════════════
+LOGO HANDLING (IMPORTANT — READ CAREFULLY)
+═══════════════════════════════════════════════════════════════════
+The logo file is /public/logo.png — it's a BLACK logo on TRANSPARENT 
+background, with a hexagonal icon and "EVERYDAY DIGITAL SOLUTIONS" wordmark.
+
+Because the website background is dark (#0A0908), the logo MUST be inverted 
+to display in white/cream. Use one of these approaches:
+
+OPTION A (preferred): Apply a CSS filter to the logo image:
+  filter: invert(1) brightness(1.05);
+  This converts the black logo to white at runtime.
+
+OPTION B: Place the logo inside an <img> tag with the filter applied via 
+Tailwind: className="invert brightness-105"
+
+The logo should appear in:
+- Nav (height: 40px, auto width, in white via filter)
+- Footer (height: 48px, auto width, in white via filter)
+- Favicon (use the black version on light surface — generate from logo.png)
+- OG image (use the white version on dark background)
+
+Do NOT modify the logo PNG file itself — handle inversion via CSS only.
+
+═══════════════════════════════════════════════════════════════════
+FOLDER STRUCTURE TO CREATE
+═══════════════════════════════════════════════════════════════════
+app/
+  layout.tsx              (fonts, metadata, theme)
+  page.tsx                (homepage)
+  globals.css             (Tailwind directives + base styles)
+  work/quasar-salon/page.tsx
+  contact/page.tsx
+  api/lead/route.ts       (form handler → forwards to N8N_WEBHOOK_URL env)
+  sitemap.ts
+  robots.ts
+  opengraph-image.tsx     (auto-generated OG image)
+components/
+  nav.tsx
+  mobile-menu.tsx
+  hero.tsx
+  trust-strip.tsx
+  services-grid.tsx
+  case-study.tsx
+  phone-mockup.tsx        (CSS iPhone frame that auto-cycles screenshots)
+  process-timeline.tsx
+  about-section.tsx
+  faq.tsx
+  final-cta.tsx
+  footer.tsx
+  lead-form.tsx
+  ui/                     (shadcn components — install via shadcn CLI)
+content/
+  site.ts                 (all site-wide settings — see SITE CONFIG below)
+  services.ts             (3 services with copy + pricing)
+  faqs.ts                 (7 FAQ items)
+  case-studies.ts         (Quasar case study data)
+lib/
+  utils.ts                (cn helper)
+  constants.ts            (re-exports from content/site.ts)
+public/
+  logo.png                (logo — already provided)
+  photos/
+    shushant.jpg          (placeholder for now)
+    quasar/               (placeholder Quasar app screenshots)
+
+═══════════════════════════════════════════════════════════════════
+SITE CONFIG (use these EXACT values in content/site.ts)
+═══════════════════════════════════════════════════════════════════
+Company: Everyday Digital Solutions
+Tagline: AI & Custom Software Studio for ambitious businesses
+Founded: 2018
+Founder: Shushant Bangar
+
+Phone: +91 9056066006
+Email: admin@everydaydigitalsolutions.com
+WhatsApp: https://wa.me/919056066006
+
+Mohali office (primary, listed first):
+  Tecfin Tower, 264-265, Phase 8B
+  Sector 74, Sahibzada Ajit Singh Nagar
+  Punjab 140307, India
+
+Jalandhar office:
+  SCO 210, Silver Plaza Complex
+  Sodal Road, Jalandhar 144004
+  Punjab, India
+
+Domain: everydaydigitalsolutions.com
+
+═══════════════════════════════════════════════════════════════════
+HOMEPAGE — SECTION-BY-SECTION SPEC
+═══════════════════════════════════════════════════════════════════
+
+1. STICKY NAV
+- Logo (logo.png with CSS invert filter applied) on left, height 40px
+- Center-right links: Services / Work / Process / About / FAQ
+- Right primary CTA: "Book a call" → /contact (yellow background, black text)
+- Mobile: hamburger menu opens fullscreen overlay with same links
+- Background becomes slightly translucent + blurred when scrolled past 30px
+
+2. HERO
+- Two-column grid on desktop (1.7fr / 1fr), single column on mobile
+- LEFT column:
+  • Eyebrow tag: "AI & Custom Software Studio · Mohali · Jalandhar"
+  • Massive editorial headline (clamp 2.5rem to 5.25rem): 
+    "The technology partner for [Tricity's] most ambitious businesses."
+    The word "Tricity's" is in Boska italic, yellow accent color.
+  • Subhead: "We design and ship custom software, AI voice agents, and 
+    automation systems for service businesses across Chandigarh, Mohali, 
+    and Panchkula — at one-tenth of agency cost, in 30 days."
+  • Two CTAs: primary "See our work" + ghost "Book a 15-min call"
+- RIGHT column: stats panel with vertical separator
+  • 30 days · Average build time
+  • 1/10× · Of typical agency cost
+  • Mohali · Studio & home base
+  • 2018 · Founded · 7 years building
+- Stagger-fade-up animation on page load (0.1s delay between elements)
+
+3. TRUST STRIP
+- Thin bordered band
+- Label: "TRUSTED BY TRICITY'S LEADING SERVICE BRANDS"
+- One real client logo: "Quasar Salon" (typeset in Boska, large)
+- Two faded "Your brand here" placeholders
+
+4. SERVICES (id="services")
+- Section header: "Three ways we help your business [run on autopilot]." 
+  (italic + yellow on accent words)
+- Subhead: "From customer-facing apps to behind-the-scenes AI agents that 
+  work 24/7. Pick one. Or stack them — most clients do."
+- 3-column grid (stacks on mobile), numbered cards (01, 02, 03):
+  
+  CARD 01 — Custom Mobile Apps
+    Tagline: "Apps your customers actually use."
+    Bullets: iOS & Android, custom-designed for your brand · Bookings, 
+      payments, loyalty, push notifications · Live in 30 days, App Store + 
+      Play Store deployment
+    Price: Starting from ₹99,000
+    Best for: Salons, clinics, gyms, restaurants, wellness brands
+  
+  CARD 02 — AI Voice Agents
+    Tagline: "Your AI sales rep, working 24/7."
+    Bullets: Hindi, English & Punjabi voices · Inbound + outbound dialing · 
+      Direct CRM and calendar integration
+    Price: ₹50,000 setup + ₹15,000/month
+    Best for: Real estate, insurance, coaching, high-volume sales
+  
+  CARD 03 — Automation & AI Systems
+    Tagline: "Replace your next hire with a workflow."
+    Bullets: WhatsApp + CRM + email + calendar workflows · Custom AI agents · 
+      Fully managed
+    Price: Starting from ₹25,000
+    Best for: Growing businesses drowning in manual admin
+
+- Cards have subtle hover state (yellow border, slight lift)
+
+5. CASE STUDY — QUASAR (id="work")
+- Section header: "Selected work — [built & shipped]." (italic + yellow)
+- Featured case in elevated container with radial gradient backdrop
+- Tag pill: "CASE STUDY · CUSTOM MOBILE APP" (yellow soft background)
+- Title: "How we built Tricity's first celebrity-grade salon app — for 
+  [₹1.57 lakh], in 30 days." (italic + yellow on price)
+- Phone-mockup component that auto-cycles 5 screenshot images from 
+  /public/photos/quasar/screen-01.png through screen-05.png on a 
+  3-second loop. Use CSS to draw an iPhone frame around the images 
+  (rounded corners, notch, status bar).
+- 3-stat row: 30 days / ₹1.57L / 13 features (with descriptions)
+- 3-column story: The Problem / What We Built / The Result
+- Pull quote: "We didn't just get an app. We got a technology partner who 
+  understood our business — and shipped in a month." — [Owner], Quasar Salon
+- Two CTAs: "Want this for your business" / "See pricing"
+
+6. PROCESS (id="process")
+- Header: "A 30-day path from idea to [live product]." (italic + yellow)
+- Subhead: "No surprises, no scope creep, no missed deadlines."
+- 4-column timeline (stacks on mobile), each with yellow top-border:
+  01 · Days 1–3 · Discovery
+  02 · Days 4–21 · Build
+  03 · Days 22–28 · Test & Polish
+  04 · Days 29–30 · Launch & Handoff
+
+7. ABOUT (id="about")
+- 2-column grid in an elevated container
+- LEFT: photo placeholder (4:5 aspect ratio, dark frame)
+- RIGHT: 
+  Eyebrow: "ABOUT THE STUDIO"
+  Headline: "Hi, I'm Shushant. I founded Everyday Digital Solutions in [2018]."
+  3 paragraphs (see ABOUT COPY below)
+  Tech stack pills: React Native, Expo, Firebase, Next.js, n8n, Twilio, 
+    Synthflow, Anthropic Claude, OpenAI, Railway
+
+8. FAQ (id="faq")
+- Header: "Questions, [answered honestly]."
+- 7 accordion items (only one open at a time). See FAQ COPY below.
+
+9. FINAL CTA
+- Centered, yellow radial backdrop
+- Eyebrow: "LET'S TALK"
+- Headline: "Stop quoting agencies. [Start shipping.]"
+- Subhead: "Book a free 15-minute call. We'll scope your project on the call 
+  and send you a fixed quote within 24 hours."
+- Two buttons: "Book a call" + "Or WhatsApp us"
+
+10. FOOTER
+- 4-column grid:
+  COL 1 (wider): Logo (white via invert filter), tagline ("Custom apps, AI 
+    voice agents, and automation systems for ambitious businesses. Built 
+    across Mohali and Jalandhar — shipping worldwide.")
+  COL 2 — Studio: Services, Work, Process, About
+  COL 3 — Connect: WhatsApp, Email, Book a call, Contact
+  COL 4 — Visit: Mohali address (full), Jalandhar address (full), both 
+    spelled out across multiple lines
+- Bottom row: © 2026 Everyday Digital Solutions · Privacy · Terms
+
+═══════════════════════════════════════════════════════════════════
+ABOUT COPY (use verbatim)
+═══════════════════════════════════════════════════════════════════
+Paragraph 1:
+"For seven years, I helped service businesses grow through digital marketing, 
+lead generation, and custom systems. I ran offices, managed teams, and 
+learned every part of the customer acquisition stack from the inside."
+
+Paragraph 2:
+"In 2024, I rebuilt the company from the ground up around AI. Today, I run a 
+focused studio — backed by a stack of AI agents and modern automation tools 
+— that ships custom software, voice agents, and AI systems in 30 days, at 
+prices traditional agencies can't match."
+
+Paragraph 3:
+"Based in Mohali and Jalandhar. Working with ambitious service businesses 
+across Tricity, India, and beyond."
+
+═══════════════════════════════════════════════════════════════════
+FAQ COPY (7 items, use verbatim)
+═══════════════════════════════════════════════════════════════════
+Q1: How can you build for one-tenth the price of an agency?
+A1: Honest answer: AI-assisted development, no agency overhead, no junior 
+devs learning on your project. The same quality of code, faster, cheaper, 
+by an experienced builder. The savings come from cutting waste, not corners.
+
+Q2: What happens after the project goes live?
+A2: Every project includes 30 days of free post-launch support. After that, 
+you can either go solo, or stay on a simple monthly retainer for updates, 
+new features, and ongoing support. No long-term lock-in.
+
+Q3: What if I need scope changes mid-build?
+A3: The first two scope changes are free. After that, we quote any new work 
+separately so you stay fully in control of cost. No surprise invoices.
+
+Q4: Can you integrate with our existing systems?
+A4: Most likely yes. We work with virtually every common SaaS tool, payment 
+gateway, CRM, and messaging platform. If something custom needs building, 
+we'll quote it transparently up front.
+
+Q5: Do you sign NDAs and proper agreements?
+A5: Always. Every project starts with a signed agreement covering scope, 
+timeline, payment, IP ownership, and data handling. Your code and your 
+data are yours — full stop.
+
+Q6: Why work with a focused studio over a large agency?
+A6: Speed, cost, and direct access. No account managers. No junior devs. No 
+handoffs between teams. You talk to the person actually building your 
+product — every day, on WhatsApp, in your timezone.
+
+Q7: What if we're not in Tricity?
+A7: We work remotely with clients worldwide. Tricity clients get the 
+in-person bonus — we'll come to your office and close the project face-to-
+face. The same speed and price applies anywhere else.
+
+═══════════════════════════════════════════════════════════════════
+ENVIRONMENT VARIABLES (.env.local)
+═══════════════════════════════════════════════════════════════════
+Create .env.local with placeholders:
+  N8N_WEBHOOK_URL=https://placeholder
+  RESEND_API_KEY=placeholder
+  NEXT_PUBLIC_PLAUSIBLE_DOMAIN=everydaydigitalsolutions.com
+  NEXT_PUBLIC_CALCOM_URL=https://cal.com/shushant-bangar/15min
+
+═══════════════════════════════════════════════════════════════════
+SEO & METADATA
+═══════════════════════════════════════════════════════════════════
+- Page title: "Everyday Digital Solutions — AI & Custom Software Studio · 
+  Mohali, India"
+- Meta description: "Custom mobile apps, AI voice agents, and automation 
+  systems for ambitious service businesses. Studio based in Mohali and 
+  Jalandhar, shipping in 30 days at one-tenth of agency cost."
+- Add JSON-LD structured data for Organization (with both addresses) and 
+  LocalBusiness
+- Generate sitemap.xml and robots.txt automatically via app/sitemap.ts and 
+  app/robots.ts
+- Open Graph image generated dynamically via app/opengraph-image.tsx using 
+  the brand colors (yellow on dark, with logo and tagline)
+- Favicon generated from logo.png (use the black version, since favicons 
+  display on browser tabs which may be light)
+
+═══════════════════════════════════════════════════════════════════
+PERFORMANCE TARGETS (NON-NEGOTIABLE)
+═══════════════════════════════════════════════════════════════════
+- Lighthouse 95+ on Performance, Accessibility, Best Practices, SEO
+- LCP under 1.5 seconds on 4G
+- Zero cumulative layout shift
+- All images served via Next.js <Image> component with priority + blur 
+  placeholders
+
+═══════════════════════════════════════════════════════════════════
+ACCESSIBILITY
+═══════════════════════════════════════════════════════════════════
+- Semantic HTML5 (header/main/section/article/nav/footer)
+- Keyboard navigable everywhere
+- Skip-to-content link at top
+- Proper ARIA labels on all interactive elements
+- Focus states visible (yellow outline)
+- Color contrast WCAG AA minimum
+- Respect prefers-reduced-motion
+
+═══════════════════════════════════════════════════════════════════
+EXECUTION ORDER
+═══════════════════════════════════════════════════════════════════
+1. Scaffold the project structure first. Show me the file tree.
+2. Set up tailwind.config.ts with all design tokens.
+3. Set up app/layout.tsx with fonts and base metadata.
+4. Build content/ data files first (services.ts, faqs.ts, case-studies.ts, 
+   site.ts) so all copy is in one place I can edit.
+5. Build components in this order: nav → hero → trust-strip → services-grid 
+   → case-study → process-timeline → about-section → faq → final-cta → 
+   footer. Make sure the nav and footer correctly invert the logo PNG so 
+   it appears white on the dark background.
+6. Assemble homepage in app/page.tsx by composing the components.
+7. Build /work/quasar-salon/ and /contact/ pages.
+8. Add sitemap, robots, OG image generation.
+9. Deploy live preview at the end so I can review.
+
+Confirm you understand the brief, then begin scaffolding. Show progress 
+section by section so I can review as you go — don't try to build everything 
+silently in one shot.

@@ -1,0 +1,38 @@
+uploads = []
+outputs = []
+
+[[generated]]
+id = "lS-PsNa8ucOgtee9xPi1b"
+uri = "file://artifacts/eds-site/public/photos/quasar/screen-01.png"
+type = "image"
+title = "Salon app booking screen"
+
+[[generated]]
+id = "q7qMg0_ll72sVl-21Gr4T"
+uri = "file://artifacts/eds-site/public/photos/quasar/screen-02.png"
+type = "image"
+title = "Salon app services list"
+
+[[generated]]
+id = "Av58Y3iZLb8Yl4FJUIUp2"
+uri = "file://artifacts/eds-site/public/photos/quasar/screen-03.png"
+type = "image"
+title = "Salon app stylist profile"
+
+[[generated]]
+id = "jQcsAXFiIUnjlc3owqIV6"
+uri = "file://artifacts/eds-site/public/photos/quasar/screen-04.png"
+type = "image"
+title = "Salon app loyalty screen"
+
+[[generated]]
+id = "b_u6LRBJefxn-dNnupKPU"
+uri = "file://artifacts/eds-site/public/photos/quasar/screen-05.png"
+type = "image"
+title = "Salon app checkout screen"
+
+[[generated]]
+id = "MvwbZkKHHjkKktVdPTwjH"
+uri = "file://artifacts/eds-site/public/photos/founder.png"
+type = "image"
+title = "Founder portrait placeholder"
