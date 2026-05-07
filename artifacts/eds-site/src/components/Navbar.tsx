@@ -152,25 +152,14 @@ export function Navbar() {
                   alt="Everyday Digital Solutions"
                   className="kn-logo-img"
                 />
-                <span className="kn-logo-text">
-                  Everyday<br />Digital Solutions
-                </span>
+                <div className="kn-logo-wordmark">
+                  <span className="kn-logo-name">Everyday Digital Solutions</span>
+                  <span className="kn-logo-sub">AI &amp; Custom Software Studio</span>
+                </div>
               </Link>
 
               <div className="kn-nav-row-right">
-                {/* Desktop nav */}
-                <nav className="kn-desktop-links">
-                  {navLinks.slice(0, 5).map((l) => (
-                    <a key={l.label} href={l.href} className="kn-desktop-link">
-                      {l.label}
-                    </a>
-                  ))}
-                  <Link href="/contact" className="kn-cta-btn">
-                    Get a Free Quote
-                  </Link>
-                </nav>
-
-                {/* Hamburger button */}
+                {/* Hamburger button — only item in header besides logo */}
                 <button className="nav-close-btn" onClick={toggleMenu} aria-label="Toggle menu">
                   <div className="menu-button-text">
                     <p className="kn-btn-label">Menu</p>
@@ -265,7 +254,10 @@ export function Navbar() {
             <div className="kn-overlay-logo">
               <Link href="/" onClick={closeMenu} className="kn-logo-link">
                 <img src="/logo.png" alt="Everyday Digital Solutions" className="kn-logo-img" />
-                <span className="kn-logo-text">Everyday<br />Digital Solutions</span>
+                <div className="kn-logo-wordmark">
+                  <span className="kn-logo-name">Everyday Digital Solutions</span>
+                  <span className="kn-logo-sub">AI &amp; Custom Software Studio</span>
+                </div>
               </Link>
             </div>
 

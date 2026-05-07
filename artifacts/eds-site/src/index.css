@@ -127,42 +127,41 @@
 .kn-logo-link {
   display: flex;
   align-items: center;
-  gap: 0.75rem;
+  gap: 0.875rem;
   text-decoration: none;
 }
 .kn-logo-img {
-  height: 2.25rem;
+  height: 2.75rem;
   width: auto;
   filter: invert(1) brightness(1.05);
+  flex-shrink: 0;
 }
-.kn-logo-text {
-  font-size: 0.8rem;
+.kn-logo-wordmark {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+.kn-logo-name {
+  font-family: 'Boska', serif;
+  font-size: 1.05rem;
   font-weight: 500;
-  color: var(--text-foreground, #FAF6EC);
-  line-height: 1.3;
-  display: none;
+  color: var(--text-primary);
+  line-height: 1.15;
+  letter-spacing: -0.01em;
 }
-@media (min-width: 640px) {
-  .kn-logo-text { display: block; }
-}
-
-/* Desktop nav links */
-.kn-desktop-links {
-  display: none;
-  align-items: center;
-  gap: 2rem;
-}
-@media (min-width: 768px) {
-  .kn-desktop-links { display: flex; }
-}
-.kn-desktop-link {
-  font-size: 0.875rem;
+.kn-logo-sub {
+  font-family: 'Satoshi', sans-serif;
+  font-size: 0.65rem;
   font-weight: 500;
-  color: var(--text-secondary);
-  text-decoration: none;
-  transition: color 0.2s;
+  color: var(--accent);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
 }
-.kn-desktop-link:hover { color: var(--text-primary); }
+/* Hide wordmark on very small screens */
+.kn-logo-wordmark { display: none; }
+@media (min-width: 480px) {
+  .kn-logo-wordmark { display: flex; }
+}
 
 /* CTA button */
 .kn-cta-btn {
