@@ -5,7 +5,48 @@ import { SEO } from "@/components/SEO";
 import { caseStudies } from "@/content/case-studies";
 import { PhoneMockup } from "@/components/PhoneMockup";
 
-const caseStudySchema = {
+const breadcrumb = {
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Home",
+      "item": "https://everydaydigitalsolutions.com/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Work",
+      "item": "https://everydaydigitalsolutions.com/#work"
+    },
+    {
+      "@type": "ListItem",
+      "position": 3,
+      "name": "Quasar Salon Case Study",
+      "item": "https://everydaydigitalsolutions.com/work/quasar-salon"
+    }
+  ]
+};
+
+const webPageSchema = {
+  "@context": "https://schema.org",
+  "@type": "WebPage",
+  "@id": "https://everydaydigitalsolutions.com/work/quasar-salon#webpage",
+  "url": "https://everydaydigitalsolutions.com/work/quasar-salon",
+  "name": "Quasar Salon — Mobile App Case Study — Everyday Digital Solutions",
+  "description": "How EDS built Tricity's first celebrity-grade salon booking app in 30 days. 60% of bookings went digital in month one. 40% drop in no-shows.",
+  "inLanguage": "en-IN",
+  "isPartOf": {
+    "@type": "WebSite",
+    "@id": "https://everydaydigitalsolutions.com/#website",
+    "url": "https://everydaydigitalsolutions.com",
+    "name": "Everyday Digital Solutions"
+  },
+  "breadcrumb": breadcrumb
+};
+
+const articleSchema = {
   "@context": "https://schema.org",
   "@type": "Article",
   "headline": "How we built Tricity's first celebrity-grade salon app in 30 days",
@@ -25,28 +66,10 @@ const caseStudySchema = {
       "url": "https://everydaydigitalsolutions.com/logo.png"
     }
   },
-  "breadcrumb": {
-    "@type": "BreadcrumbList",
-    "itemListElement": [
-      {
-        "@type": "ListItem",
-        "position": 1,
-        "name": "Home",
-        "item": "https://everydaydigitalsolutions.com/"
-      },
-      {
-        "@type": "ListItem",
-        "position": 2,
-        "name": "Work",
-        "item": "https://everydaydigitalsolutions.com/#work"
-      },
-      {
-        "@type": "ListItem",
-        "position": 3,
-        "name": "Quasar Salon Case Study",
-        "item": "https://everydaydigitalsolutions.com/work/quasar-salon"
-      }
-    ]
+  "breadcrumb": breadcrumb,
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://everydaydigitalsolutions.com/work/quasar-salon"
   }
 };
 
@@ -64,7 +87,7 @@ export default function QuasarCaseStudy() {
         description="How Everyday Digital Solutions built Tricity's first celebrity-grade salon booking app in 30 days. 60% of bookings went digital in month one. 40% drop in no-shows."
         canonical="/work/quasar-salon"
         ogType="article"
-        jsonLd={caseStudySchema}
+        jsonLd={[webPageSchema, articleSchema]}
       />
       <Navbar />
       <main className="pt-8 pb-16 sm:pt-12 lg:pt-28 lg:pb-32 bg-background min-h-[100dvh]">
