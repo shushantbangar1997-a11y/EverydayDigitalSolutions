@@ -1,0 +1,29 @@
+# Dependencies (reinstalled inside Docker)
+node_modules
+**/node_modules
+
+# Git history
+.git
+.gitignore
+
+# Replit-specific
+.local
+.replit
+replit.nix
+attached_assets
+
+# Services not needed for the eds-site build
+artifacts/api-server
+artifacts/mockup-sandbox
+
+# Build artefacts that will be regenerated
+artifacts/eds-site/dist
+
+# Env files
+.env
+.env.*
+*.local
+
+# Logs
+*.log
+npm-debug.log*
