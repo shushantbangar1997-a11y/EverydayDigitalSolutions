@@ -1,12 +1,11 @@
 export const caseStudies = {
   quasar: {
     id: "quasar-salon",
-    title: "How we built Tricity's first celebrity-grade salon app — for ₹1.57 lakh, in 30 days.",
+    title: "How we built Tricity's first celebrity-grade salon app — in 30 days.",
     client: "Quasar Salon",
     tag: "CASE STUDY · CUSTOM MOBILE APP",
     meta: {
       timeline: "30 days",
-      budget: "₹1.57L",
       features: "13 features"
     },
     screens: [

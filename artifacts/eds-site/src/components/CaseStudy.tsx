@@ -58,18 +58,14 @@ export function CaseStudy() {
             </span>
 
             <h3 className="text-3xl lg:text-4xl font-serif mb-10 leading-tight">
-              How we built Tricity's first celebrity-grade salon app — for{" "}
-              <em className="text-primary italic">{cs.meta.budget}</em>, in 30 days.
+              How we built Tricity's first celebrity-grade salon app —{" "}
+              <em className="text-primary italic">in 30 days</em>.
             </h3>
 
-            <div className="grid grid-cols-3 gap-6 w-full mb-12 border-y border-border/40 py-6">
+            <div className="grid grid-cols-2 gap-6 w-full mb-12 border-y border-border/40 py-6">
               <div className="flex flex-col">
                 <span className="text-2xl font-serif text-primary">{cs.meta.timeline}</span>
                 <span className="text-xs text-muted-foreground uppercase tracking-widest mt-1">Timeline</span>
-              </div>
-              <div className="flex flex-col">
-                <span className="text-2xl font-serif text-primary">{cs.meta.budget}</span>
-                <span className="text-xs text-muted-foreground uppercase tracking-widest mt-1">Investment</span>
               </div>
               <div className="flex flex-col">
                 <span className="text-2xl font-serif text-primary">{cs.meta.features}</span>

@@ -28,7 +28,7 @@ export default function QuasarCaseStudy() {
             {cs.tag}
           </span>
           <h1 className="text-4xl md:text-5xl lg:text-6xl font-serif mb-12 leading-tight">
-            How we built Tricity's first celebrity-grade salon app — for <em className="text-primary italic">₹1.57 lakh</em>, in 30 days.
+            How we built Tricity's first celebrity-grade salon app — <em className="text-primary italic">in 30 days</em>.
           </h1>
           
           <div className="flex flex-wrap justify-center items-center gap-x-12 gap-y-6 text-sm text-muted-foreground border-y border-border/40 py-8">
@@ -39,10 +39,6 @@ export default function QuasarCaseStudy() {
             <div className="flex flex-col items-center">
               <span className="uppercase tracking-widest font-bold mb-1">Timeline</span>
               <span className="text-foreground">{cs.meta.timeline}</span>
-            </div>
-            <div className="flex flex-col items-center">
-              <span className="uppercase tracking-widest font-bold mb-1">Budget</span>
-              <span className="text-foreground">{cs.meta.budget}</span>
             </div>
             <div className="flex flex-col items-center">
               <span className="uppercase tracking-widest font-bold mb-1">Scope</span>
