@@ -35,7 +35,7 @@ export function FinalCTA() {
             href="/contact"
             className="bg-primary text-black px-8 py-4 rounded-sm font-medium hover:bg-primary/90 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background text-lg"
           >
-            Get Free Quote
+            Get a Free Quote
           </Link>
           <a
             href={site.whatsapp}

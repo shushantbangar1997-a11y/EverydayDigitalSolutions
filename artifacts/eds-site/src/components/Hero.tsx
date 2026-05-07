@@ -35,7 +35,7 @@ export function Hero() {
               href="/contact"
               className="bg-primary text-black px-6 py-3 rounded-sm font-medium hover:bg-primary/90 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background"
             >
-              Get Free Quote
+              Get a Free Quote
             </Link>
             <a
               href="#work"

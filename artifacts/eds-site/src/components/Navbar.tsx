@@ -54,7 +54,7 @@ export function Navbar() {
               href="/contact"
               className="bg-primary text-black px-5 py-2.5 rounded-sm text-sm font-medium hover:bg-primary/90 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background"
             >
-              Get Free Quote
+              Get a Free Quote
             </Link>
           </nav>
 
@@ -100,7 +100,7 @@ export function Navbar() {
               className="mt-6 bg-primary text-black px-6 py-4 text-center rounded-sm text-lg font-medium hover:bg-primary/90 transition-colors"
               onClick={() => setMobileOpen(false)}
             >
-              Get Free Quote
+              Get a Free Quote
             </Link>
           </div>
         </div>
