@@ -115,14 +115,20 @@
 .kn-container {
   max-width: 1280px;
   margin: 0 auto;
-  padding: 0 1.5rem;
+  padding: 0 1rem;
+}
+@media (min-width: 640px) {
+  .kn-container { padding: 0 1.5rem; }
+}
+@media (min-width: 1024px) {
+  .kn-container { padding: 0 2rem; }
 }
 
 .kn-nav-row {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  height: 5rem;
+  height: 4.5rem;
 }
 
 .kn-nav-row-right {
@@ -139,7 +145,7 @@
   text-decoration: none;
 }
 .kn-logo-img {
-  height: 3.6rem;
+  height: 2.6rem;
   width: auto;
   filter: none;
   flex-shrink: 0;
