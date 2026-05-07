@@ -11,19 +11,25 @@ RUN corepack enable && corepack prepare pnpm@10.26.1 --activate
 
 WORKDIR /app
 
-# Copy workspace manifests first (layer cache friendly)
+# ── Workspace manifests + root TypeScript configs ──
 COPY package.json pnpm-workspace.yaml pnpm-lock.yaml ./
+# eds-site/tsconfig.json extends ../../tsconfig.base.json — must be present
+COPY tsconfig.base.json tsconfig.json ./
 
-# Copy every workspace package pnpm needs to resolve the graph
+# ── Workspace packages ──
 COPY artifacts/eds-site ./artifacts/eds-site
 COPY lib ./lib
 COPY scripts ./scripts
 
+# Stub attached_assets so the @assets vite alias resolves without error
+RUN mkdir -p ./attached_assets
+
 # Install all workspace deps (lockfile used as-is — no network resolution)
 RUN pnpm install --frozen-lockfile
 
-# Build the static bundle
-RUN pnpm --filter @workspace/eds-site run build
+# Build from within the package directory so relative paths resolve correctly
+WORKDIR /app/artifacts/eds-site
+RUN NODE_ENV=production pnpm run build
 
 # ── Stage 2: Serve ──────────────────────────────────────────────────────────
 FROM node:20-slim
