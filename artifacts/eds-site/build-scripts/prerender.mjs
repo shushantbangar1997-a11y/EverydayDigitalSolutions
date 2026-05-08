@@ -6,12 +6,6 @@ const __dirname = dirname(fileURLToPath(import.meta.url));
 const distDir = resolve(__dirname, "../dist/public");
 const ssrDir = resolve(__dirname, "../dist/ssr");
 
-const ROUTES = [
-  { urlPath: "",                  url: "/" },
-  { urlPath: "contact",           url: "/contact" },
-  { urlPath: "work/quasar-salon", url: "/work/quasar-salon" },
-];
-
 /**
  * React 19 renderToString hoists <title>, <meta>, <link>, and
  * <script type="application/ld+json"> inline into the component output.
@@ -40,7 +34,44 @@ function extractHeadTags(appHtml) {
   return { headHtml: extracted.join("\n  "), bodyHtml };
 }
 
-const { render } = await import(pathToFileURL(resolve(ssrDir, "entry-server.js")).href);
+const { render, blogPosts } = await import(pathToFileURL(resolve(ssrDir, "entry-server.js")).href);
+
+// Derive blog post routes dynamically from the exported blogPosts array.
+const blogRoutes = blogPosts.map((post) => ({
+  urlPath: `blog/${post.slug}`,
+  url: `/blog/${post.slug}`,
+}));
+
+const ROUTES = [
+  // Core pages
+  { urlPath: "",                                    url: "/" },
+  { urlPath: "contact",                             url: "/contact" },
+  { urlPath: "work/quasar-salon",                   url: "/work/quasar-salon" },
+
+  // Service pages
+  { urlPath: "services/mobile-app-development",     url: "/services/mobile-app-development" },
+  { urlPath: "services/ai-voice-agents",             url: "/services/ai-voice-agents" },
+  { urlPath: "services/automation-systems",          url: "/services/automation-systems" },
+
+  // Location pages
+  { urlPath: "chandigarh",                          url: "/chandigarh" },
+  { urlPath: "mohali",                              url: "/mohali" },
+  { urlPath: "panchkula",                           url: "/panchkula" },
+  { urlPath: "jalandhar",                           url: "/jalandhar" },
+  { urlPath: "punjab",                              url: "/punjab" },
+
+  // Solution pages
+  { urlPath: "solutions/salons-and-spas",           url: "/solutions/salons-and-spas" },
+  { urlPath: "solutions/real-estate",               url: "/solutions/real-estate" },
+  { urlPath: "solutions/clinics-and-healthcare",    url: "/solutions/clinics-and-healthcare" },
+  { urlPath: "solutions/restaurants-and-cafes",     url: "/solutions/restaurants-and-cafes" },
+
+  // Blog index
+  { urlPath: "blog",                                url: "/blog" },
+
+  // Blog posts — derived dynamically from blogPosts exported by entry-server
+  ...blogRoutes,
+];
 
 // Strip fallback <title> and <meta name="description"> from the template;
 // per-route equivalents are extracted from renderToString output below.
