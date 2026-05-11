@@ -27,10 +27,11 @@ const files = walk(SRC_DIR);
 
 const violations: { file: string; line: number; snippet: string }[] = [];
 
-// Match a full <img ...> tag, including multi-line attribute lists. The `[\s\S]*?`
-// (non-greedy any-char including newlines) captures everything up to the closing
-// `>` (or `/>`). We then check the captured attrs for an `alt=...` attribute.
-const IMG_TAG_RE = /<img\b([\s\S]*?)\/?>/g;
+// Match a full <img ...> or <OptimizedImage ...> tag, including multi-line
+// attribute lists. The `[\s\S]*?` (non-greedy any-char including newlines)
+// captures everything up to the closing `>` (or `/>`). We then check the
+// captured attrs for an `alt=...` attribute.
+const IMG_TAG_RE = /<(img|OptimizedImage)\b([\s\S]*?)\/?>/g;
 const HAS_ALT_RE = /(?<![A-Za-z0-9_])alt\s*=\s*("[^"]*"|'[^']*'|\{[^}]*\})/;
 
 function stripComments(src: string): string {
@@ -51,7 +52,7 @@ for (const file of files) {
   let m: RegExpExecArray | null;
   IMG_TAG_RE.lastIndex = 0;
   while ((m = IMG_TAG_RE.exec(content)) !== null) {
-    const attrs = m[1] ?? "";
+    const attrs = m[2] ?? "";
     if (!HAS_ALT_RE.test(attrs)) {
       const line = lineNumberAt(content, m.index);
       const snippet = m[0].replace(/\s+/g, " ").trim().slice(0, 200);

@@ -312,7 +312,7 @@ export default function Admin() {
 
   return (
     <>
-      <SEO title="Admin" description="Internal admin dashboard." canonical="/admin" />
+      <SEO title="Admin" description="Internal admin dashboard." canonical="/admin" noindex />
       {session.isLoading ? (
         <main className="min-h-[100dvh] flex items-center justify-center">
           <p className="text-sm text-muted-foreground">Loading…</p>
