@@ -15,7 +15,7 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
-import { Lock, LogOut, RefreshCw } from "lucide-react";
+import { Lock, LogOut, RefreshCw, Check } from "lucide-react";
 import { SEO } from "@/components/SEO";
 
 const STATUSES = ["new", "contacted", "qualified", "closed_won", "closed_lost"] as const;
@@ -74,12 +74,26 @@ function LeadRow({ lead }: { lead: import("@workspace/api-client-react").Lead })
   const [notes, setNotes] = useState(lead.notes ?? "");
   const qc = useQueryClient();
   const mutation = useUpdateLead();
+  const quickContacted = useUpdateLead();
 
   function save() {
     mutation.mutate(
       { id: lead.id, data: { status, notes } },
       {
         onSuccess: () => {
+          qc.invalidateQueries({ queryKey: getListLeadsQueryKey() });
+        },
+      },
+    );
+  }
+
+  function markContacted(e: React.MouseEvent) {
+    e.stopPropagation();
+    quickContacted.mutate(
+      { id: lead.id, data: { status: "contacted", notes: lead.notes ?? "" } },
+      {
+        onSuccess: () => {
+          setStatus("contacted");
           qc.invalidateQueries({ queryKey: getListLeadsQueryKey() });
         },
       },
@@ -112,6 +126,26 @@ function LeadRow({ lead }: { lead: import("@workspace/api-client-react").Lead })
         <span className={`text-xs font-medium px-2 py-1 rounded-sm ${statusColor[lead.status] ?? ""}`}>
           {lead.status}
         </span>
+        {lead.status === "new" && (
+          <span
+            role="button"
+            tabIndex={0}
+            onClick={markContacted}
+            onKeyDown={(e) => {
+              if (e.key === "Enter" || e.key === " ") {
+                e.preventDefault();
+                markContacted(e as unknown as React.MouseEvent);
+              }
+            }}
+            aria-label="Mark as contacted"
+            className={`inline-flex items-center gap-1 text-xs font-medium px-2 py-1 rounded-sm border border-border hover:border-primary hover:text-primary transition-colors ${
+              quickContacted.isPending ? "opacity-50" : ""
+            }`}
+          >
+            <Check className="w-3 h-3" />
+            {quickContacted.isPending ? "Saving…" : "Mark contacted"}
+          </span>
+        )}
         <span className="text-xs text-muted-foreground tabular-nums">
           {new Date(lead.createdAt).toLocaleString()}
         </span>

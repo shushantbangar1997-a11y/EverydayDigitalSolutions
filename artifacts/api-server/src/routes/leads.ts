@@ -3,6 +3,7 @@ import { eq } from "drizzle-orm";
 import { db, leadsTable } from "@workspace/db";
 import { CreateLeadBody } from "@workspace/api-zod";
 import { sendWhatsApp, formatLeadMessage } from "../lib/whatsapp";
+import { scheduleRetry } from "../lib/whatsapp-retry";
 import { logger } from "../lib/logger";
 
 const router: IRouter = Router();
@@ -54,10 +55,14 @@ router.post("/leads", async (req, res): Promise<void> => {
           .update(leadsTable)
           .set({ whatsappNotificationSent: true })
           .where(eq(leadsTable.id, row.id));
+        logger.info({ leadId: row.id }, "WhatsApp delivered on first try");
+      } else {
+        logger.warn({ leadId: row.id }, "WhatsApp first attempt failed — queuing retry");
+        await scheduleRetry(row.id, 0);
       }
-      logger.info({ leadId: row.id, whatsappSent: sent }, "WhatsApp dispatch finished");
     } catch (err) {
-      logger.error({ err, leadId: row.id }, "Async WhatsApp dispatch failed");
+      logger.error({ err, leadId: row.id }, "Async WhatsApp dispatch threw — queuing retry");
+      await scheduleRetry(row.id, 0);
     }
   })();
 });

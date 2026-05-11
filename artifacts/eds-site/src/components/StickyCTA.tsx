@@ -4,11 +4,13 @@ import { MessageCircle, X, ArrowRight } from "lucide-react";
 import { site } from "@/lib/constants";
 
 const DISMISS_KEY = "eds_sticky_cta_dismissed";
+const SHOW_AFTER_PX = 700; // appear only after the user has scrolled past the hero
 
 export function StickyCTA() {
   const [location] = useLocation();
   const [mounted, setMounted] = useState(false);
   const [dismissed, setDismissed] = useState(false);
+  const [scrolledPast, setScrolledPast] = useState(false);
 
   useEffect(() => {
     setMounted(true);
@@ -17,9 +19,21 @@ export function StickyCTA() {
     } catch {
       // ignore
     }
+
+    function onScroll() {
+      if (window.scrollY > SHOW_AFTER_PX) setScrolledPast(true);
+    }
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  if (!mounted || dismissed) return null;
+  // Reset scroll-past state on route change so the CTA waits again on each new page.
+  useEffect(() => {
+    setScrolledPast(window.scrollY > SHOW_AFTER_PX);
+  }, [location]);
+
+  if (!mounted || dismissed || !scrolledPast) return null;
   if (location.startsWith("/contact") || location.startsWith("/admin")) return null;
 
   function dismiss() {

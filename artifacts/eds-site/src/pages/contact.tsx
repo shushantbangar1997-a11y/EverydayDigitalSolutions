@@ -4,7 +4,7 @@ import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
 import { SEO } from "@/components/SEO";
 import { site } from "@/lib/constants";
-import { Phone, Mail, MessageCircle, MapPin, Check, ArrowLeft, ArrowRight, CheckCircle2 } from "lucide-react";
+import { Phone, Mail, MessageCircle, MapPin, Check, ArrowLeft, ArrowRight, CheckCircle2, Download } from "lucide-react";
 import { useCreateLead } from "@workspace/api-client-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -141,11 +141,178 @@ function labelFor<T extends string>(opts: readonly { value: T; label: string }[]
   return opts.find((o) => o.value === v)?.label ?? "—";
 }
 
+interface Brief {
+  recommendedScope: string[];
+  ballparkBudget: string;
+  nextStep: string;
+}
+
+const SCOPE_BY_INDUSTRY: Record<Industry | "_default", string[]> = {
+  salon_spa: [
+    "Online booking page tied to your staff calendar",
+    "Automated WhatsApp confirmations and no-show reminders",
+    "Customer database with visit history and a small admin dashboard",
+  ],
+  real_estate: [
+    "Per-property lead capture with WhatsApp routing",
+    "Lightweight CRM for your sales team with reminders",
+    "Automated follow-up sequence for cold leads",
+  ],
+  clinic_healthcare: [
+    "Patient appointment booking with slot rules",
+    "Automated WhatsApp + SMS reminders and reschedule links",
+    "Patient records dashboard for the front desk",
+  ],
+  restaurant_cafe: [
+    "Online ordering page (dine-in or delivery)",
+    "WhatsApp order notifications to the kitchen",
+    "Repeat-customer / loyalty tracking",
+  ],
+  other_service: [
+    "Lead capture site with industry-specific intake form",
+    "WhatsApp + email follow-up automation",
+    "Internal admin dashboard for your team",
+  ],
+  other: [
+    "Discovery workshop to lock the core flow",
+    "Lean MVP build of the highest-impact screen",
+    "Admin tooling so your team can self-serve from day one",
+  ],
+  _default: [
+    "Discovery call to scope the highest-impact flow",
+    "MVP build with WhatsApp-first communication",
+    "Internal admin dashboard for your team",
+  ],
+};
+
+const BUDGET_BAND: Record<Budget | "_default", string> = {
+  under_1l: "Under ₹1L — single tightly-scoped flow, 2–3 week build",
+  "1l_to_3l": "₹1L–₹3L — MVP plus a small admin dashboard, 4–6 week build",
+  "3l_to_8l": "₹3L–₹8L — full booking / CRM stack with integrations, 6–10 weeks",
+  "8l_to_20l": "₹8L–₹20L — multi-platform product (web + mobile or staff app), 10–16 weeks",
+  "20l_plus": "₹20L+ — bespoke product build with a phased roadmap",
+  not_sure: "We will suggest a band on the call once the scope is clearer",
+  _default: "We will suggest a band on the call once the scope is clearer",
+};
+
+const NEXT_STEP_BY_TIMELINE: Record<Timeline | "_default", string> = {
+  asap: "We WhatsApp you within 4 working hours and aim for a same-week kickoff.",
+  within_1_month: "We WhatsApp within 4 working hours and lock a start date in the next 2 weeks.",
+  "1_to_3_months": "We WhatsApp within 4 working hours and reserve a slot in the queue once scope is signed off.",
+  "3_to_6_months": "We WhatsApp within 4 working hours and plan a kickoff window 30+ days out.",
+  exploring: "We WhatsApp within 4 working hours with a one-pager — zero commitment.",
+  _default: "We WhatsApp you within 4 working hours.",
+};
+
+function computeBrief(form: FormState): Brief {
+  const ind = (form.industry || "_default") as Industry | "_default";
+  const bud = (form.budget || "_default") as Budget | "_default";
+  const tim = (form.timeline || "_default") as Timeline | "_default";
+  return {
+    recommendedScope: SCOPE_BY_INDUSTRY[ind] ?? SCOPE_BY_INDUSTRY._default,
+    ballparkBudget: BUDGET_BAND[bud] ?? BUDGET_BAND._default,
+    nextStep: NEXT_STEP_BY_TIMELINE[tim] ?? NEXT_STEP_BY_TIMELINE._default,
+  };
+}
+
+const FOUNDER_WHATSAPP = "919056066006"; // recipient number for prefilled deep link
+
+function buildWhatsAppText(form: FormState, brief: Brief): string {
+  const lines = [
+    `Hi! I just sent a brief from your site.`,
+    ``,
+    `Name: ${form.name}`,
+    form.businessName ? `Business: ${form.businessName}` : null,
+    `City: ${form.city}`,
+    `Industry: ${labelFor(INDUSTRY_OPTIONS, form.industry)}`,
+    ``,
+    `Problem: ${form.problem}`,
+    `3-month goal: ${form.goalIn3Months}`,
+    ``,
+    `Budget: ${labelFor(BUDGET_OPTIONS, form.budget)}`,
+    `Timeline: ${labelFor(TIMELINE_OPTIONS, form.timeline)}`,
+    ``,
+    `Suggested next step: ${brief.nextStep}`,
+  ].filter(Boolean) as string[];
+  return lines.join("\n");
+}
+
+function escHtml(s: string): string {
+  return s
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#39;");
+}
+
+function downloadBriefPdf(form: FormState, brief: Brief): void {
+  const today = new Date().toLocaleDateString("en-IN", {
+    day: "numeric",
+    month: "long",
+    year: "numeric",
+  });
+  const html = `<!doctype html><html><head><meta charset="utf-8" /><title>Project brief — ${escHtml(form.name)}</title>
+<style>
+  body{font-family:Georgia,serif;color:#111;padding:48px;max-width:760px;margin:auto;line-height:1.55}
+  .meta{color:#666;font-size:12px;font-family:system-ui,sans-serif}
+  h1{font-size:30px;margin:0 0 6px}
+  h2{font-size:11px;text-transform:uppercase;letter-spacing:.1em;color:#888;margin:26px 0 8px;font-family:system-ui,sans-serif;font-weight:600}
+  p{margin:0 0 8px}
+  ul{margin:6px 0 8px 20px;padding:0}
+  .grid{display:grid;grid-template-columns:140px 1fr;gap:6px 16px;font-size:14px}
+  .label{color:#666;font-family:system-ui,sans-serif;font-size:12px;text-transform:uppercase;letter-spacing:.06em}
+  .footer{margin-top:40px;padding-top:16px;border-top:1px solid #ddd;color:#888;font-size:11px;font-family:system-ui,sans-serif}
+  @media print { body { padding:24px } }
+</style></head><body>
+<h1>Project Brief</h1>
+<p class="meta">Prepared with Everyday Digital Solutions · ${escHtml(today)}</p>
+
+<h2>Contact</h2>
+<div class="grid">
+  <div class="label">Name</div><div>${escHtml(form.name)}</div>
+  ${form.businessName ? `<div class="label">Business</div><div>${escHtml(form.businessName)}</div>` : ""}
+  <div class="label">City</div><div>${escHtml(form.city)}</div>
+  <div class="label">WhatsApp</div><div>${escHtml(form.whatsappNumber)}</div>
+  ${form.email ? `<div class="label">Email</div><div>${escHtml(form.email)}</div>` : ""}
+  <div class="label">Industry</div><div>${escHtml(labelFor(INDUSTRY_OPTIONS, form.industry))}</div>
+</div>
+
+<h2>The Problem</h2>
+<p>${escHtml(form.problem)}</p>
+
+${form.currentSolution ? `<h2>Current Solution</h2><p>${escHtml(form.currentSolution)}</p>` : ""}
+
+<h2>3-Month Goal</h2>
+<p>${escHtml(form.goalIn3Months)}</p>
+
+<h2>Budget &amp; Timeline</h2>
+<p>${escHtml(labelFor(BUDGET_OPTIONS, form.budget))} · ${escHtml(labelFor(TIMELINE_OPTIONS, form.timeline))}</p>
+
+<h2>Recommended Scope</h2>
+<ul>${brief.recommendedScope.map((s) => `<li>${escHtml(s)}</li>`).join("")}</ul>
+
+<h2>Ballpark Budget</h2>
+<p>${escHtml(brief.ballparkBudget)}</p>
+
+<h2>Next Step</h2>
+<p>${escHtml(brief.nextStep)}</p>
+
+<div class="footer">Save this dialog as PDF to keep a copy of your brief. We will WhatsApp you within 4 working hours.</div>
+<script>window.onload=function(){setTimeout(function(){window.print();},250);};</script>
+</body></html>`;
+  const w = window.open("", "_blank");
+  if (!w) return;
+  w.document.write(html);
+  w.document.close();
+}
+
 export default function Contact() {
   const [step, setStep] = useState(0);
   const [form, setForm] = useState<FormState>(INITIAL);
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [submitted, setSubmitted] = useState(false);
+  const [submittedForm, setSubmittedForm] = useState<FormState | null>(null);
 
   const mutation = useCreateLead();
 
@@ -216,12 +383,18 @@ export default function Contact() {
         },
       },
       {
-        onSuccess: () => setSubmitted(true),
+        onSuccess: () => {
+          setSubmittedForm(form);
+          setSubmitted(true);
+        },
       },
     );
   }
 
-  if (submitted) {
+  if (submitted && submittedForm) {
+    const finalBrief = computeBrief(submittedForm);
+    const waText = buildWhatsAppText(submittedForm, finalBrief);
+    const waLink = `https://wa.me/${FOUNDER_WHATSAPP}?text=${encodeURIComponent(waText)}`;
     return (
       <>
         <SEO title="Thank you" description="Your brief has been received." canonical="/contact" />
@@ -237,15 +410,22 @@ export default function Contact() {
             <p className="text-base lg:text-lg text-muted-foreground mb-10 leading-relaxed">
               Shushant or someone from the team will reach out on the WhatsApp number you shared, with a couple of questions and a proposed time for a 15-minute call.
             </p>
-            <div className="flex flex-col sm:flex-row gap-3 justify-center">
+            <div className="flex flex-col sm:flex-row gap-3 justify-center flex-wrap">
               <a
-                href={site.whatsapp}
+                href={waLink}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex items-center gap-2 bg-primary text-black px-6 py-3 rounded-sm font-medium hover:bg-primary/90 transition-colors"
               >
-                <MessageCircle className="w-4 h-4" /> WhatsApp us now
+                <MessageCircle className="w-4 h-4" /> WhatsApp us with my brief
               </a>
+              <button
+                type="button"
+                onClick={() => downloadBriefPdf(submittedForm, finalBrief)}
+                className="inline-flex items-center gap-2 border border-border px-6 py-3 rounded-sm font-medium hover:bg-muted transition-colors"
+              >
+                <Download className="w-4 h-4" /> Download brief as PDF
+              </button>
               <Link
                 href="/"
                 className="inline-flex items-center gap-2 border border-border px-6 py-3 rounded-sm font-medium hover:bg-muted transition-colors"
@@ -531,6 +711,40 @@ export default function Contact() {
                     </div>
                   ))}
                 </dl>
+
+                <div className="bg-primary/5 border border-primary/30 rounded-sm p-5 space-y-4">
+                  <p className="text-xs uppercase tracking-widest text-primary font-medium">Your brief — at a glance</p>
+                  {(() => {
+                    const brief = computeBrief(form);
+                    return (
+                      <div className="space-y-4 text-sm">
+                        <div>
+                          <p className="text-xs uppercase tracking-wider text-muted-foreground mb-1.5">Recommended scope</p>
+                          <ul className="space-y-1">
+                            {brief.recommendedScope.map((s) => (
+                              <li key={s} className="flex gap-2 text-foreground">
+                                <Check className="w-4 h-4 text-primary mt-0.5 flex-shrink-0" />
+                                <span>{s}</span>
+                              </li>
+                            ))}
+                          </ul>
+                        </div>
+                        <div>
+                          <p className="text-xs uppercase tracking-wider text-muted-foreground mb-1">Ballpark budget</p>
+                          <p className="text-foreground">{brief.ballparkBudget}</p>
+                        </div>
+                        <div>
+                          <p className="text-xs uppercase tracking-wider text-muted-foreground mb-1">Recommended next step</p>
+                          <p className="text-foreground">{brief.nextStep}</p>
+                        </div>
+                      </div>
+                    );
+                  })()}
+                  <p className="text-xs text-muted-foreground italic">
+                    A starting point — we'll refine these together on the call.
+                  </p>
+                </div>
+
                 {mutation.isError && (
                   <p className="text-sm text-destructive">
                     Something went wrong. Please try again or message us on{" "}

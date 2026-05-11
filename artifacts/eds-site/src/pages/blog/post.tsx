@@ -4,6 +4,7 @@ import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
 import { SEO } from "@/components/SEO";
 import { BlogCard } from "@/components/pages/BlogCard";
+import { LeadMagnet } from "@/components/LeadMagnet";
 import { blogPosts, getBlogPost } from "@/content/blog";
 
 const BASE_URL = "https://everydaydigitalsolutions.com";
@@ -113,6 +114,10 @@ export default function BlogPost() {
               <p className="text-muted-foreground leading-relaxed">{section.body}</p>
             </section>
           ))}
+
+          <div className="mt-12 mb-4">
+            <LeadMagnet variant="compact" source={`blog:${post.slug}`} />
+          </div>
         </article>
 
         {/* Explore further — internal links to service/solution/location pages */}

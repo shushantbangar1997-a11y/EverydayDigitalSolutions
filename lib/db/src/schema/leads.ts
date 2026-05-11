@@ -4,6 +4,7 @@ import {
   text,
   jsonb,
   boolean,
+  integer,
   timestamp,
 } from "drizzle-orm/pg-core";
 
@@ -24,6 +25,8 @@ export const leadsTable = pgTable("leads", {
   status: text("status").notNull().default("new"),
   notes: text("notes"),
   whatsappNotificationSent: boolean("whatsapp_notification_sent").notNull().default(false),
+  whatsappAttempts: integer("whatsapp_attempts").notNull().default(0),
+  whatsappRetryAfter: timestamp("whatsapp_retry_after", { withTimezone: true }),
   createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
   updatedAt: timestamp("updated_at", { withTimezone: true })
     .notNull()
