@@ -1,8 +1,13 @@
 import { Link } from "wouter";
 import { motion, useReducedMotion } from "framer-motion";
+import { useGetSiteStats } from "@workspace/api-client-react";
 
 export function Hero() {
   const prefersReducedMotion = useReducedMotion();
+  const { data: stats } = useGetSiteStats();
+  const projectsShipped = stats?.projectsShipped ?? 12;
+  const activeProjects = stats?.activeProjects ?? 3;
+
   const variants = {
     hidden: { opacity: 0, y: prefersReducedMotion ? 0 : 20 },
     visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1] as [number, number, number, number] } }
@@ -21,8 +26,12 @@ export function Hero() {
         animate="visible"
       >
         <div className="max-w-3xl">
-          <motion.div variants={variants} className="inline-block border border-border px-3 py-1 rounded-full text-xs font-medium tracking-wide text-muted-foreground mb-6 lg:mb-8">
-            AI &amp; Custom Software Studio · Mohali · Jalandhar
+          <motion.div variants={variants} className="inline-flex items-center gap-2 border border-border px-3 py-1 rounded-full text-xs font-medium tracking-wide text-muted-foreground mb-6 lg:mb-8">
+            <span className="relative flex h-2 w-2">
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75" />
+              <span className="relative inline-flex rounded-full h-2 w-2 bg-primary" />
+            </span>
+            <span>{activeProjects} projects in build · accepting 2 new clients</span>
           </motion.div>
           <motion.h1 variants={variants} className="font-serif leading-[1.1] text-foreground mb-6 lg:mb-8" style={{ fontSize: 'clamp(2.2rem, 6vw + 0.5rem, 5.25rem)' }}>
             The technology partner for <em className="text-primary font-serif italic">Tricity's</em> most ambitious businesses.
@@ -52,8 +61,8 @@ export function Hero() {
             <span className="text-xs lg:text-sm text-muted-foreground">Average delivery</span>
           </div>
           <div className="flex flex-col gap-1 lg:gap-2">
-            <span className="text-2xl lg:text-3xl font-serif text-primary">Senior</span>
-            <span className="text-xs lg:text-sm text-muted-foreground">Talent on every project</span>
+            <span className="text-2xl lg:text-3xl font-serif text-primary">{projectsShipped}+</span>
+            <span className="text-xs lg:text-sm text-muted-foreground">Projects shipped</span>
           </div>
           <div className="flex flex-col gap-1 lg:gap-2">
             <span className="text-2xl lg:text-3xl font-serif text-primary">Mohali</span>

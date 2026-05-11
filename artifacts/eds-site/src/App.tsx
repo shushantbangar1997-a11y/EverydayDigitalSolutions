@@ -6,6 +6,8 @@ import NotFound from "@/pages/not-found";
 import Home from "@/pages/home";
 import Contact from "@/pages/contact";
 import QuasarCaseStudy from "@/pages/quasar-case-study";
+import Admin from "@/pages/admin";
+import AppCostGuide2026 from "@/pages/resources/app-cost-guide-2026";
 
 import MobileAppDevelopment from "@/pages/services/mobile-app-development";
 import AIVoiceAgents from "@/pages/services/ai-voice-agents";
@@ -25,6 +27,9 @@ import RestaurantsAndCafes from "@/pages/solutions/restaurants-and-cafes";
 import BlogIndex from "@/pages/blog/index";
 import BlogPost from "@/pages/blog/post";
 
+import { StickyCTA } from "@/components/StickyCTA";
+import { ExitIntent } from "@/components/ExitIntent";
+
 const queryClient = new QueryClient();
 
 function Router() {
@@ -32,6 +37,8 @@ function Router() {
     <Switch>
       <Route path="/" component={Home} />
       <Route path="/contact" component={Contact} />
+      <Route path="/admin" component={Admin} />
+      <Route path="/resources/app-cost-guide-2026" component={AppCostGuide2026} />
       <Route path="/work/quasar-salon" component={QuasarCaseStudy} />
 
       <Route path="/services/mobile-app-development" component={MobileAppDevelopment} />
@@ -63,6 +70,8 @@ function App() {
       <TooltipProvider>
         <WouterRouter base={import.meta.env.BASE_URL.replace(/\/$/, "")}>
           <Router />
+          <StickyCTA />
+          <ExitIntent />
         </WouterRouter>
         <Toaster />
       </TooltipProvider>

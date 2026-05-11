@@ -8,6 +8,7 @@ import { ProcessTimeline } from "@/components/ProcessTimeline";
 import { AboutSection } from "@/components/AboutSection";
 import { FAQ } from "@/components/FAQ";
 import { FinalCTA } from "@/components/FinalCTA";
+import { LeadMagnet } from "@/components/LeadMagnet";
 import { Footer } from "@/components/Footer";
 import { faqs } from "@/content/faqs";
 
@@ -151,6 +152,7 @@ export default function Home() {
         <CaseStudy />
         <ProcessTimeline />
         <AboutSection />
+        <LeadMagnet source="homepage" />
         <FAQ />
         <FinalCTA />
       </main>

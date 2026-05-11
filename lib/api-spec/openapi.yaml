@@ -3,13 +3,21 @@ info:
   # Do not change the title, if the title changes, the import paths will be broken
   title: Api
   version: 0.1.0
-  description: API specification
+  description: API specification for Everyday Digital Solutions
 servers:
   - url: /api
     description: Base API path
 tags:
   - name: health
     description: Health operations
+  - name: leads
+    description: Public lead capture (intake form)
+  - name: subscribers
+    description: Lead-magnet email capture
+  - name: stats
+    description: Public site statistics (trust ticker)
+  - name: admin
+    description: Admin dashboard (password-protected)
 paths:
   /healthz:
     get:
@@ -24,6 +32,194 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/HealthStatus"
+
+  /leads:
+    post:
+      operationId: createLead
+      tags: [leads]
+      summary: Submit an intake brief
+      description: Saves the visitor's full intake brief and triggers a WhatsApp notification to the founder.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/LeadInput"
+      responses:
+        "201":
+          description: Lead saved
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Lead"
+        "400":
+          description: Invalid body
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+
+  /subscribers:
+    post:
+      operationId: createSubscriber
+      tags: [subscribers]
+      summary: Capture an email for the lead-magnet
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/SubscriberInput"
+      responses:
+        "201":
+          description: Subscriber saved
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Subscriber"
+        "400":
+          description: Invalid body
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+
+  /stats:
+    get:
+      operationId: getSiteStats
+      tags: [stats]
+      summary: Public site stats for the trust ticker
+      responses:
+        "200":
+          description: Site stats
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SiteStats"
+
+  /admin/login:
+    post:
+      operationId: adminLogin
+      tags: [admin]
+      summary: Authenticate as admin
+      description: Verifies the password and sets an httpOnly session cookie.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/AdminLoginInput"
+      responses:
+        "204":
+          description: Authenticated; cookie set
+        "401":
+          description: Invalid password
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+
+  /admin/logout:
+    post:
+      operationId: adminLogout
+      tags: [admin]
+      summary: Clear the admin session cookie
+      responses:
+        "204":
+          description: Logged out
+
+  /admin/me:
+    get:
+      operationId: getAdminSession
+      tags: [admin]
+      summary: Current admin session state
+      responses:
+        "200":
+          description: Session state
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AdminSession"
+
+  /admin/leads:
+    get:
+      operationId: listLeads
+      tags: [admin]
+      summary: List all leads (admin only)
+      responses:
+        "200":
+          description: List of leads
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Lead"
+        "401":
+          description: Not authenticated
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+
+  /admin/leads/{id}:
+    patch:
+      operationId: updateLead
+      tags: [admin]
+      summary: Update lead status or notes (admin only)
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/LeadUpdate"
+      responses:
+        "200":
+          description: Updated lead
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Lead"
+        "401":
+          description: Not authenticated
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "404":
+          description: Lead not found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+
+  /admin/subscribers:
+    get:
+      operationId: listSubscribers
+      tags: [admin]
+      summary: List all newsletter / lead-magnet subscribers (admin only)
+      responses:
+        "200":
+          description: List of subscribers
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Subscriber"
+        "401":
+          description: Not authenticated
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+
 components:
   schemas:
     HealthStatus:
@@ -34,3 +230,219 @@ components:
       required:
         - status
 
+    ErrorResponse:
+      type: object
+      properties:
+        error:
+          type: string
+      required:
+        - error
+
+    Industry:
+      type: string
+      enum:
+        - salon_spa
+        - real_estate
+        - clinic_healthcare
+        - restaurant_cafe
+        - other_service
+        - other
+
+    BudgetBand:
+      type: string
+      enum:
+        - under_1l
+        - 1l_to_3l
+        - 3l_to_8l
+        - 8l_to_20l
+        - 20l_plus
+        - not_sure
+
+    Timeline:
+      type: string
+      enum:
+        - asap
+        - within_1_month
+        - 1_to_3_months
+        - 3_to_6_months
+        - exploring
+
+    LeadStatus:
+      type: string
+      enum:
+        - new
+        - contacted
+        - qualified
+        - closed_won
+        - closed_lost
+
+    LeadInput:
+      type: object
+      required:
+        - name
+        - whatsappNumber
+        - city
+        - industry
+        - problem
+        - goalIn3Months
+        - budget
+        - timeline
+      properties:
+        name:
+          type: string
+          minLength: 2
+        businessName:
+          type: ["string", "null"]
+        whatsappNumber:
+          type: string
+          minLength: 6
+        email:
+          type: ["string", "null"]
+        city:
+          type: string
+          minLength: 2
+        industry:
+          $ref: "#/components/schemas/Industry"
+        industryDetails:
+          type: object
+          additionalProperties: true
+        problem:
+          type: string
+          minLength: 10
+        currentSolution:
+          type: ["string", "null"]
+        goalIn3Months:
+          type: string
+          minLength: 5
+        budget:
+          $ref: "#/components/schemas/BudgetBand"
+        timeline:
+          $ref: "#/components/schemas/Timeline"
+
+    LeadUpdate:
+      type: object
+      properties:
+        status:
+          $ref: "#/components/schemas/LeadStatus"
+        notes:
+          type: ["string", "null"]
+
+    Lead:
+      type: object
+      required:
+        - id
+        - name
+        - whatsappNumber
+        - city
+        - industry
+        - industryDetails
+        - problem
+        - goalIn3Months
+        - budget
+        - timeline
+        - status
+        - whatsappNotificationSent
+        - createdAt
+        - updatedAt
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        businessName:
+          type: ["string", "null"]
+        whatsappNumber:
+          type: string
+        email:
+          type: ["string", "null"]
+        city:
+          type: string
+        industry:
+          $ref: "#/components/schemas/Industry"
+        industryDetails:
+          type: object
+          additionalProperties: true
+        problem:
+          type: string
+        currentSolution:
+          type: ["string", "null"]
+        goalIn3Months:
+          type: string
+        budget:
+          $ref: "#/components/schemas/BudgetBand"
+        timeline:
+          $ref: "#/components/schemas/Timeline"
+        status:
+          $ref: "#/components/schemas/LeadStatus"
+        notes:
+          type: ["string", "null"]
+        whatsappNotificationSent:
+          type: boolean
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+
+    SubscriberInput:
+      type: object
+      required:
+        - email
+        - source
+      properties:
+        email:
+          type: string
+          format: email
+        source:
+          type: string
+          minLength: 1
+
+    Subscriber:
+      type: object
+      required:
+        - id
+        - email
+        - source
+        - createdAt
+      properties:
+        id:
+          type: string
+        email:
+          type: string
+        source:
+          type: string
+        createdAt:
+          type: string
+          format: date-time
+
+    SiteStats:
+      type: object
+      required:
+        - activeProjects
+        - projectsShipped
+        - leadsAllTime
+      properties:
+        activeProjects:
+          type: integer
+        projectsShipped:
+          type: integer
+        leadsAllTime:
+          type: integer
+
+    AdminLoginInput:
+      type: object
+      required:
+        - password
+      properties:
+        password:
+          type: string
+          minLength: 1
+
+    AdminSession:
+      type: object
+      required:
+        - authenticated
+      properties:
+        authenticated:
+          type: boolean

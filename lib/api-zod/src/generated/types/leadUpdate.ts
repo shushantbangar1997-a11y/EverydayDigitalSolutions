@@ -5,7 +5,10 @@
  * API specification for Everyday Digital Solutions
  * OpenAPI spec version: 0.1.0
  */
+import type { LeadStatus } from "./leadStatus";
 
-export interface HealthStatus {
-  status: string;
+export interface LeadUpdate {
+  status?: LeadStatus;
+  /** @nullable */
+  notes?: string | null;
 }
