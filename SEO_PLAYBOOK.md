@@ -71,22 +71,37 @@ Hours:   Mon–Fri 09:30–19:00, Sat 10:00–17:00
 Category: Software Company
 ```
 
-### 12 priority citations
+### 12 priority citations (India, required list)
 
-| # | Directory                      | Free / Paid                | Primary category to pick           | Notes |
-|---|--------------------------------|----------------------------|------------------------------------|-------|
-| 1 | Google Business Profile        | Free                       | Software company                   | Verify by postcard or video. The single most important listing. |
-| 2 | Bing Places                    | Free                       | Software & Computer Services       | Import from GBP to save 30 min. |
-| 3 | Apple Business Connect         | Free                       | Computers / Electronics            | Drives Apple Maps + Siri results. |
-| 4 | Justdial                       | Free (paid tier optional)  | Software Companies                 | Highest-traffic Indian directory. Free listing is enough at first. |
-| 5 | Sulekha                        | Free (paid leads optional) | Software Development               | Decent secondary directory in Punjab. |
-| 6 | IndiaMART                      | Free                       | IT Services › Software Development | B2B-focused; expect cold sales calls — set them as "no follow-up". |
-| 7 | TradeIndia                     | Free                       | IT & Software Services             | Useful for backlink + B2B brand. |
-| 8 | LinkedIn Company Page          | Free                       | Software Development               | NAP must match exactly; set HQ to Mohali. |
-| 9 | Facebook Business Page         | Free                       | Software Company                   | Don't post here daily — just keep NAP correct + monthly post. |
-| 10 | Clutch.co                     | Free profile (paid leads)  | Mobile App Development             | Agency-buyer-grade reviews. Worth paid plan once 5+ Clutch reviews exist. |
-| 11 | GoodFirms                     | Free profile (paid tier)   | Software Development               | Same audience as Clutch. Free tier is fine. |
-| 12 | The Manifest                  | Free                       | Software Development Companies     | Sister brand of Clutch — listing is automatic if Clutch is set up. |
+These are the 12 directories that **must** be claimed and kept NAP-consistent.
+For each, paste the NAP record above verbatim, pick the primary category
+listed, and add the website + a 60–80 word business description. After
+publishing, paste the live profile URL into the right-most column of this
+table so we can audit drift.
+
+| # | Directory          | URL                                    | Primary category                         | Free / Paid                  | Notes |
+|---|--------------------|----------------------------------------|------------------------------------------|------------------------------|-------|
+| 1 | Justdial           | https://www.justdial.com               | Software Companies                       | Free (paid leads optional)   | India's highest-traffic local directory. Free listing is enough at first; upgrade only after lead volume justifies it. |
+| 2 | Sulekha            | https://www.sulekha.com                | Software Development                     | Free (paid leads optional)   | Strong in Punjab/Tricity. Add separate locations for Mohali and Jalandhar. |
+| 3 | IndiaMART          | https://www.indiamart.com              | IT Services › Software Development       | Free (paid "Star" optional)  | B2B-focused; expect cold sales calls — mark as "no follow-up" until ready. |
+| 4 | TradeIndia         | https://www.tradeindia.com             | IT & Software Services                   | Free (paid optional)         | Decent backlink + B2B brand recall. |
+| 5 | AskMe              | https://www.askmebazaar.com            | Software Development Companies           | Free                         | Lower traffic but a fast-to-claim citation that contributes to NAP consistency. |
+| 6 | Yellowpages.in     | https://www.yellowpages.in             | Software Development                     | Free                         | Long-standing India yellow-pages directory; useful for citation graph. |
+| 7 | Hotfrog India      | https://www.hotfrog.in                 | Software Development                     | Free                         | Quick to claim. Add a 200-word description with all keywords + city names. |
+| 8 | ClickIndia         | https://www.clickindia.com             | Computers / IT Services                  | Free (paid promotion optional) | Listing + business profile + classifieds. Free tier is enough. |
+| 9 | DesignRush         | https://www.designrush.com             | Web Development / Mobile App Development | Free profile (paid tier)     | Agency-buyer-grade. Worth submitting case studies once 3+ are published on the site. |
+| 10 | Clutch.co         | https://clutch.co                      | Mobile App Development                   | Free profile (paid leads)    | Highest-trust agency review platform. Push for 5+ verified reviews via the Clutch interview process before going paid. |
+| 11 | GoodFirms         | https://www.goodfirms.co               | Software Development                     | Free profile (paid tier)     | Same buyer audience as Clutch. Free tier is fine. Add tech-stack badges. |
+| 12 | The Manifest      | https://themanifest.com                | Software Development Companies           | Free                         | Sister brand of Clutch — listing is largely automatic once Clutch is live; verify the auto-imported NAP matches. |
+
+### Optional / second-wave directories (claim after the 12 above)
+
+These are not on the required list but are high-leverage extras the founder
+should claim after the 12 priority citations are live and consistent:
+**Google Business Profile** (treated separately in §1 — already the highest
+priority listing), **Bing Places** (free, imports from GBP), **Apple Business
+Connect** (free, drives Apple Maps + Siri), **LinkedIn Company Page** (free),
+**Facebook Business Page** (free).
 
 ### Audit cadence
 
