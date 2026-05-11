@@ -3,7 +3,6 @@ import { useCreateSubscriber } from "@workspace/api-client-react";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
 import { SEO } from "@/components/SEO";
-import { BreadcrumbsJsonLd } from "@/components/BreadcrumbsJsonLd";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -157,9 +156,7 @@ export default function AppCostCalculator() {
         description="Free calculator that estimates what a custom mobile app costs to build in India in 2026. Pick app type, platforms, and features — get a transparent budget band in minutes."
         canonical="/tools/app-cost-calculator"
         jsonLd={softwareApplicationSchema}
-      />
-      <BreadcrumbsJsonLd
-        items={[
+        breadcrumbs={[
           { name: "Home", path: "/" },
           { name: "Tools", path: "/tools/app-cost-calculator" },
           { name: "App Cost Calculator", path: "/tools/app-cost-calculator" },

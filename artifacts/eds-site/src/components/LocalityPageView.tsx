@@ -3,7 +3,6 @@ import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
 import { SEO } from "@/components/SEO";
 import { PageCTA } from "@/components/pages/PageCTA";
-import { BreadcrumbsJsonLd } from "@/components/BreadcrumbsJsonLd";
 import type { LocalityPage } from "@/content/locality-pages";
 
 const PARENT_HREF: Record<LocalityPage["parentSlug"], string> = {
@@ -63,9 +62,7 @@ export function LocalityPageView({ page }: { page: LocalityPage }) {
         description={page.seoDescription}
         canonical={page.canonical}
         jsonLd={[localBusinessSchema, faqSchema]}
-      />
-      <BreadcrumbsJsonLd
-        items={[
+        breadcrumbs={[
           { name: "Home", path: "/" },
           { name: page.parentCity, path: PARENT_HREF[page.parentSlug] },
           { name: page.localityName, path: page.canonical },

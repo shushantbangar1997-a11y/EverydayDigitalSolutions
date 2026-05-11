@@ -3,7 +3,6 @@ import { useCreateSubscriber } from "@workspace/api-client-react";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
 import { SEO } from "@/components/SEO";
-import { BreadcrumbsJsonLd } from "@/components/BreadcrumbsJsonLd";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -137,9 +136,7 @@ export default function AIVoiceAgentROICalculator() {
         description="Estimate the additional revenue and 12-month ROI from deploying an AI voice agent for sub-60-second lead response. Free interactive calculator."
         canonical="/tools/ai-voice-agent-roi-calculator"
         jsonLd={softwareApplicationSchema}
-      />
-      <BreadcrumbsJsonLd
-        items={[
+        breadcrumbs={[
           { name: "Home", path: "/" },
           { name: "Tools", path: "/tools/ai-voice-agent-roi-calculator" },
           { name: "AI Voice Agent ROI Calculator", path: "/tools/ai-voice-agent-roi-calculator" },
