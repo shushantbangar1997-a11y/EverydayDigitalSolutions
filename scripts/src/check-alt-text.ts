@@ -15,32 +15,52 @@ function walk(dir: string, out: string[] = []): string[] {
   return out;
 }
 
+function lineNumberAt(content: string, index: number): number {
+  let line = 1;
+  for (let i = 0; i < index && i < content.length; i++) {
+    if (content[i] === "\n") line++;
+  }
+  return line;
+}
+
 const files = walk(SRC_DIR);
 
 const violations: { file: string; line: number; snippet: string }[] = [];
 
-const IMG_OPEN_RE = /<img\b([^>]*)>/g;
-const HAS_ALT_RE = /\balt\s*=\s*("[^"]*"|'[^']*'|\{[^}]*\})/;
+// Match a full <img ...> tag, including multi-line attribute lists. The `[\s\S]*?`
+// (non-greedy any-char including newlines) captures everything up to the closing
+// `>` (or `/>`). We then check the captured attrs for an `alt=...` attribute.
+const IMG_TAG_RE = /<img\b([\s\S]*?)\/?>/g;
+const HAS_ALT_RE = /(?<![A-Za-z0-9_])alt\s*=\s*("[^"]*"|'[^']*'|\{[^}]*\})/;
+
+function stripComments(src: string): string {
+  // Replace block comments with same-length whitespace (preserves line numbers).
+  // Catches /* ... */ JSDoc and {/* ... */} JSX comments alike.
+  let out = src.replace(/\/\*[\s\S]*?\*\//g, (m) =>
+    m.replace(/[^\n]/g, " "),
+  );
+  // Strip // line comments (best-effort; we don't try to track string state,
+  // but TSX rarely contains `//` inside JSX attributes).
+  out = out.replace(/(^|[^:"'`\\])\/\/[^\n]*/g, (_m, p) => p);
+  return out;
+}
 
 for (const file of files) {
-  const content = readFileSync(file, "utf-8");
-  const lines = content.split("\n");
-  let cumulative = 0;
-  for (let i = 0; i < lines.length; i++) {
-    const line = lines[i];
-    let m: RegExpExecArray | null;
-    IMG_OPEN_RE.lastIndex = 0;
-    while ((m = IMG_OPEN_RE.exec(line)) !== null) {
-      const attrs = m[1] ?? "";
-      if (!HAS_ALT_RE.test(attrs)) {
-        violations.push({
-          file: relative(SRC_DIR, file),
-          line: i + 1,
-          snippet: line.trim(),
-        });
-      }
+  const raw = readFileSync(file, "utf-8");
+  const content = stripComments(raw);
+  let m: RegExpExecArray | null;
+  IMG_TAG_RE.lastIndex = 0;
+  while ((m = IMG_TAG_RE.exec(content)) !== null) {
+    const attrs = m[1] ?? "";
+    if (!HAS_ALT_RE.test(attrs)) {
+      const line = lineNumberAt(content, m.index);
+      const snippet = m[0].replace(/\s+/g, " ").trim().slice(0, 200);
+      violations.push({
+        file: relative(SRC_DIR, file),
+        line,
+        snippet,
+      });
     }
-    cumulative += line.length + 1;
   }
 }
 

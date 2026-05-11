@@ -28,16 +28,26 @@ export function PhoneMockup({ screens }: PhoneMockupProps) {
       {/* Inner Screen */}
       <div className="relative w-full h-full rounded-[2rem] overflow-hidden bg-muted">
         <AnimatePresence mode="wait">
-          <motion.img
+          <motion.picture
             key={currentIndex}
-            src={screens[currentIndex]}
-            alt={`Screen ${currentIndex + 1}`}
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.8, ease: "easeInOut" }}
-            className="absolute inset-0 w-full h-full object-cover object-top"
-          />
+            className="absolute inset-0 w-full h-full"
+          >
+            <source
+              srcSet={screens[currentIndex].replace(/\.(png|jpe?g)$/i, ".webp")}
+              type="image/webp"
+            />
+            <img
+              src={screens[currentIndex]}
+              alt={`Screen ${currentIndex + 1}`}
+              loading="lazy"
+              decoding="async"
+              className="absolute inset-0 w-full h-full object-cover object-top"
+            />
+          </motion.picture>
         </AnimatePresence>
       </div>
     </div>
