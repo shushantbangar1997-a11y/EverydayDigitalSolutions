@@ -161,11 +161,15 @@ export function SEO({
   const effectiveBreadcrumbs =
     breadcrumbs && breadcrumbs.length > 0 ? breadcrumbs : deriveBreadcrumbs(canonical);
 
-  const allJsonLd: JsonLdObject[] = [
-    ORGANIZATION_SCHEMA,
-    ...(effectiveBreadcrumbs.length > 0 && !noindex ? [makeBreadcrumbList(effectiveBreadcrumbs)] : []),
-    ...userJsonLd,
-  ];
+  // On noindex/private routes (e.g. /admin) we suppress structured data
+  // entirely so we don't pollute the crawl graph with admin-only entities.
+  const allJsonLd: JsonLdObject[] = noindex
+    ? []
+    : [
+        ORGANIZATION_SCHEMA,
+        ...(effectiveBreadcrumbs.length > 0 ? [makeBreadcrumbList(effectiveBreadcrumbs)] : []),
+        ...userJsonLd,
+      ];
 
   return (
     <Helmet>

@@ -1,5 +1,6 @@
 import { Link } from "wouter";
 import { site } from "@/lib/constants";
+import { OptimizedImage } from "@/components/OptimizedImage";
 
 export function Footer() {
   return (
@@ -10,10 +11,14 @@ export function Footer() {
         <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-8 sm:gap-10 mb-12 lg:mb-20">
           <div className="col-span-2 sm:col-span-3 lg:col-span-2">
             <Link href="/" className="flex items-start gap-3 mb-5 group w-fit">
-              <img
+              <OptimizedImage
                 src="/logo.png"
                 alt="Everyday Digital Solutions"
                 className="h-8 w-auto invert brightness-105 mt-0.5 flex-shrink-0"
+                width={32}
+                height={32}
+                loading="lazy"
+                decoding="async"
               />
               <span className="text-sm font-medium text-foreground/70 group-hover:text-foreground transition-colors leading-snug">
                 Everyday<br />Digital Solutions

@@ -1,4 +1,5 @@
 import { motion, useReducedMotion } from "framer-motion";
+import { OptimizedImage } from "@/components/OptimizedImage";
 
 const techStack = [
   "React Native", "Expo", "Firebase", "Next.js", "n8n",
@@ -34,10 +35,14 @@ export function AboutSection() {
           {/* Brand block — hidden on mobile to save space, shown on desktop */}
           <div className="hidden lg:flex relative aspect-[4/5] bg-gradient-to-b from-[#111008] to-background border border-border/60 rounded-sm overflow-hidden flex-col items-center justify-center gap-6 p-8">
             <div className="flex flex-col items-center gap-2">
-              <img
+              <OptimizedImage
                 src="/logo.png"
                 alt="Everyday Digital Solutions"
                 className="h-20 w-auto invert brightness-105 opacity-90"
+                width={80}
+                height={80}
+                loading="lazy"
+                decoding="async"
               />
               <span className="text-xs font-bold uppercase tracking-[0.25em] text-muted-foreground mt-2">
                 Everyday Digital Solutions
