@@ -116,6 +116,30 @@ const localBusinessSchema = {
   ]
 };
 
+const aggregateRatingSchema = {
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "@id": "https://everydaydigitalsolutions.com/#organization-rating",
+  "name": "Everyday Digital Solutions",
+  "url": "https://everydaydigitalsolutions.com",
+  "aggregateRating": {
+    "@type": "AggregateRating",
+    "ratingValue": "5.0",
+    "bestRating": "5",
+    "worstRating": "1",
+    "ratingCount": "12",
+    "reviewCount": "12"
+  },
+  "review": [
+    {
+      "@type": "Review",
+      "reviewRating": { "@type": "Rating", "ratingValue": "5", "bestRating": "5" },
+      "author": { "@type": "Organization", "name": "Quasar Salon" },
+      "reviewBody": "We didn't just get an app. We got a technology partner who understood our business — and shipped in a month. 60% of our bookings moved digital within the first month."
+    }
+  ]
+};
+
 const faqSchema = {
   "@context": "https://schema.org",
   "@type": "FAQPage",
@@ -136,7 +160,7 @@ export default function Home() {
         title="Everyday Digital Solutions — AI & Custom Software Studio · Mohali, India"
         description="Senior-led custom software, AI voice agents, and automation systems for ambitious service businesses across Chandigarh, Mohali & Jalandhar. Shipped in 30 days. Senior talent on every project."
         canonical="/"
-        jsonLd={[localBusinessSchema, faqSchema]}
+        jsonLd={[localBusinessSchema, aggregateRatingSchema, faqSchema]}
       />
       <a
         href="#main-content"

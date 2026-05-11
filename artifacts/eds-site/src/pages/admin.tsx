@@ -258,6 +258,9 @@ function Dashboard({ onLogout }: { onLogout: () => void }) {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex items-center justify-between gap-4">
           <h1 className="font-serif text-xl text-foreground">Admin Dashboard</h1>
           <div className="flex items-center gap-2">
+            <Button variant="ghost" size="sm" asChild>
+              <a href="/admin/request-review">Request review</a>
+            </Button>
             <Button variant="ghost" size="sm" onClick={refresh}>
               <RefreshCw className="w-4 h-4 mr-1.5" /> Refresh
             </Button>

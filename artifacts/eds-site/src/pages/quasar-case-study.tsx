@@ -5,6 +5,31 @@ import { SEO } from "@/components/SEO";
 import { caseStudies } from "@/content/case-studies";
 import { PhoneMockup } from "@/components/PhoneMockup";
 
+const reviewSchema = {
+  "@context": "https://schema.org",
+  "@type": "Product",
+  "@id": "https://everydaydigitalsolutions.com/work/quasar-salon#product",
+  "name": "Quasar Salon — Custom Mobile App",
+  "description": "Custom iOS and Android booking, loyalty, and payments app shipped in 30 days for a Tricity premium salon brand.",
+  "brand": { "@type": "Brand", "name": "Everyday Digital Solutions" },
+  "aggregateRating": {
+    "@type": "AggregateRating",
+    "ratingValue": "5.0",
+    "bestRating": "5",
+    "worstRating": "1",
+    "ratingCount": "1",
+    "reviewCount": "1"
+  },
+  "review": [
+    {
+      "@type": "Review",
+      "reviewRating": { "@type": "Rating", "ratingValue": "5", "bestRating": "5" },
+      "author": { "@type": "Person", "name": "Owner, Quasar Salon" },
+      "reviewBody": "We didn't just get an app. We got a technology partner who understood our business — and shipped in a month."
+    }
+  ]
+};
+
 const breadcrumb = {
   "@type": "BreadcrumbList",
   "itemListElement": [
@@ -87,7 +112,7 @@ export default function QuasarCaseStudy() {
         description="How Everyday Digital Solutions built Tricity's first celebrity-grade salon booking app in 30 days. 60% of bookings went digital in month one. 40% drop in no-shows."
         canonical="/work/quasar-salon"
         ogType="article"
-        jsonLd={[webPageSchema, articleSchema]}
+        jsonLd={[webPageSchema, articleSchema, reviewSchema]}
       />
       <Navbar />
       <main className="pt-8 pb-16 sm:pt-12 lg:pt-28 lg:pb-32 bg-background min-h-[100dvh]">

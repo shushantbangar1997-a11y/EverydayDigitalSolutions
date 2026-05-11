@@ -34,12 +34,18 @@ function extractHeadTags(appHtml) {
   return { headHtml: extracted.join("\n  "), bodyHtml };
 }
 
-const { render, blogPosts } = await import(pathToFileURL(resolve(ssrDir, "entry-server.js")).href);
+const { render, blogPosts, localityPagesList } = await import(pathToFileURL(resolve(ssrDir, "entry-server.js")).href);
 
 // Derive blog post routes dynamically from the exported blogPosts array.
 const blogRoutes = blogPosts.map((post) => ({
   urlPath: `blog/${post.slug}`,
   url: `/blog/${post.slug}`,
+}));
+
+// Derive locality routes dynamically from the exported localityPagesList array.
+const localityRoutes = localityPagesList.map((p) => ({
+  urlPath: p.slug,
+  url: `/${p.slug}`,
 }));
 
 const ROUTES = [
@@ -65,6 +71,13 @@ const ROUTES = [
   { urlPath: "solutions/real-estate",               url: "/solutions/real-estate" },
   { urlPath: "solutions/clinics-and-healthcare",    url: "/solutions/clinics-and-healthcare" },
   { urlPath: "solutions/restaurants-and-cafes",     url: "/solutions/restaurants-and-cafes" },
+
+  // Locality pages (3 Chandigarh sectors, 3 Mohali phases, 2 Jalandhar localities)
+  ...localityRoutes,
+
+  // Free interactive tools
+  { urlPath: "tools/app-cost-calculator",           url: "/tools/app-cost-calculator" },
+  { urlPath: "tools/ai-voice-agent-roi-calculator", url: "/tools/ai-voice-agent-roi-calculator" },
 
   // Blog index
   { urlPath: "blog",                                url: "/blog" },

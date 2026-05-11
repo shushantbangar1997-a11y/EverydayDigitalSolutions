@@ -8,6 +8,7 @@ import Home from "@/pages/home";
 import Contact from "@/pages/contact";
 import QuasarCaseStudy from "@/pages/quasar-case-study";
 import Admin from "@/pages/admin";
+import RequestReview from "@/pages/admin/request-review";
 import AppCostGuide2026 from "@/pages/resources/app-cost-guide-2026";
 
 import MobileAppDevelopment from "@/pages/services/mobile-app-development";
@@ -20,6 +21,18 @@ import Panchkula from "@/pages/locations/panchkula";
 import Jalandhar from "@/pages/locations/jalandhar";
 import Punjab from "@/pages/locations/punjab";
 
+import ChandigarhSector17 from "@/pages/chandigarh/sector-17";
+import ChandigarhSector22 from "@/pages/chandigarh/sector-22";
+import ChandigarhIndustrialAreaPhase1 from "@/pages/chandigarh/industrial-area-phase-1";
+import MohaliPhase7 from "@/pages/mohali/phase-7";
+import MohaliPhase8bItPark from "@/pages/mohali/phase-8b-it-park";
+import MohaliSector82Aerocity from "@/pages/mohali/sector-82-aerocity";
+import JalandharModelTown from "@/pages/jalandhar/model-town";
+import JalandharCivilLines from "@/pages/jalandhar/civil-lines";
+
+import AppCostCalculator from "@/pages/tools/app-cost-calculator";
+import AIVoiceAgentROICalculator from "@/pages/tools/ai-voice-agent-roi-calculator";
+
 import SalonsAndSpas from "@/pages/solutions/salons-and-spas";
 import RealEstate from "@/pages/solutions/real-estate";
 import ClinicsAndHealthcare from "@/pages/solutions/clinics-and-healthcare";
@@ -29,19 +42,14 @@ import BlogIndex from "@/pages/blog/index";
 import BlogPost from "@/pages/blog/post";
 
 import { blogPosts } from "@/content/blog";
+import { localityPagesList } from "@/content/locality-pages";
 
-export { blogPosts };
+export { blogPosts, localityPagesList };
 
 function makeStaticHook(path: string): BaseLocationHook {
   return () => [path, () => {}];
 }
 
-/**
- * Render a route to a full HTML string.
- * In React 19, renderToString hoists <title>, <meta>, <link>, and
- * <script type="application/ld+json"> tags inline into the output.
- * build-scripts/prerender.mjs extracts those tags and moves them to <head>.
- */
 export function render(url: string): string {
   const queryClient = new QueryClient({
     defaultOptions: { queries: { retry: false, staleTime: Infinity } },
@@ -56,6 +64,7 @@ export function render(url: string): string {
               <Route path="/" component={Home} />
               <Route path="/contact" component={Contact} />
               <Route path="/admin" component={Admin} />
+              <Route path="/admin/request-review" component={RequestReview} />
               <Route path="/resources/app-cost-guide-2026" component={AppCostGuide2026} />
               <Route path="/work/quasar-salon" component={QuasarCaseStudy} />
 
@@ -64,10 +73,21 @@ export function render(url: string): string {
               <Route path="/services/automation-systems" component={AutomationSystems} />
 
               <Route path="/chandigarh" component={Chandigarh} />
+              <Route path="/chandigarh/sector-17" component={ChandigarhSector17} />
+              <Route path="/chandigarh/sector-22" component={ChandigarhSector22} />
+              <Route path="/chandigarh/industrial-area-phase-1" component={ChandigarhIndustrialAreaPhase1} />
               <Route path="/mohali" component={Mohali} />
+              <Route path="/mohali/phase-7" component={MohaliPhase7} />
+              <Route path="/mohali/phase-8b-it-park" component={MohaliPhase8bItPark} />
+              <Route path="/mohali/sector-82-aerocity" component={MohaliSector82Aerocity} />
               <Route path="/panchkula" component={Panchkula} />
               <Route path="/jalandhar" component={Jalandhar} />
+              <Route path="/jalandhar/model-town" component={JalandharModelTown} />
+              <Route path="/jalandhar/civil-lines" component={JalandharCivilLines} />
               <Route path="/punjab" component={Punjab} />
+
+              <Route path="/tools/app-cost-calculator" component={AppCostCalculator} />
+              <Route path="/tools/ai-voice-agent-roi-calculator" component={AIVoiceAgentROICalculator} />
 
               <Route path="/solutions/salons-and-spas" component={SalonsAndSpas} />
               <Route path="/solutions/real-estate" component={RealEstate} />

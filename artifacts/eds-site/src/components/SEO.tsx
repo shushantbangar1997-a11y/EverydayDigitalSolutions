@@ -6,6 +6,11 @@ const DEFAULT_OG_IMAGE = `${BASE_URL}/opengraph.jpg`;
 const DEFAULT_DESCRIPTION =
   "Senior-led custom software, AI voice agents, and automation systems for ambitious service businesses. Studio based in Mohali, Punjab — built with precision, shipped in 30 days.";
 
+const GOOGLE_SITE_VERIFICATION =
+  (typeof process !== "undefined" && process.env && process.env.GOOGLE_SITE_VERIFICATION) ||
+  (typeof import.meta !== "undefined" && (import.meta as { env?: Record<string, string> }).env?.VITE_GOOGLE_SITE_VERIFICATION) ||
+  "";
+
 interface JsonLdObject {
   [key: string]: unknown;
 }
@@ -47,6 +52,9 @@ export function SEO({
       <title>{fullTitle}</title>
       <meta name="description" content={description} />
       {noindex && <meta name="robots" content="noindex,nofollow" />}
+      {GOOGLE_SITE_VERIFICATION && (
+        <meta name="google-site-verification" content={GOOGLE_SITE_VERIFICATION} />
+      )}
       <link rel="canonical" href={canonicalUrl} />
 
       {/* Open Graph */}

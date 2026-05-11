@@ -17,6 +17,7 @@ Marketing site + lead-capture engine for an AI & custom software studio based in
   - `CALLMEBOT_PHONE` — recipient WhatsApp number, international format with NO `+` (e.g. `919056066006`)
 - Optional env:
   - `TRUST_ACTIVE_PROJECTS` (default `3`), `TRUST_SHIPPED_PROJECTS` (default `12`) — numbers shown in the hero trust ticker
+  - `GOOGLE_SITE_VERIFICATION` (server / prerender) and/or `VITE_GOOGLE_SITE_VERIFICATION` (client) — token from Google Search Console, injected as `<meta name="google-site-verification">` by `SEO.tsx`. Set BOTH to the same value to keep SSR-rendered HTML and client hydration consistent. Set once after registering the property in GSC.
 
 ## Stack
 
@@ -36,9 +37,14 @@ Marketing site + lead-capture engine for an AI & custom software studio based in
 - Admin auth (HMAC cookie): `artifacts/api-server/src/lib/admin-auth.ts`
 - Marketing site: `artifacts/eds-site/src/`
   - Multi-step intake: `pages/contact.tsx`
-  - Admin dashboard: `pages/admin.tsx`
+  - Admin dashboard: `pages/admin.tsx` (+ `pages/admin/request-review.tsx` — one-click WhatsApp review-request composer)
   - Lead-magnet guide: `pages/resources/app-cost-guide-2026.tsx`
+  - Free interactive tools: `pages/tools/{app-cost-calculator,ai-voice-agent-roi-calculator}.tsx`
+  - Locality pages (8): `pages/{chandigarh,mohali,jalandhar}/*.tsx` driven by `content/locality-pages.ts` + shared `components/LocalityPageView.tsx`
   - Conversion accessories: `components/{StickyCTA,ExitIntent,LeadMagnet,Hero}.tsx`
+  - SEO helpers: `components/{SEO,BreadcrumbsJsonLd}.tsx`
+- SEO playbook (founder-facing, off-page work): `SEO_PLAYBOOK.md` at repo root.
+- Image alt-text audit: `pnpm --filter @workspace/scripts run check-alt-text`
 - Generated React Query hooks + Zod schemas: `lib/api-client-react/`, `lib/api-zod/`
 
 ## Architecture decisions

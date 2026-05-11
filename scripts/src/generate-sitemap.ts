@@ -28,6 +28,20 @@ const routes: SitemapEntry[] = [
   { path: "/jalandhar",                                    changefreq: "monthly", priority: "0.85" },
   { path: "/punjab",                                       changefreq: "monthly", priority: "0.85" },
 
+  // Locality pages
+  { path: "/chandigarh/sector-17",                         changefreq: "monthly", priority: "0.8" },
+  { path: "/chandigarh/sector-22",                         changefreq: "monthly", priority: "0.8" },
+  { path: "/chandigarh/industrial-area-phase-1",           changefreq: "monthly", priority: "0.8" },
+  { path: "/mohali/phase-7",                               changefreq: "monthly", priority: "0.8" },
+  { path: "/mohali/phase-8b-it-park",                      changefreq: "monthly", priority: "0.8" },
+  { path: "/mohali/sector-82-aerocity",                    changefreq: "monthly", priority: "0.8" },
+  { path: "/jalandhar/model-town",                         changefreq: "monthly", priority: "0.8" },
+  { path: "/jalandhar/civil-lines",                        changefreq: "monthly", priority: "0.8" },
+
+  // Free interactive tools
+  { path: "/tools/app-cost-calculator",                    changefreq: "monthly", priority: "0.85" },
+  { path: "/tools/ai-voice-agent-roi-calculator",          changefreq: "monthly", priority: "0.85" },
+
   { path: "/solutions/salons-and-spas",                    changefreq: "monthly", priority: "0.85" },
   { path: "/solutions/real-estate",                        changefreq: "monthly", priority: "0.85" },
   { path: "/solutions/clinics-and-healthcare",             changefreq: "monthly", priority: "0.85" },
