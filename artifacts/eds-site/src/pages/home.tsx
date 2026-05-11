@@ -3,6 +3,7 @@ import { Navbar } from "@/components/Navbar";
 import { Hero } from "@/components/Hero";
 import { TrustStrip } from "@/components/TrustStrip";
 import { ServicesGrid } from "@/components/ServicesGrid";
+import { FeatureShowcase } from "@/components/FeatureShowcase";
 import { CaseStudy } from "@/components/CaseStudy";
 import { ProcessTimeline } from "@/components/ProcessTimeline";
 import { AboutSection } from "@/components/AboutSection";
@@ -173,6 +174,7 @@ export default function Home() {
         <Hero />
         <TrustStrip />
         <ServicesGrid />
+        <FeatureShowcase />
         <CaseStudy />
         <ProcessTimeline />
         <AboutSection />

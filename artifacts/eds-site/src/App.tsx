@@ -42,6 +42,7 @@ import BlogPost from "@/pages/blog/post";
 
 import { StickyCTA } from "@/components/StickyCTA";
 import { ExitIntent } from "@/components/ExitIntent";
+import { WhatsAppFAB } from "@/components/WhatsAppFAB";
 
 const queryClient = new QueryClient();
 
@@ -97,6 +98,7 @@ function App() {
           <Router />
           <StickyCTA />
           <ExitIntent />
+          <WhatsAppFAB />
         </WouterRouter>
         <Toaster />
       </TooltipProvider>

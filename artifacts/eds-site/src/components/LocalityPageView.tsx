@@ -69,7 +69,7 @@ export function LocalityPageView({ page }: { page: LocalityPage }) {
         ]}
       />
       <Navbar />
-      <main className="bg-background min-h-[100dvh]">
+      <main className="bg-background min-h-[100dvh] pt-[4.5rem]">
         {/* Breadcrumb visible nav */}
         <nav aria-label="Breadcrumb" className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 pt-6 text-xs text-muted-foreground">
           <ol className="flex flex-wrap items-center gap-2">

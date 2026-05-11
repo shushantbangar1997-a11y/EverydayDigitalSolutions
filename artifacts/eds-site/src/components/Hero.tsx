@@ -1,6 +1,7 @@
 import { Link } from "wouter";
 import { motion, useReducedMotion } from "framer-motion";
 import { useGetSiteStats } from "@workspace/api-client-react";
+import { Check } from "lucide-react";
 
 export function Hero() {
   const prefersReducedMotion = useReducedMotion();
@@ -55,22 +56,65 @@ export function Hero() {
           </motion.div>
         </div>
 
-        <motion.div variants={variants} className="grid grid-cols-2 lg:flex lg:flex-col gap-6 lg:pl-10 lg:border-l border-border/40 pt-6 lg:pt-0 border-t lg:border-t-0 border-border/40">
-          <div className="flex flex-col gap-1 lg:gap-2">
-            <span className="text-2xl lg:text-3xl font-serif text-primary">30 days</span>
-            <span className="text-xs lg:text-sm text-muted-foreground">Average delivery</span>
+        <motion.div variants={variants} className="flex flex-col gap-6 lg:pl-10 lg:border-l border-border/40 pt-6 lg:pt-0 border-t lg:border-t-0 border-border/40">
+          {/* Mini app preview — desktop only */}
+          <div className="hidden lg:block">
+            <div className="bg-card border border-border/60 rounded-xl p-5 shadow-sm">
+              <div className="flex items-center justify-between mb-4">
+                <span className="text-[11px] font-medium text-muted-foreground uppercase tracking-widest">Quasar Salon · App</span>
+                <span className="flex h-2 w-2">
+                  <span className="relative inline-flex rounded-full h-2 w-2 bg-primary" />
+                </span>
+              </div>
+              <div className="space-y-2 mb-4">
+                <div className="flex items-center gap-2.5 p-2.5 bg-background rounded-md border border-border/40">
+                  <div className="w-6 h-6 rounded-full bg-primary/20 shrink-0" />
+                  <div className="flex-1 min-w-0">
+                    <div className="text-xs font-medium text-foreground">Appointment confirmed</div>
+                    <div className="text-[10px] text-muted-foreground">Today, 3:00 PM · Harpreet S.</div>
+                  </div>
+                  <Check className="w-3.5 h-3.5 text-primary shrink-0" />
+                </div>
+                <div className="flex items-center gap-2.5 p-2.5 bg-background rounded-md border border-border/40 opacity-60">
+                  <div className="w-6 h-6 rounded-full bg-border shrink-0" />
+                  <div className="flex-1 min-w-0">
+                    <div className="text-xs text-foreground">New booking request</div>
+                    <div className="text-[10px] text-muted-foreground">Tomorrow, 11:00 AM</div>
+                  </div>
+                </div>
+                <div className="flex items-center gap-2.5 p-2.5 bg-background rounded-md border border-border/40 opacity-40">
+                  <div className="w-6 h-6 rounded-full bg-border shrink-0" />
+                  <div className="flex-1 min-w-0">
+                    <div className="text-xs text-foreground">Loyalty reward earned</div>
+                    <div className="text-[10px] text-muted-foreground">240 pts · Manpreet K.</div>
+                  </div>
+                </div>
+              </div>
+              <div className="w-full py-2 bg-primary rounded-sm text-center text-[11px] font-bold text-black tracking-wide">
+                Book Now
+              </div>
+              <p className="text-center text-[10px] text-muted-foreground mt-2">Shipped in 30 days · 60% bookings went digital</p>
+            </div>
           </div>
-          <div className="flex flex-col gap-1 lg:gap-2">
-            <span className="text-2xl lg:text-3xl font-serif text-primary">{projectsShipped}+</span>
-            <span className="text-xs lg:text-sm text-muted-foreground">Projects shipped</span>
-          </div>
-          <div className="flex flex-col gap-1 lg:gap-2">
-            <span className="text-2xl lg:text-3xl font-serif text-primary">Mohali</span>
-            <span className="text-xs lg:text-sm text-muted-foreground">Studio &amp; home base</span>
-          </div>
-          <div className="flex flex-col gap-1 lg:gap-2">
-            <span className="text-2xl lg:text-3xl font-serif text-primary">2018</span>
-            <span className="text-xs lg:text-sm text-muted-foreground">Founded · 7 years building</span>
+
+          {/* Stats */}
+          <div className="grid grid-cols-2 lg:grid-cols-1 gap-5 lg:gap-6">
+            <div className="flex flex-col gap-1 lg:gap-2">
+              <span className="text-2xl lg:text-3xl font-serif text-primary">30 days</span>
+              <span className="text-xs lg:text-sm text-muted-foreground">Average delivery</span>
+            </div>
+            <div className="flex flex-col gap-1 lg:gap-2">
+              <span className="text-2xl lg:text-3xl font-serif text-primary">{projectsShipped}+</span>
+              <span className="text-xs lg:text-sm text-muted-foreground">Projects shipped</span>
+            </div>
+            <div className="flex flex-col gap-1 lg:gap-2">
+              <span className="text-2xl lg:text-3xl font-serif text-primary">Mohali</span>
+              <span className="text-xs lg:text-sm text-muted-foreground">Studio &amp; home base</span>
+            </div>
+            <div className="flex flex-col gap-1 lg:gap-2">
+              <span className="text-2xl lg:text-3xl font-serif text-primary">2018</span>
+              <span className="text-xs lg:text-sm text-muted-foreground">Founded · 7 years building</span>
+            </div>
           </div>
         </motion.div>
       </motion.div>

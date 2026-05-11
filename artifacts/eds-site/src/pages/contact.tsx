@@ -500,6 +500,30 @@ export default function Contact() {
                 </div>
               ))}
             </div>
+
+            <div className="mt-10 pt-8 border-t border-border/60">
+              <h3 className="text-xs font-bold uppercase tracking-widest text-muted-foreground mb-6">
+                What happens next
+              </h3>
+              <ol className="flex flex-col gap-5">
+                {[
+                  { title: "We read your brief", desc: "Within 4 working hours, we review what you've shared and size the opportunity." },
+                  { title: "WhatsApp within the day", desc: "We message you to confirm we're on it and agree a time for a quick call." },
+                  { title: "30-minute discovery call", desc: "A focused call to map the scope, ask follow-up questions, and align on expectations." },
+                  { title: "Fixed quote in 48 hours", desc: "A clear, no-surprises proposal — timeline, deliverables, and a fixed price." },
+                ].map((s, i) => (
+                  <li key={i} className="flex items-start gap-4">
+                    <div className="flex-shrink-0 w-7 h-7 rounded-full border border-primary/50 text-primary text-xs font-bold flex items-center justify-center mt-0.5">
+                      {i + 1}
+                    </div>
+                    <div>
+                      <p className="text-sm font-medium text-foreground leading-snug">{s.title}</p>
+                      <p className="text-sm text-muted-foreground mt-0.5 leading-relaxed">{s.desc}</p>
+                    </div>
+                  </li>
+                ))}
+              </ol>
+            </div>
           </div>
 
           <div className="bg-card border border-border/40 rounded-md p-6 sm:p-8 lg:p-10">

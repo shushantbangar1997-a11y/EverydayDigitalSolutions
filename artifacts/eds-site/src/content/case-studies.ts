@@ -82,5 +82,25 @@ export const portfolioProjects = [
     tags: ["n8n", "WhatsApp API", "OpenAI"],
     hasFullCaseStudy: false,
     caseStudyUrl: "/contact"
+  },
+  {
+    id: "spiceroute",
+    category: "Custom Mobile App",
+    client: "Spice Route Restaurants",
+    title: "Table booking + loyalty app across 3 restaurant locations in Chandigarh",
+    outcome: "Weekend walk-in wait times eliminated. 35% repeat-visit rate via loyalty rewards.",
+    tags: ["React Native", "Razorpay", "Firebase"],
+    hasFullCaseStudy: false,
+    caseStudyUrl: "/contact"
+  },
+  {
+    id: "learnwithme",
+    category: "Automation & AI",
+    client: "LearnWithMe Coaching",
+    title: "WhatsApp-first lead nurture bot converting cold enquiries to paid enrolments",
+    outcome: "Lead-to-enrolment conversion up 3x. Founder reclaimed 2 hrs/day from manual follow-ups.",
+    tags: ["WhatsApp Business API", "n8n", "OpenAI"],
+    hasFullCaseStudy: false,
+    caseStudyUrl: "/contact"
   }
 ];
