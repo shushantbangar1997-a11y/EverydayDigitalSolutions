@@ -77,7 +77,11 @@ function RequestReviewDashboard() {
 
   const waLink = useMemo(() => {
     if (!selected) return null;
-    const phone = selected.whatsappNumber.replace(/\D/g, "");
+    const raw = (selected.whatsappNumber ?? "").trim();
+    if (!raw) return null;
+    const phone = raw.replace(/\D/g, "");
+    // wa.me requires an international number, no leading zeros, ≥ 8 digits.
+    if (phone.length < 8) return null;
     return `https://wa.me/${phone}?text=${encodeURIComponent(message)}`;
   }, [selected, message]);
 
@@ -192,14 +196,19 @@ function RequestReviewDashboard() {
                 Open in WhatsApp
               </a>
             ) : (
-              <Button disabled className="rounded-sm">Open in WhatsApp</Button>
+              <Button disabled className="rounded-sm" title={selected ? "This lead has no valid WhatsApp number on file." : undefined}>Open in WhatsApp</Button>
             )}
           </div>
 
-          {selected && (
+          {selected && waLink && (
             <p className="text-[11px] text-muted-foreground border-t border-border pt-4">
               Sending to <span className="text-foreground font-medium">{selected.name}</span> at {selected.whatsappNumber}.
               The link opens WhatsApp with the message prefilled — review it, then hit send.
+            </p>
+          )}
+          {selected && !waLink && (
+            <p className="text-[11px] text-destructive border-t border-border pt-4">
+              {selected.name} has no valid WhatsApp number on file. Update the lead in /admin first.
             </p>
           )}
         </div>
