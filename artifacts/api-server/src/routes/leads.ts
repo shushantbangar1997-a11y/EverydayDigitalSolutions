@@ -3,6 +3,7 @@ import { eq } from "drizzle-orm";
 import { db, leadsTable } from "@workspace/db";
 import { CreateLeadBody } from "@workspace/api-zod";
 import { sendWhatsApp, formatLeadMessage } from "../lib/whatsapp";
+import { logger } from "../lib/logger";
 
 const router: IRouter = Router();
 
@@ -39,18 +40,26 @@ router.post("/leads", async (req, res): Promise<void> => {
     return;
   }
 
-  // Fire WhatsApp notification — never block the response on it failing.
-  const sent = await sendWhatsApp(formatLeadMessage(row));
-  if (sent) {
-    await db
-      .update(leadsTable)
-      .set({ whatsappNotificationSent: true })
-      .where(eq(leadsTable.id, row.id));
-    row.whatsappNotificationSent = true;
-  }
-
-  req.log.info({ leadId: row.id, whatsappSent: sent }, "Lead captured");
+  req.log.info({ leadId: row.id }, "Lead captured");
   res.status(201).json(row);
+
+  // Fire WhatsApp notification AFTER responding so a slow/failing CallMeBot
+  // never stalls the user. Persisted lead is the source of truth; this is
+  // best-effort enrichment of `whatsappNotificationSent`.
+  void (async () => {
+    try {
+      const sent = await sendWhatsApp(formatLeadMessage(row));
+      if (sent) {
+        await db
+          .update(leadsTable)
+          .set({ whatsappNotificationSent: true })
+          .where(eq(leadsTable.id, row.id));
+      }
+      logger.info({ leadId: row.id, whatsappSent: sent }, "WhatsApp dispatch finished");
+    } catch (err) {
+      logger.error({ err, leadId: row.id }, "Async WhatsApp dispatch failed");
+    }
+  })();
 });
 
 export default router;

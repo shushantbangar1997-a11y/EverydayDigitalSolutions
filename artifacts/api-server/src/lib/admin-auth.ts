@@ -88,3 +88,66 @@ export function requireAdmin(
   }
   next();
 }
+
+// --- Login throttle (in-memory; single-instance deployment) ----------------
+//
+// Per-IP sliding window: max 8 failed attempts per 15 min, then a 15-min
+// lockout. Successful login clears the counter. Memory is bounded by capping
+// the map size and evicting expired entries opportunistically.
+
+interface LoginAttemptState {
+  failures: number;
+  firstFailureAt: number;
+  lockedUntil: number;
+}
+
+const WINDOW_MS = 15 * 60 * 1000;
+const MAX_FAILURES = 8;
+const LOCKOUT_MS = 15 * 60 * 1000;
+const MAX_TRACKED_IPS = 5_000;
+
+const loginAttempts = new Map<string, LoginAttemptState>();
+
+function clientIp(req: Request): string {
+  const fwd = req.headers["x-forwarded-for"];
+  const first = Array.isArray(fwd) ? fwd[0] : fwd?.split(",")[0]?.trim();
+  return first || req.ip || req.socket.remoteAddress || "unknown";
+}
+
+function gcLoginAttempts(now: number): void {
+  if (loginAttempts.size < MAX_TRACKED_IPS) return;
+  for (const [ip, state] of loginAttempts) {
+    if (state.lockedUntil < now && now - state.firstFailureAt > WINDOW_MS) {
+      loginAttempts.delete(ip);
+    }
+  }
+}
+
+/** Returns ms remaining if locked out, otherwise 0. */
+export function checkLoginLockout(req: Request): number {
+  const ip = clientIp(req);
+  const state = loginAttempts.get(ip);
+  if (!state) return 0;
+  const now = Date.now();
+  if (state.lockedUntil > now) return state.lockedUntil - now;
+  return 0;
+}
+
+export function recordLoginFailure(req: Request): void {
+  const now = Date.now();
+  const ip = clientIp(req);
+  const state = loginAttempts.get(ip);
+  if (!state || now - state.firstFailureAt > WINDOW_MS) {
+    loginAttempts.set(ip, { failures: 1, firstFailureAt: now, lockedUntil: 0 });
+  } else {
+    state.failures += 1;
+    if (state.failures >= MAX_FAILURES) {
+      state.lockedUntil = now + LOCKOUT_MS;
+    }
+  }
+  gcLoginAttempts(now);
+}
+
+export function recordLoginSuccess(req: Request): void {
+  loginAttempts.delete(clientIp(req));
+}

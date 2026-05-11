@@ -8,21 +8,35 @@ import {
   clearAdminCookie,
   isAdminAuthed,
   requireAdmin,
+  checkLoginLockout,
+  recordLoginFailure,
+  recordLoginSuccess,
 } from "../lib/admin-auth";
 
 const router: IRouter = Router();
 
 router.post("/admin/login", async (req, res): Promise<void> => {
+  const lockedMs = checkLoginLockout(req);
+  if (lockedMs > 0) {
+    const retrySec = Math.ceil(lockedMs / 1000);
+    req.log.warn({ retrySec }, "Admin login locked out");
+    res.setHeader("Retry-After", String(retrySec));
+    res.status(429).json({ error: "Too many attempts. Try again later." });
+    return;
+  }
+
   const parsed = AdminLoginBody.safeParse(req.body);
   if (!parsed.success) {
     res.status(400).json({ error: "Invalid input" });
     return;
   }
   if (!verifyAdminPassword(parsed.data.password)) {
+    recordLoginFailure(req);
     req.log.warn("Admin login failed");
     res.status(401).json({ error: "Invalid password" });
     return;
   }
+  recordLoginSuccess(req);
   setAdminCookie(res);
   res.status(204).send();
 });
