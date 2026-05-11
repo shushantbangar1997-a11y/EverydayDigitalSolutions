@@ -47,7 +47,6 @@ const ORGANIZATION_SCHEMA = {
       "telephone": "+91-9056066006",
       "areaServed": "IN",
       "availableLanguage": ["en", "hi", "pa"],
-      "contactOption": "TollFree",
     },
     {
       "@type": "ContactPoint",

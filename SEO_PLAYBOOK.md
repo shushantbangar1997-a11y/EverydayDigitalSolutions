@@ -252,9 +252,36 @@ Every post must be:
 - [x] `GOOGLE_SITE_VERIFICATION` (and `VITE_GOOGLE_SITE_VERIFICATION`) env wired into `<head>`
 - [x] WebP variants generated for every raster image at build time (`build-scripts/optimize-images.mjs`); served via `<picture>` fallback (`OptimizedImage`)
 - [x] Alt-text audit blocks the build — `pnpm --filter @workspace/scripts run check-alt-text`
-- [ ] Verify property in Google Search Console (paste meta token into env, deploy, click "Verify" in GSC).
+- [ ] Verify property in Google Search Console — see step-by-step below.
 - [ ] Submit `https://everydaydigitalsolutions.com/sitemap.xml` to GSC and Bing Webmaster Tools.
 - [ ] Set the GBP profile to verified (postcard or video).
+
+### How to verify the site in Google Search Console (one-time, ~5 min)
+
+For non-technical founders. Do this once after the first deploy.
+
+1. Go to <https://search.google.com/search-console> and sign in with the
+   business Google account.
+2. Click **Add property → URL prefix** and enter
+   `https://everydaydigitalsolutions.com` exactly. Click **Continue**.
+3. On the verification screen, expand **HTML tag**. You'll see something
+   like:
+   ```html
+   <meta name="google-site-verification" content="abc123XYZdef456GHIjkl789MNO" />
+   ```
+   **Copy only the token between the quotes after `content=`** — e.g.
+   `abc123XYZdef456GHIjkl789MNO`. Do NOT copy the whole `<meta>` tag.
+4. In Replit, open **Tools → Secrets** and add **two** identical secrets so
+   server-rendered HTML and client hydration stay consistent:
+   - `GOOGLE_SITE_VERIFICATION` = the token from step 3
+   - `VITE_GOOGLE_SITE_VERIFICATION` = the same token
+5. Hit **Publish** in Replit (or wait for the next auto-deploy).
+6. After ~30 seconds, return to Search Console and click **Verify**. It
+   should succeed immediately.
+7. Once verified, go to **Sitemaps** in the left nav and submit
+   `https://everydaydigitalsolutions.com/sitemap.xml`. Repeat the same
+   sitemap submission inside **Bing Webmaster Tools** at
+   <https://www.bing.com/webmasters>.
 
 ---
 
