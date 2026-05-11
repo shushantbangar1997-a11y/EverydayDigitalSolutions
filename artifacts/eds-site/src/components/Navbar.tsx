@@ -4,6 +4,7 @@ import gsap from "gsap";
 import { CustomEase } from "gsap/CustomEase";
 import { Sun, Moon } from "lucide-react";
 import { useTheme } from "@/hooks/useTheme";
+import { OptimizedImage } from "@/components/OptimizedImage";
 
 if (typeof window !== "undefined") {
   gsap.registerPlugin(CustomEase);
@@ -150,10 +151,14 @@ export function Navbar() {
             <nav className="kn-nav-row">
               {/* Logo */}
               <Link href="/" className="kn-logo-link" aria-label="Home">
-                <img
+                <OptimizedImage
                   src="/logo.png"
                   alt="Everyday Digital Solutions"
                   className="kn-logo-img"
+                  width={140}
+                  height={32}
+                  loading="eager"
+                  decoding="async"
                 />
                 <div className="kn-logo-wordmark">
                   <span className="kn-logo-name">Everyday Digital Solutions</span>
@@ -265,7 +270,7 @@ export function Navbar() {
             {/* Logo inside overlay */}
             <div className="kn-overlay-logo">
               <Link href="/" onClick={closeMenu} className="kn-logo-link">
-                <img src="/logo.png" alt="Everyday Digital Solutions" className="kn-logo-img" />
+                <OptimizedImage src="/logo.png" alt="Everyday Digital Solutions" className="kn-logo-img" width={140} height={32} loading="eager" decoding="async" />
                 <div className="kn-logo-wordmark">
                   <span className="kn-logo-name">Everyday Digital Solutions</span>
                   <span className="kn-logo-sub">AI &amp; Custom Software Studio</span>

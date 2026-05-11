@@ -11,8 +11,68 @@ const GOOGLE_SITE_VERIFICATION =
   (typeof import.meta !== "undefined" && (import.meta as { env?: Record<string, string> }).env?.VITE_GOOGLE_SITE_VERIFICATION) ||
   "";
 
+/**
+ * Global Organization schema — emitted on EVERY page so search engines
+ * always have a consistent root entity (LinkedIn / Instagram / GBP /
+ * WhatsApp contactPoint). Page-level schemas (LocalBusiness on home,
+ * Article on blog posts, etc.) are layered on top via the `jsonLd`
+ * prop.
+ */
+const ORGANIZATION_SCHEMA = {
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "@id": `${BASE_URL}/#organization`,
+  "name": SITE_NAME,
+  "url": BASE_URL,
+  "logo": `${BASE_URL}/logo.png`,
+  "image": DEFAULT_OG_IMAGE,
+  "description": DEFAULT_DESCRIPTION,
+  "founder": {
+    "@type": "Person",
+    "name": "Shushant Bangar",
+    "jobTitle": "Founder & Principal Engineer",
+  },
+  "foundingDate": "2018",
+  "areaServed": [
+    { "@type": "City", "name": "Chandigarh" },
+    { "@type": "City", "name": "Mohali" },
+    { "@type": "City", "name": "Panchkula" },
+    { "@type": "City", "name": "Jalandhar" },
+    { "@type": "State", "name": "Punjab" },
+  ],
+  "contactPoint": [
+    {
+      "@type": "ContactPoint",
+      "contactType": "customer support",
+      "telephone": "+91-9056066006",
+      "areaServed": "IN",
+      "availableLanguage": ["en", "hi", "pa"],
+      "contactOption": "TollFree",
+    },
+    {
+      "@type": "ContactPoint",
+      "contactType": "sales",
+      "url": "https://wa.me/919056066006",
+      "areaServed": "IN",
+      "availableLanguage": ["en", "hi", "pa"],
+    },
+  ],
+  "sameAs": [
+    "https://www.linkedin.com/company/everyday-digital-solutions",
+    "https://www.linkedin.com/in/shushantbangar",
+    "https://www.instagram.com/everydaydigitalsolutions",
+    "https://g.page/everyday-digital-solutions",
+    "https://wa.me/919056066006",
+  ],
+};
+
 interface JsonLdObject {
   [key: string]: unknown;
+}
+
+interface BreadcrumbItem {
+  name: string;
+  path: string;
 }
 
 interface SEOProps {
@@ -22,7 +82,57 @@ interface SEOProps {
   ogImage?: string;
   ogType?: "website" | "article";
   jsonLd?: JsonLdObject | JsonLdObject[];
+  /**
+   * If provided, a BreadcrumbList JSON-LD is auto-emitted alongside
+   * the page-level schemas. The first item is typically `{ name: "Home", path: "/" }`.
+   */
+  breadcrumbs?: BreadcrumbItem[];
   noindex?: boolean;
+}
+
+function makeBreadcrumbList(items: BreadcrumbItem[]): JsonLdObject {
+  return {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": items.map((item, i) => ({
+      "@type": "ListItem",
+      "position": i + 1,
+      "name": item.name,
+      "item": `${BASE_URL}${item.path}`,
+    })),
+  };
+}
+
+function titleizeSegment(segment: string): string {
+  // "ai-voice-agents" → "AI Voice Agents"; "phase-8b-it-park" → "Phase 8b IT Park".
+  return segment
+    .split("-")
+    .map((w) => {
+      if (!w) return w;
+      const upper = w.toUpperCase();
+      if (["AI", "ROI", "IT", "EDS", "GBP"].includes(upper)) return upper;
+      return w.charAt(0).toUpperCase() + w.slice(1);
+    })
+    .join(" ");
+}
+
+/**
+ * Derive a sensible BreadcrumbList from the canonical URL when the
+ * page didn't pass one explicitly. `/services/ai-voice-agents` →
+ * `Home › Services › AI Voice Agents`. The home page (`/` or empty)
+ * skips breadcrumbs entirely (a 1-item breadcrumb is noise).
+ */
+function deriveBreadcrumbs(canonical: string | undefined): BreadcrumbItem[] {
+  if (!canonical || canonical === "/" || canonical === "") return [];
+  const segments = canonical.split("/").filter(Boolean);
+  if (segments.length === 0) return [];
+  const items: BreadcrumbItem[] = [{ name: "Home", path: "/" }];
+  let acc = "";
+  for (const seg of segments) {
+    acc += `/${seg}`;
+    items.push({ name: titleizeSegment(seg), path: acc });
+  }
+  return items;
 }
 
 export function SEO({
@@ -32,6 +142,7 @@ export function SEO({
   ogImage = DEFAULT_OG_IMAGE,
   ogType = "website",
   jsonLd,
+  breadcrumbs,
   noindex = false,
 }: SEOProps) {
   const fullTitle = title.includes(SITE_NAME)
@@ -41,11 +152,20 @@ export function SEO({
     ? `${BASE_URL}${canonical}`
     : BASE_URL;
 
-  const jsonLdArray = jsonLd
+  const userJsonLd: JsonLdObject[] = jsonLd
     ? Array.isArray(jsonLd)
       ? jsonLd
       : [jsonLd]
     : [];
+
+  const effectiveBreadcrumbs =
+    breadcrumbs && breadcrumbs.length > 0 ? breadcrumbs : deriveBreadcrumbs(canonical);
+
+  const allJsonLd: JsonLdObject[] = [
+    ORGANIZATION_SCHEMA,
+    ...(effectiveBreadcrumbs.length > 0 && !noindex ? [makeBreadcrumbList(effectiveBreadcrumbs)] : []),
+    ...userJsonLd,
+  ];
 
   return (
     <Helmet>
@@ -75,7 +195,7 @@ export function SEO({
       <meta name="twitter:image" content={ogImage} />
 
       {/* JSON-LD */}
-      {jsonLdArray.map((schema, i) => (
+      {allJsonLd.map((schema, i) => (
         <script key={i} type="application/ld+json">
           {JSON.stringify(schema)}
         </script>

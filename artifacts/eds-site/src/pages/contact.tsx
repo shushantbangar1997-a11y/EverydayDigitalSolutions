@@ -386,6 +386,11 @@ export default function Contact() {
         onSuccess: () => {
           setSubmittedForm(form);
           setSubmitted(true);
+          if (typeof window !== "undefined" && typeof (window as { plausible?: (e: string, o?: unknown) => void }).plausible === "function") {
+            (window as unknown as { plausible: (e: string, o?: unknown) => void }).plausible("LeadSubmitted", {
+              props: { industry: form.industry, budget: form.budget, timeline: form.timeline, city: form.city },
+            });
+          }
         },
       },
     );

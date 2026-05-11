@@ -31,6 +31,11 @@ export function LeadMagnet({
       {
         onSuccess: () => {
           setSubmitted(true);
+          if (typeof window !== "undefined" && typeof (window as { plausible?: (e: string, o?: unknown) => void }).plausible === "function") {
+            (window as unknown as { plausible: (e: string, o?: unknown) => void }).plausible("AppCostGuideDownload", {
+              props: { source },
+            });
+          }
           setTimeout(() => {
             if (typeof window !== "undefined") {
               window.open(GUIDE_PATH, "_blank", "noopener,noreferrer");

@@ -5,6 +5,7 @@ import { Footer } from "@/components/Footer";
 import { SEO } from "@/components/SEO";
 import { BlogCard } from "@/components/pages/BlogCard";
 import { LeadMagnet } from "@/components/LeadMagnet";
+import { OptimizedImage } from "@/components/OptimizedImage";
 import { blogPosts, getBlogPost } from "@/content/blog";
 
 const BASE_URL = "https://everydaydigitalsolutions.com";
@@ -147,10 +148,14 @@ export default function BlogPost() {
         {/* Author bio */}
         <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 pb-16">
           <div className="border-t border-border/40 pt-8 flex gap-4 items-start">
-            <img
+            <OptimizedImage
               src="/photos/founder.png"
               alt={post.author.name}
               className="w-12 h-12 rounded-full object-cover flex-shrink-0"
+              width={48}
+              height={48}
+              loading="lazy"
+              decoding="async"
             />
             <div>
               <p className="font-medium text-foreground text-sm">{post.author.name}</p>

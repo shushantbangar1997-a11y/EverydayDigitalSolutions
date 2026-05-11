@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { useCreateSubscriber } from "@workspace/api-client-react";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
@@ -62,6 +62,24 @@ export default function AIVoiceAgentROICalculator() {
   const [emailSubmitted, setEmailSubmitted] = useState(false);
   const [emailError, setEmailError] = useState<string | null>(null);
   const subscribe = useCreateSubscriber();
+  const mountedRef = useRef(false);
+  const firedRef = useRef(false);
+  useEffect(() => {
+    // Skip the initial mount — only count *changes* as interaction.
+    if (!mountedRef.current) {
+      mountedRef.current = true;
+      return;
+    }
+    if (firedRef.current) return;
+    if (typeof window === "undefined") return;
+    const t = window.setTimeout(() => {
+      firedRef.current = true;
+      if (typeof (window as { plausible?: (e: string) => void }).plausible === "function") {
+        (window as unknown as { plausible: (e: string) => void }).plausible("AIVoiceROICalculatorUsed");
+      }
+    }, 5000);
+    return () => window.clearTimeout(t);
+  }, [monthlyLeads, avgDealValue, responseMinutes, currentConversionPct]);
 
   const result = useMemo(() => {
     const lift = conversionLift(responseMinutes); // additive lift on conversion rate
