@@ -138,7 +138,6 @@ export default function AIVoiceAgentROICalculator() {
         jsonLd={softwareApplicationSchema}
         breadcrumbs={[
           { name: "Home", path: "/" },
-          { name: "Tools", path: "/tools/ai-voice-agent-roi-calculator" },
           { name: "AI Voice Agent ROI Calculator", path: "/tools/ai-voice-agent-roi-calculator" },
         ]}
       />
@@ -266,7 +265,7 @@ export default function AIVoiceAgentROICalculator() {
                   <Button
                     type="submit"
                     disabled={subscribe.isPending}
-                    className="w-full bg-primary text-black hover:bg-primary/90 rounded-sm font-medium plausible-event-name=AIVoiceROICalculatorEmail"
+                    className="w-full bg-primary text-black hover:bg-primary/90 rounded-sm font-medium"
                   >
                     {subscribe.isPending ? "Sending..." : "Email me this estimate"}
                   </Button>

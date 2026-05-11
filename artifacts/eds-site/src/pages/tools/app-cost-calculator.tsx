@@ -158,7 +158,6 @@ export default function AppCostCalculator() {
         jsonLd={softwareApplicationSchema}
         breadcrumbs={[
           { name: "Home", path: "/" },
-          { name: "Tools", path: "/tools/app-cost-calculator" },
           { name: "App Cost Calculator", path: "/tools/app-cost-calculator" },
         ]}
       />
@@ -306,7 +305,7 @@ export default function AppCostCalculator() {
                   <Button
                     type="submit"
                     disabled={subscribe.isPending}
-                    className="w-full bg-primary text-black hover:bg-primary/90 rounded-sm font-medium plausible-event-name=AppCostCalculatorEmail"
+                    className="w-full bg-primary text-black hover:bg-primary/90 rounded-sm font-medium"
                   >
                     {subscribe.isPending ? "Sending..." : "Email me this estimate"}
                   </Button>
