@@ -43,6 +43,7 @@ import BlogPost from "@/pages/blog/post";
 import { StickyCTA } from "@/components/StickyCTA";
 import { ExitIntent } from "@/components/ExitIntent";
 import { WhatsAppFAB } from "@/components/WhatsAppFAB";
+import { PageTransition } from "@/components/PageTransition";
 
 const queryClient = new QueryClient();
 
@@ -95,7 +96,9 @@ function App() {
     <QueryClientProvider client={queryClient}>
       <TooltipProvider>
         <WouterRouter base={import.meta.env.BASE_URL.replace(/\/$/, "")}>
-          <Router />
+          <PageTransition>
+            <Router />
+          </PageTransition>
           <StickyCTA />
           <ExitIntent />
           <WhatsAppFAB />
