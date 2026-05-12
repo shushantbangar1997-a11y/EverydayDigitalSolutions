@@ -174,6 +174,7 @@ export function CaseStudy() {
                             <span className={`text-[8px] font-bold uppercase tracking-wider px-1.5 py-0.5 rounded-full flex-shrink-0 ${statusColors[call.status] ?? "text-muted-foreground"}`}>
                               {call.status}
                             </span>
+                            <span className="text-[9px] text-muted-foreground font-mono flex-shrink-0">{call.duration}</span>
                             <span className="text-[9px] text-muted-foreground/60 flex-shrink-0 hidden sm:block">{call.time}</span>
                           </div>
                         ))}
