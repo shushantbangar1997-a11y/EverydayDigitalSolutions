@@ -1,3 +1,24 @@
-<svg width="180" height="180" viewBox="0 0 180 180" fill="none" xmlns="http://www.w3.org/2000/svg">
-<rect width="180" height="180" rx="36" fill="#FF3C00"/>
+<svg width="512" height="512" viewBox="0 0 512 512" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Brand dark background -->
+  <rect width="512" height="512" rx="96" fill="#0f0e08"/>
+  <!-- EDS geometric mark — hexagonal outline approximating the official logo -->
+  <!-- Outer hex (flat-left orientation matching the logo) -->
+  <!-- Left vertical spine -->
+  <rect x="88" y="108" width="28" height="296" rx="6" fill="#F5D424"/>
+  <!-- Top-left diagonal -->
+  <polygon points="88,108 116,108 256,52 228,52" fill="#F5D424"/>
+  <!-- Top-right diagonal -->
+  <polygon points="228,52 256,52 396,108 368,108" fill="#F5D424"/>
+  <!-- Top-right vertical segment -->
+  <rect x="368" y="108" width="28" height="130" rx="6" fill="#F5D424"/>
+  <!-- Middle diagonal (E cross-bar / D middle) -->
+  <polygon points="116,256 144,256 300,196 272,196" fill="#F5D424"/>
+  <!-- Bottom-right diagonal (S element) -->
+  <polygon points="272,316 300,316 396,272 368,272" fill="#F5D424"/>
+  <!-- Bottom-right vertical segment -->
+  <rect x="368" y="272" width="28" height="132" rx="6" fill="#F5D424"/>
+  <!-- Bottom-left diagonal -->
+  <polygon points="88,404 116,404 256,460 228,460" fill="#F5D424"/>
+  <!-- Bottom-right diagonal -->
+  <polygon points="228,460 256,460 396,404 368,404" fill="#F5D424"/>
 </svg>
