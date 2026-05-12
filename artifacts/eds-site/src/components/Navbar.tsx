@@ -132,6 +132,21 @@ export function Navbar() {
     return () => ctx.revert();
   }, [isMenuOpen]);
 
+  // Body scroll lock — prevent page scrolling behind open menu
+  useEffect(() => {
+    if (isMenuOpen) {
+      document.body.style.overflow = "hidden";
+      document.body.style.touchAction = "none";
+    } else {
+      document.body.style.overflow = "";
+      document.body.style.touchAction = "";
+    }
+    return () => {
+      document.body.style.overflow = "";
+      document.body.style.touchAction = "";
+    };
+  }, [isMenuOpen]);
+
   // Escape key
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => { if (e.key === "Escape") setIsMenuOpen(false); };
