@@ -104,7 +104,7 @@ export function FeatureShowcase() {
                   key={f.id}
                   ref={(el) => { tabRefs.current[index] = el; }}
                   onClick={() => select(index)}
-                  className={`text-left flex items-start gap-4 p-5 rounded-lg transition-all duration-300 border ${
+                  className={`text-left flex items-start gap-3 sm:gap-4 p-4 sm:p-5 rounded-lg transition-all duration-300 border ${
                     isActive
                       ? "bg-background border-primary/30 shadow-sm"
                       : "bg-transparent border-transparent hover:bg-background/60"

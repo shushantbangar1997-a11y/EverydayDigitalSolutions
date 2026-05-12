@@ -30,7 +30,7 @@ export function TrustStrip() {
                   <span className="text-[10px] font-bold tracking-wider text-foreground/70">{client.initials}</span>
                 </div>
                 <div className="flex flex-col">
-                  <span className="font-serif text-base text-foreground whitespace-nowrap leading-tight">{client.name}</span>
+                  <span className="font-serif text-base text-foreground leading-tight">{client.name}</span>
                   <span className="text-[10px] text-muted-foreground uppercase tracking-wider">{client.category}</span>
                 </div>
               </div>

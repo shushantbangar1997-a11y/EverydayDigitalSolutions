@@ -22,11 +22,11 @@ export function FinalCTA() {
         className="relative z-10 max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col items-center text-center"
       >
         <span className="text-xs font-bold uppercase tracking-widest text-muted-foreground mb-6">Let's build</span>
-        <h2 className="text-5xl md:text-6xl lg:text-7xl font-serif mb-8 leading-tight">
-          Ready to build something <br />
+        <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-7xl font-serif mb-8 leading-tight">
+          Ready to build something{" "}
           <em className="text-primary italic">exceptional?</em>
         </h2>
-        <p className="text-xl text-muted-foreground mb-12 max-w-xl">
+        <p className="text-lg sm:text-xl text-muted-foreground mb-12 max-w-xl">
           Tell us what you're building. We'll scope it on a 15-minute call and send you a clear, fixed proposal — no ambiguity, no surprises.
         </p>
 

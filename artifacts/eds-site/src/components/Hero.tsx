@@ -19,7 +19,7 @@ export function Hero() {
   };
 
   return (
-    <section className="pt-8 pb-16 sm:pt-12 lg:pt-28 lg:pb-32 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <section className="pt-8 pb-16 sm:pt-12 md:pt-16 lg:pt-28 lg:pb-32 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <motion.div
         className="grid grid-cols-1 lg:grid-cols-[1.7fr_1fr] gap-10 lg:gap-16 items-start"
         variants={container}
@@ -56,7 +56,7 @@ export function Hero() {
           </motion.div>
         </div>
 
-        <motion.div variants={variants} className="flex flex-col gap-6 lg:pl-10 lg:border-l border-border/40 pt-6 lg:pt-0 border-t lg:border-t-0 border-border/40">
+        <motion.div variants={variants} className="flex flex-col gap-6 lg:pl-10 lg:border-l border-border/40 pt-6 lg:pt-0 border-t lg:border-t-0 border-border/40 min-w-0">
           {/* Mini app preview — desktop only */}
           <div className="hidden lg:block">
             <div className="bg-card border border-border/60 rounded-xl p-5 shadow-sm">
@@ -98,7 +98,7 @@ export function Hero() {
           </div>
 
           {/* Stats */}
-          <div className="grid grid-cols-2 lg:grid-cols-1 gap-5 lg:gap-6">
+          <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-2 gap-5 lg:gap-6">
             <div className="flex flex-col gap-1 lg:gap-2">
               <span className="text-2xl lg:text-3xl font-serif text-primary">30 days</span>
               <span className="text-xs lg:text-sm text-muted-foreground">Average delivery</span>

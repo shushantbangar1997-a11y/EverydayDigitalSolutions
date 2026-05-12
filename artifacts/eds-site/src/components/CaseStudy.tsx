@@ -43,7 +43,7 @@ export function CaseStudy() {
           hidden: { opacity: 0, y: prefersReducedMotion ? 0 : 40 },
           visible: { opacity: 1, y: 0, transition: { duration: 0.8 } }
         }}
-        className="relative bg-card border border-border/40 rounded-xl overflow-hidden p-6 lg:p-16 mb-12"
+        className="relative bg-card border border-border/40 rounded-xl overflow-hidden p-6 md:p-10 lg:p-16 mb-12"
       >
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,var(--accent-soft)_0%,transparent_70%)] opacity-20 pointer-events-none"></div>
 
