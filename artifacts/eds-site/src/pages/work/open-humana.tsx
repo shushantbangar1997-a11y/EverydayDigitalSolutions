@@ -197,6 +197,24 @@ export default function OpenHumanaCaseStudy() {
           </div>
         </div>
 
+        {/* Tech Stack */}
+        <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 mb-16 lg:mb-32">
+          <h3 className="text-xl sm:text-2xl font-serif mb-6 text-center">Built with</h3>
+          <div className="flex flex-wrap justify-center gap-2.5">
+            {[
+              "Node.js", "TypeScript", "React", "PostgreSQL",
+              "Twilio", "WebSockets", "REST API", "Redis"
+            ].map((tech) => (
+              <span
+                key={tech}
+                className="px-3 py-1.5 text-xs font-mono border border-border/60 rounded text-muted-foreground bg-card"
+              >
+                {tech}
+              </span>
+            ))}
+          </div>
+        </div>
+
         {/* Live product link */}
         <div className="max-w-xl mx-auto px-4 sm:px-6 lg:px-8 mb-10">
           <div className="bg-card border border-border/40 p-6 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 rounded-lg">

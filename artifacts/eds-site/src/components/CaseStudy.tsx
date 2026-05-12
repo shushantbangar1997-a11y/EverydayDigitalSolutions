@@ -196,16 +196,16 @@ export function CaseStudy() {
 
                 <div className="grid grid-cols-3 gap-4 w-full mb-12 border-y border-border/40 py-6">
                   <div className="flex flex-col">
-                    <span className="text-2xl font-serif text-primary">1,285+</span>
+                    <span className="text-2xl font-serif text-primary">50+</span>
+                    <span className="text-xs text-muted-foreground uppercase tracking-widest mt-1">Teams served</span>
+                  </div>
+                  <div className="flex flex-col">
+                    <span className="text-2xl font-serif text-primary">1,285</span>
                     <span className="text-xs text-muted-foreground uppercase tracking-widest mt-1">Dials / day</span>
                   </div>
                   <div className="flex flex-col">
-                    <span className="text-2xl font-serif text-primary">5–10x</span>
-                    <span className="text-xs text-muted-foreground uppercase tracking-widest mt-1">Dial volume</span>
-                  </div>
-                  <div className="flex flex-col">
-                    <span className="text-2xl font-serif text-primary">100%</span>
-                    <span className="text-xs text-muted-foreground uppercase tracking-widest mt-1">Live calls</span>
+                    <span className="text-2xl font-serif text-primary">3:42</span>
+                    <span className="text-xs text-muted-foreground uppercase tracking-widest mt-1">Avg call duration</span>
                   </div>
                 </div>
 
@@ -225,20 +225,20 @@ export function CaseStudy() {
                 </div>
 
                 <div className="flex flex-wrap gap-4">
-                  <Link
-                    href="/work/open-humana"
-                    className="bg-primary text-black px-6 py-3 rounded-sm font-medium hover:bg-primary/90 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background"
-                  >
-                    Read full case study
-                  </Link>
                   <a
                     href={oh.liveUrl}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex items-center gap-2 border border-border bg-transparent text-foreground px-6 py-3 rounded-sm font-medium hover:bg-muted transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background"
+                    className="inline-flex items-center gap-2 bg-primary text-black px-6 py-3 rounded-sm font-medium hover:bg-primary/90 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background"
                   >
                     Visit openhumana.com <ArrowUpRight className="w-4 h-4" />
                   </a>
+                  <Link
+                    href="/contact"
+                    className="border border-border bg-transparent text-foreground px-6 py-3 rounded-sm font-medium hover:bg-muted transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background"
+                  >
+                    Build something similar
+                  </Link>
                 </div>
               </div>
             </div>
