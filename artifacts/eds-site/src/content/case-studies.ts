@@ -1,4 +1,50 @@
 export const caseStudies = {
+  openHumana: {
+    id: "open-humana",
+    title: "We built the AI voice agent platform that lets sales teams stop dialling — and start closing.",
+    client: "Everyday Digital Solutions (In-House Product)",
+    tag: "IN-HOUSE PRODUCT · AI SAAS",
+    meta: {
+      launched: "2024",
+      category: "AI Voice Agent SaaS"
+    },
+    dashboard: {
+      stats: [
+        { label: "Total Dials", value: "1,285" },
+        { label: "Live Transfers", value: "187" },
+        { label: "Voicemails Left", value: "512" },
+        { label: "Avg Duration", value: "3:42" }
+      ],
+      sampleCalls: [
+        { name: "Priya Sharma", status: "TRANSFERRED", duration: "4:12", time: "2m ago" },
+        { name: "Rajiv Mehta", status: "VOICEMAIL", duration: "0:28", time: "5m ago" },
+        { name: "Sunita Rao", status: "CONNECTED", duration: "6:47", time: "11m ago" },
+        { name: "Arjun Kapoor", status: "TRANSFERRED", duration: "3:55", time: "18m ago" }
+      ]
+    },
+    story: {
+      problem: "Sales reps at high-volume teams spend nearly 70% of their day on wasted dials — ringing out, hitting voicemail, navigating call trees. By the time a real human picks up, the rep's energy and call list are both depleted. Managers have no visibility into where time goes, and CRMs are full of stale data from calls that never connected.",
+      solution: "Open Humana deploys Alex, an AI voice agent that handles every outbound dial autonomously. Alex navigates voicemail, leaves personalised messages, and detects live pickups within milliseconds — instantly transferring the live call to a human rep with full context. The dashboard gives managers real-time visibility: total dials, transfers, voicemails, average handle time, and call-by-call history.",
+      result: "Teams using Open Humana report that reps spend 100% of their on-phone time speaking to live prospects — not dialling. Dial volume increases 5x to 10x because the AI never tires, never waits, and never misses a pickup. The result is a sales floor that exclusively closes."
+    },
+    features: [
+      "Autonomous AI outbound dialling (Alex)",
+      "Real-time live-answer detection",
+      "Instant warm transfer to human rep",
+      "Personalised voicemail drops",
+      "Live call dashboard with full history",
+      "Per-rep performance analytics",
+      "CRM webhook integration",
+      "Campaign and contact list management",
+      "Call recording and transcripts",
+      "Multi-team workspace support",
+      "Custom AI voice and script editor",
+      "HIPAA-aware call handling options"
+    ],
+    industries: ["Real Estate", "Insurance", "SaaS SDR Teams", "Recruiting", "Financial Services"],
+    liveUrl: "https://openhumana.com"
+  },
+
   quasar: {
     id: "quasar-salon",
     title: "How we built Tricity's first celebrity-grade salon app — in 30 days.",
@@ -52,6 +98,16 @@ export const portfolioProjects = [
     tags: ["React Native", "Firebase", "iOS & Android"],
     hasFullCaseStudy: true,
     caseStudyUrl: "/work/quasar-salon"
+  },
+  {
+    id: "open-humana",
+    category: "AI Voice Agent",
+    client: "Everyday Digital Solutions (In-House)",
+    title: "AI dialler SaaS that transfers only live calls — reps exclusively close",
+    outcome: "1,285+ dials/day per campaign. 5x to 10x rep dial volume. Zero wasted rings.",
+    tags: ["AI Voice", "Node.js", "React", "SaaS"],
+    hasFullCaseStudy: true,
+    caseStudyUrl: "/work/open-humana"
   },
   {
     id: "realty-voice",

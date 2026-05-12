@@ -53,6 +53,7 @@ const ROUTES = [
   { urlPath: "",                                    url: "/" },
   { urlPath: "contact",                             url: "/contact" },
   { urlPath: "work/quasar-salon",                   url: "/work/quasar-salon" },
+  { urlPath: "work/open-humana",                    url: "/work/open-humana" },
 
   // Service pages
   { urlPath: "services/mobile-app-development",     url: "/services/mobile-app-development" },
