@@ -104,7 +104,7 @@ export function LeadMagnet({
               The <em className="italic text-primary">App Cost Guide</em> for Indian businesses, 2026.
             </h2>
             <p className="text-base lg:text-lg text-muted-foreground leading-relaxed mb-6">
-              Real numbers from 12+ shipped projects across salons, clinics, real estate and restaurants in Punjab. What a custom app actually costs in 2026 — and what makes the bill move up or down.
+              Built from 7 years of building digital systems for service businesses, plus our 2026 flagship build for Quasar Salon. What a custom app actually costs in 2026 — and what makes the bill move up or down.
             </p>
             <ul className="space-y-2 text-sm text-foreground">
               <li className="flex items-start gap-2"><span className="text-primary mt-1">·</span><span>Honest price ranges by app type (booking, CRM, marketplace, internal tools)</span></li>

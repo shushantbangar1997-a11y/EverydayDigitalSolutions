@@ -53,9 +53,6 @@ export function Footer() {
             <h4 className="font-serif text-base lg:text-lg mb-5">Solutions</h4>
             <ul className="flex flex-col gap-3">
               <li><Link href="/solutions/salons-and-spas" className="text-sm text-muted-foreground hover:text-foreground transition-colors">Salons &amp; Spas</Link></li>
-              <li><Link href="/solutions/real-estate" className="text-sm text-muted-foreground hover:text-foreground transition-colors">Real Estate</Link></li>
-              <li><Link href="/solutions/clinics-and-healthcare" className="text-sm text-muted-foreground hover:text-foreground transition-colors">Clinics</Link></li>
-              <li><Link href="/solutions/restaurants-and-cafes" className="text-sm text-muted-foreground hover:text-foreground transition-colors">Restaurants</Link></li>
             </ul>
           </div>
 

@@ -1,7 +1,6 @@
 import { SEO } from "@/components/SEO";
 import { Navbar } from "@/components/Navbar";
 import { Hero } from "@/components/Hero";
-import { TrustStrip } from "@/components/TrustStrip";
 import { ServicesGrid } from "@/components/ServicesGrid";
 import { CaseStudy } from "@/components/CaseStudy";
 import { ProcessTimeline } from "@/components/ProcessTimeline";
@@ -127,8 +126,8 @@ const aggregateRatingSchema = {
     "ratingValue": "5.0",
     "bestRating": "5",
     "worstRating": "1",
-    "ratingCount": "12",
-    "reviewCount": "12"
+    "ratingCount": "1",
+    "reviewCount": "1"
   },
   "review": [
     {
@@ -171,7 +170,6 @@ export default function Home() {
       <Navbar />
       <main id="main-content" className="pt-[4.5rem]">
         <Hero />
-        <TrustStrip />
         <ServicesGrid />
         <CaseStudy />
         <ProcessTimeline />

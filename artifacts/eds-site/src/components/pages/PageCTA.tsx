@@ -11,7 +11,7 @@ interface PageCTAProps {
 export function PageCTA({
   heading = "Ready to get started?",
   subtext = "Tell us about your business. We will scope a solution and get back to you within one business day.",
-  primaryLabel = "Get a Free Quote",
+  primaryLabel = "Start a Project",
   secondaryLabel = "Back to Home",
   secondaryHref = "/",
 }: PageCTAProps) {

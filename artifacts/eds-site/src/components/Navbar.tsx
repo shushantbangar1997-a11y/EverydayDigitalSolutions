@@ -323,9 +323,6 @@ export function Navbar() {
                   <p className="kn-nav-sub-heading">Solutions</p>
                   <ul className="kn-nav-sub-list">
                     <li><Link href="/solutions/salons-and-spas" className="kn-nav-sub-link" onClick={closeMenu}>Salons &amp; Spas</Link></li>
-                    <li><Link href="/solutions/real-estate" className="kn-nav-sub-link" onClick={closeMenu}>Real Estate</Link></li>
-                    <li><Link href="/solutions/clinics-and-healthcare" className="kn-nav-sub-link" onClick={closeMenu}>Clinics &amp; Healthcare</Link></li>
-                    <li><Link href="/solutions/restaurants-and-cafes" className="kn-nav-sub-link" onClick={closeMenu}>Restaurants &amp; Cafes</Link></li>
                   </ul>
                 </div>
                 <div className="kn-nav-sub-col">
@@ -339,7 +336,7 @@ export function Navbar() {
 
               <div className="kn-overlay-footer" data-menu-fade>
                 <Link href="/contact" className="kn-cta-btn kn-cta-btn--large" onClick={closeMenu}>
-                  Get a Free Quote
+                  Start a Project
                 </Link>
                 <p className="kn-overlay-tagline">AI &amp; Custom Software · Mohali · Jalandhar</p>
               </div>

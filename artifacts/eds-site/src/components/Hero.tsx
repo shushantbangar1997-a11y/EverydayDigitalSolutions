@@ -1,13 +1,9 @@
 import { Link } from "wouter";
 import { motion, useReducedMotion } from "framer-motion";
-import { useGetSiteStats } from "@workspace/api-client-react";
 import { Check } from "lucide-react";
 
 export function Hero() {
   const prefersReducedMotion = useReducedMotion();
-  const { data: stats } = useGetSiteStats();
-  const projectsShipped = stats?.projectsShipped ?? 12;
-  const activeProjects = stats?.activeProjects ?? 3;
 
   const variants = {
     hidden: { opacity: 0, y: prefersReducedMotion ? 0 : 20 },
@@ -32,7 +28,7 @@ export function Hero() {
               <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75" />
               <span className="relative inline-flex rounded-full h-2 w-2 bg-primary" />
             </span>
-            <span>{activeProjects} projects in build · accepting 2 new clients</span>
+            <span>1 flagship project shipping · taking new clients for 2026</span>
           </motion.div>
           <motion.h1 variants={variants} className="font-serif leading-[1.1] text-foreground mb-6 lg:mb-8" style={{ fontSize: 'clamp(2.2rem, 6vw + 0.5rem, 5.25rem)' }}>
             The technology partner for <em className="text-primary font-serif italic">Tricity's</em> most ambitious businesses.
@@ -93,7 +89,7 @@ export function Hero() {
               <div className="w-full py-2 bg-primary rounded-sm text-center text-[11px] font-bold text-black tracking-wide">
                 Book Now
               </div>
-              <p className="text-center text-[10px] text-muted-foreground mt-2">Shipped in 30 days · 60% bookings went digital</p>
+              <p className="text-center text-[10px] text-muted-foreground mt-2">Shipped in 30 days · Launching May 2026</p>
             </div>
           </div>
 
@@ -104,8 +100,8 @@ export function Hero() {
               <span className="text-xs lg:text-sm text-muted-foreground">Average delivery</span>
             </div>
             <div className="flex flex-col gap-1 lg:gap-2">
-              <span className="text-2xl lg:text-3xl font-serif text-primary">{projectsShipped}+</span>
-              <span className="text-xs lg:text-sm text-muted-foreground">Projects shipped</span>
+              <span className="text-2xl lg:text-3xl font-serif text-primary">2</span>
+              <span className="text-xs lg:text-sm text-muted-foreground">In-house products built</span>
             </div>
             <div className="flex flex-col gap-1 lg:gap-2">
               <span className="text-2xl lg:text-3xl font-serif text-primary">Mohali</span>

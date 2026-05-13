@@ -1,4 +1,48 @@
 export const caseStudies = {
+  oneClickAssist: {
+    id: "one-click-assist",
+    title: "We built a social-scheduling and lead-capture SaaS so small businesses can post everywhere — and capture every enquiry.",
+    client: "Everyday Digital Solutions (In-House Product)",
+    tag: "IN-HOUSE PRODUCT · SOCIAL & LEAD GEN SAAS",
+    meta: {
+      launched: "2025",
+      category: "Social Media & Lead Generation SaaS"
+    },
+    dashboard: {
+      scheduledPosts: [
+        { platform: "IG", preview: "Diwali offer — early bird booking now open...", time: "Today, 3:00 PM", status: "SCHEDULED" },
+        { platform: "LI", preview: "5 reasons your salon needs a booking app in 2026...", time: "Today, 5:30 PM", status: "SCHEDULED" },
+        { platform: "FB", preview: "Client spotlight: 300 bookings in a single month", time: "Tomorrow, 10:00 AM", status: "DRAFT" },
+      ],
+      capturedLeads: [
+        { name: "R. Kapoor", source: "Instagram", time: "2m ago" },
+        { name: "S. Patel", source: "Facebook", time: "14m ago" },
+        { name: "M. Singh", source: "LinkedIn", time: "1h ago" },
+      ]
+    },
+    story: {
+      problem: "Small service businesses know they need to be active on Instagram, Facebook, and LinkedIn — but between running the shop, managing staff, and serving clients, social media is the first thing dropped. And when a potential client comments or DMs, no-one follows up fast enough.",
+      solution: "OneClickAssist is a SaaS dashboard where business owners schedule posts across all three platforms in one shot, generate AI-assisted captions, and capture every inbound lead from social comments and DMs into a simple CRM. One click to post. Every lead in one inbox.",
+      result: "OneClickAssist is live at oneclickassist.com, built and run in-house. The product serves Indian small business owners with content scheduling and lead capture across Instagram, Facebook, and LinkedIn."
+    },
+    features: [
+      "Post scheduling for Instagram, Facebook & LinkedIn",
+      "AI caption generation",
+      "Social inbox — all DMs and comments in one place",
+      "Lead capture from social interactions",
+      "Simple lead CRM with follow-up reminders",
+      "Analytics: reach, engagement, lead count",
+      "Team collaboration",
+      "White-label option for agencies"
+    ],
+    featuredMetrics: [
+      { value: "Live", label: "In production" },
+      { value: "3", label: "Platforms connected" },
+      { value: "SMB", label: "Indian market focus" }
+    ],
+    liveUrl: "https://oneclickassist.com"
+  },
+
   openHumana: {
     id: "open-humana",
     title: "We built the AI voice agent platform that lets sales teams stop dialling — and start closing.",
@@ -16,16 +60,17 @@ export const caseStudies = {
         { label: "Avg Duration", value: "3:42" }
       ],
       sampleCalls: [
-        { name: "Priya Sharma", status: "TRANSFERRED", duration: "4:12", time: "2m ago" },
-        { name: "Rajiv Mehta", status: "VOICEMAIL", duration: "0:28", time: "5m ago" },
-        { name: "Sunita Rao", status: "CONNECTED", duration: "6:47", time: "11m ago" },
-        { name: "Arjun Kapoor", status: "TRANSFERRED", duration: "3:55", time: "18m ago" }
+        { name: "P. Sharma", status: "TRANSFERRED", duration: "4:12", time: "2m ago" },
+        { name: "R. Verma", status: "VOICEMAIL", duration: "0:28", time: "5m ago" },
+        { name: "S. Kapoor", status: "CONNECTED", duration: "6:47", time: "11m ago" },
+        { name: "A. Singh", status: "TRANSFERRED", duration: "3:55", time: "18m ago" },
+        { name: "M. Khan", status: "VOICEMAIL", duration: "0:31", time: "24m ago" }
       ]
     },
     story: {
-      problem: "Sales reps at high-volume teams spend nearly 70% of their day on wasted dials — ringing out, hitting voicemail, navigating call trees. By the time a real human picks up, the rep's energy and call list are both depleted. Managers have no visibility into where time goes, and CRMs are full of stale data from calls that never connected.",
-      solution: "Open Humana deploys Alex, an AI voice agent that handles every outbound dial autonomously. Alex navigates voicemail, leaves personalised messages, and detects live pickups within milliseconds — instantly transferring the live call to a human rep with full context. The dashboard gives managers real-time visibility: total dials, transfers, voicemails, average handle time, and call-by-call history.",
-      result: "Teams using Open Humana report that reps spend 100% of their on-phone time speaking to live prospects — not dialling. Dial volume increases 5x to 10x because the AI never tires, never waits, and never misses a pickup. The result is a sales floor that exclusively closes."
+      problem: "Sales reps at high-volume teams spend nearly 70% of their day on wasted dials — ringing out, hitting voicemail, navigating call trees. By the time a real human picks up, the rep's energy and call list are both depleted.",
+      solution: "Open Humana deploys Alex, an AI voice agent that handles every outbound dial autonomously. Alex navigates voicemail, leaves personalised messages, and detects live pickups within milliseconds — instantly transferring the live call to a human rep with full context.",
+      result: "Open Humana is live and in production, serving sales teams across Indian and US markets. Calls are handled in Hindi, English, and Punjabi. The platform is actively used — results vary by team and campaign."
     },
     features: [
       "Autonomous AI outbound dialling (Alex)",
@@ -39,12 +84,12 @@ export const caseStudies = {
       "Call recording and transcripts",
       "Multi-team workspace support",
       "Custom AI voice and script editor",
-      "HIPAA-aware call handling options"
+      "Hindi, English & Punjabi language support"
     ],
     featuredMetrics: [
-      { value: "50+",   label: "Teams served" },
-      { value: "1,285", label: "Dials / day" },
-      { value: "3:42",  label: "Avg call duration" }
+      { value: "Live", label: "In production" },
+      { value: "IN + US", label: "Markets" },
+      { value: "3", label: "Languages" }
     ],
     industries: ["Real Estate", "Insurance", "SaaS SDR Teams", "Recruiting", "Financial Services"],
     liveUrl: "https://openhumana.com"
@@ -67,9 +112,9 @@ export const caseStudies = {
       "/photos/quasar/screen-05.png"
     ],
     story: {
-      problem: "Quasar Salon was growing fast, but their booking process was stuck in the past. Customers were calling the front desk, stylists were double-booked, and loyalty points were tracked on paper cards. They needed a digital experience that matched their premium in-salon service.",
-      solution: "We designed and shipped a custom iOS and Android app in 30 days. It featured real-time booking, stylist availability, an automated loyalty program, and push notifications for appointments.",
-      result: "Within the first month, 60% of bookings moved to the app. The front desk saves 4 hours a day, and no-shows dropped by 40% thanks to automated reminders."
+      problem: "Quasar Salon was growing fast, but their booking process was stuck in the past. Customers were calling the front desk, stylists were being double-booked, and loyalty points were tracked on paper cards. They needed a digital experience that matched their premium in-salon service.",
+      solution: "We designed and shipped a custom iOS and Android app in 30 days. It features real-time booking, stylist availability, an automated loyalty programme, and push notifications for appointments.",
+      result: "The app is built, tested, and launching May 2026. All 13 features shipped within the 30-day window — booking, loyalty, payments, staff dashboard, and push notifications. Quasar is Tricity's first salon with a fully custom-branded booking app."
     },
     features: [
       "Real-time Appointment Booking",
@@ -99,7 +144,7 @@ export const portfolioProjects = [
     category: "Custom Mobile App",
     client: "Quasar Salon",
     title: "Celebrity-grade salon app for Tricity's most-followed salon brand",
-    outcome: "60% of bookings moved digital within 30 days. 40% drop in no-shows.",
+    outcome: "Tricity's first custom-branded salon app. Shipped in 30 days. Launching May 2026.",
     tags: ["React Native", "Firebase", "iOS & Android"],
     hasFullCaseStudy: true,
     caseStudyUrl: "/work/quasar-salon"
@@ -109,59 +154,9 @@ export const portfolioProjects = [
     category: "AI Voice Agent",
     client: "Everyday Digital Solutions (In-House)",
     title: "AI dialler SaaS that transfers only live calls — reps exclusively close",
-    outcome: "1,285+ dials/day per campaign. 5x to 10x rep dial volume. Zero wasted rings.",
+    outcome: "Live in production. Serving sales teams across Indian and US markets in Hindi, English & Punjabi.",
     tags: ["AI Voice", "Node.js", "React", "SaaS"],
     hasFullCaseStudy: true,
     caseStudyUrl: "/work/open-humana"
-  },
-  {
-    id: "realty-voice",
-    category: "AI Voice Agent",
-    client: "Tricity Realty Group",
-    title: "24/7 AI sales agent handling inbound property enquiries in Hindi & English",
-    outcome: "320+ qualified leads contacted per month without a single human SDR.",
-    tags: ["Synthflow", "Twilio", "CRM Integration"],
-    hasFullCaseStudy: false,
-    caseStudyUrl: "/contact"
-  },
-  {
-    id: "medipulse",
-    category: "Custom Mobile App",
-    client: "MediPulse Clinics",
-    title: "Multi-location clinic booking app replacing phone queues across 4 branches",
-    outcome: "Patient wait-time complaints dropped by 70%. Staff freed from manual scheduling.",
-    tags: ["React Native", "Expo", "Firebase"],
-    hasFullCaseStudy: false,
-    caseStudyUrl: "/contact"
-  },
-  {
-    id: "growstack",
-    category: "Automation & AI",
-    client: "GrowStack Commerce",
-    title: "End-to-end order + CRM automation eliminating 8 hours of daily manual work",
-    outcome: "Order-to-dispatch time cut from 4 hours to 20 minutes. Zero manual data entry.",
-    tags: ["n8n", "WhatsApp API", "OpenAI"],
-    hasFullCaseStudy: false,
-    caseStudyUrl: "/contact"
-  },
-  {
-    id: "spiceroute",
-    category: "Custom Mobile App",
-    client: "Spice Route Restaurants",
-    title: "Table booking + loyalty app across 3 restaurant locations in Chandigarh",
-    outcome: "Weekend walk-in wait times eliminated. 35% repeat-visit rate via loyalty rewards.",
-    tags: ["React Native", "Razorpay", "Firebase"],
-    hasFullCaseStudy: false,
-    caseStudyUrl: "/contact"
-  },
-  {
-    id: "learnwithme",
-    category: "Automation & AI",
-    client: "LearnWithMe Coaching",
-    title: "WhatsApp-first lead nurture bot converting cold enquiries to paid enrolments",
-    outcome: "Lead-to-enrolment conversion up 3x. Founder reclaimed 2 hrs/day from manual follow-ups.",
-    tags: ["WhatsApp Business API", "n8n", "OpenAI"],
-    hasFullCaseStudy: false,
-    caseStudyUrl: "/contact"
   }
 ];
