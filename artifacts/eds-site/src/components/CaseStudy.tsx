@@ -315,6 +315,12 @@ export function CaseStudy() {
               >
                 Visit oneclickassist.com <ArrowUpRight className="w-4 h-4" />
               </a>
+              <Link
+                href="/contact"
+                className="border border-border bg-transparent text-foreground px-6 py-3 rounded-sm font-medium hover:bg-muted transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background"
+              >
+                Build something similar
+              </Link>
             </div>
           </div>
 

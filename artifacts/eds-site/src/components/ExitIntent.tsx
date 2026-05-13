@@ -53,7 +53,7 @@ export function ExitIntent() {
           Get the <em className="italic text-primary">App Cost Guide</em>.
         </h3>
         <p className="text-sm text-muted-foreground mb-5 leading-relaxed">
-          Built from 7 years of working with service businesses in Punjab. 18 pages. Free.
+          Built from 7 years of working with service businesses in Punjab, plus our 2026 flagship build for Quasar Salon. 18 pages. Free.
         </p>
         <LeadMagnet source="exit_intent" variant="compact" />
       </div>

@@ -70,7 +70,7 @@ export default function BlogIndex() {
               href="/contact"
               className="inline-flex items-center gap-2 bg-primary text-black px-8 py-4 rounded-sm font-medium hover:bg-primary/90 transition-colors"
             >
-              Get a Free Quote
+              Start a Project
             </a>
           </div>
         </div>

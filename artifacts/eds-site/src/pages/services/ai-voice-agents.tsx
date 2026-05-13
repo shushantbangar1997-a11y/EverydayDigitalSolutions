@@ -50,7 +50,7 @@ export default function AIVoiceAgents() {
           tag="Service — AI Voice Agents"
           headline={page.heroHeadline}
           paragraph={page.heroParagraph}
-          cta={{ label: "Get a Free Quote", href: "/contact" }}
+          cta={{ label: "Start a Project", href: "/contact" }}
         />
 
         {/* Stat bar */}

@@ -49,7 +49,7 @@ export default function ClinicsAndHealthcare() {
           tag="Solution — Clinics & Healthcare"
           headline={page.heroHeadline}
           paragraph={page.heroParagraph}
-          cta={{ label: "Get a Free Quote", href: "/contact" }}
+          cta={{ label: "Start a Project", href: "/contact" }}
         />
 
         {/* Problem / Solution */}

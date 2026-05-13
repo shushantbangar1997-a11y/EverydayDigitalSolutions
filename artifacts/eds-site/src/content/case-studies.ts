@@ -68,7 +68,7 @@ export const caseStudies = {
       ]
     },
     story: {
-      problem: "Sales reps at high-volume teams spend nearly 70% of their day on wasted dials — ringing out, hitting voicemail, navigating call trees. By the time a real human picks up, the rep's energy and call list are both depleted.",
+      problem: "Sales reps at high-volume outbound teams spend the majority of their dial time on unanswered calls — ringing out, hitting voicemail, navigating call trees. By the time a real human picks up, the rep's energy and call list are both depleted.",
       solution: "Open Humana deploys Alex, an AI voice agent that handles every outbound dial autonomously. Alex navigates voicemail, leaves personalised messages, and detects live pickups within milliseconds — instantly transferring the live call to a human rep with full context.",
       result: "Open Humana is live and in production, serving sales teams across Indian and US markets. Calls are handled in Hindi, English, and Punjabi. The platform is actively used — results vary by team and campaign."
     },
