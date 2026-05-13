@@ -41,6 +41,11 @@ export const caseStudies = {
       "Custom AI voice and script editor",
       "HIPAA-aware call handling options"
     ],
+    featuredMetrics: [
+      { value: "50+",   label: "Teams served" },
+      { value: "1,285", label: "Dials / day" },
+      { value: "3:42",  label: "Avg call duration" }
+    ],
     industries: ["Real Estate", "Insurance", "SaaS SDR Teams", "Recruiting", "Financial Services"],
     liveUrl: "https://openhumana.com"
   },

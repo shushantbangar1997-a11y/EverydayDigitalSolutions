@@ -239,7 +239,7 @@ export default function OpenHumanaCaseStudy() {
           <p className="text-muted-foreground text-sm mb-8">We build bespoke AI voice agents, dialler platforms, and outbound automation for sales teams across any industry.</p>
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
             <Link href="/contact" className="bg-primary text-black px-8 py-4 rounded-sm font-medium hover:bg-primary/90 transition-colors w-full sm:w-auto text-center">
-              Start a conversation
+              Start your project
             </Link>
             <Link href="/services/ai-voice-agents" className="border border-border bg-transparent text-foreground px-8 py-4 rounded-sm font-medium hover:bg-muted transition-colors w-full sm:w-auto text-center">
               Our AI voice service

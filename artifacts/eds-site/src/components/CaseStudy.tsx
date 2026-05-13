@@ -196,18 +196,12 @@ export function CaseStudy() {
                 </h3>
 
                 <div className="grid grid-cols-3 gap-4 w-full mb-12 border-y border-border/40 py-6">
-                  <div className="flex flex-col">
-                    <span className="text-2xl font-serif text-primary">50+</span>
-                    <span className="text-xs text-muted-foreground uppercase tracking-widest mt-1">Teams served</span>
-                  </div>
-                  <div className="flex flex-col">
-                    <span className="text-2xl font-serif text-primary">1,285</span>
-                    <span className="text-xs text-muted-foreground uppercase tracking-widest mt-1">Dials / day</span>
-                  </div>
-                  <div className="flex flex-col">
-                    <span className="text-2xl font-serif text-primary">3:42</span>
-                    <span className="text-xs text-muted-foreground uppercase tracking-widest mt-1">Avg call duration</span>
-                  </div>
+                  {oh.featuredMetrics.map((m) => (
+                    <div key={m.label} className="flex flex-col">
+                      <span className="text-2xl font-serif text-primary">{m.value}</span>
+                      <span className="text-xs text-muted-foreground uppercase tracking-widest mt-1">{m.label}</span>
+                    </div>
+                  ))}
                 </div>
 
                 <div className="flex flex-col gap-6 mb-12">
