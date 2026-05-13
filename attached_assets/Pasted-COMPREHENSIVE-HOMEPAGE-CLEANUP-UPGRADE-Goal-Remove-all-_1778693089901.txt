@@ -1,0 +1,279 @@
+COMPREHENSIVE HOMEPAGE CLEANUP + UPGRADE
+
+Goal: Remove all fabricated client case studies, fake metrics, and inflated 
+numbers. Replace with our real portfolio — products we've actually built 
+in-house. Honesty is non-negotiable: every claim on the live site must be 
+defensible if someone Googles it.
+
+═══════════════════════════════════════════════════════════════════
+PART 1 — REMOVE FABRICATED CONTENT (DELETE COMPLETELY)
+═══════════════════════════════════════════════════════════════════
+
+Delete these case study cards from the "Selected work" section entirely:
+  ❌ Tricity Realty Group ("320+ qualified leads contacted per month")
+  ❌ MediPulse Clinics ("Patient wait-time complaints dropped by 70%")
+  ❌ GrowStack Commerce ("Order-to-dispatch time cut from 4 hours to 20 mins")
+  ❌ Spice Route Restaurants ("Weekend walk-in wait times eliminated")
+  ❌ LearnWithMe Coaching ("Lead-to-enrolment conversion up 3x")
+
+Delete these fake client logos from the Trust Strip:
+  ❌ Tricity Realty Group (TRG)
+  ❌ MediPulse Clinics (MP)
+  ❌ GrowStack Commerce (GS)
+
+═══════════════════════════════════════════════════════════════════
+PART 2 — FIX FALSE STATS AND METRICS
+═══════════════════════════════════════════════════════════════════
+
+HERO STATUS BADGE:
+  CURRENT: "3 projects in build · accepting 2 new clients"
+  CHANGE TO: "1 flagship project shipping · taking new clients for 2026"
+
+HERO STATS PANEL (right column):
+  CURRENT: "12+ Projects shipped"
+  CHANGE TO: "2 in-house products built"
+  
+  Keep the other three stats as is:
+    ✅ 30 days · Average delivery
+    ✅ Mohali · Studio & home base
+    ✅ 2018 · Founded · 7 years building
+
+PHONE MOCKUP CAPTION (Quasar in hero):
+  CURRENT: "Shipped in 30 days · 60% bookings went digital"
+  CHANGE TO: "Shipped in 30 days · Launching May 2026"
+
+QUASAR CASE STUDY — THE "RESULT" PARAGRAPH:
+  CURRENT (fabricated, app hasn't launched yet):
+    "Within the first month, 60% of bookings moved to the app. The front 
+    desk saves 4 hours a day, and no-shows dropped by 40% thanks to 
+    automated reminders."
+  
+  CHANGE TO (truthful, pre-launch):
+    "Launching May 2026. The app brings real-time booking with stylist-
+    level availability, automated loyalty rewards, push notifications, 
+    customer history, and a staff dashboard. We'll update this page with 
+    real impact numbers as the data comes in."
+
+QUASAR CASE STUDY CARD (in the work grid below the featured one):
+  CURRENT: "60% of bookings moved digital within 30 days. 40% drop in no-shows."
+  CHANGE TO: "Tricity's first celebrity-grade salon app. Shipped in 30 days. 
+              Launching May 2026."
+
+APP COST GUIDE SECTION:
+  CURRENT: "Real numbers from 12+ shipped projects across salons, clinics, 
+            real estate and restaurants in Punjab."
+  CHANGE TO: "Built from 7 years of building digital systems for service 
+              businesses, plus our 2026 flagship build for Quasar Salon."
+
+FOOTER + ABOUT SECTION:
+  Wherever "7+ Years in business" / "30 days Avg. delivery" / "2018 Founded" 
+  stats appear, keep them — these are true.
+  
+  Wherever any "projects shipped" or "clients served" type count appears 
+  with a fabricated number, replace with our real portfolio context.
+
+═══════════════════════════════════════════════════════════════════
+PART 3 — OPEN HUMANA SECTION FIXES (already on page, needs honesty pass)
+═══════════════════════════════════════════════════════════════════
+
+The Open Humana section exists below Quasar. Make these changes to the 
+stats and copy:
+
+STATS ROW:
+  CURRENT: "50+ teams served · 1,285 dials/day · 3:42 avg call duration"
+  
+  If these numbers are NOT verifiably true from actual Open Humana production 
+  usage, replace with these honest alternatives:
+    "In production · Indian + US markets · Hindi, English & Punjabi voices"
+  
+  OR if Open Humana is being used by paying customers (even just 1-2), use 
+  truthful specifics like:
+    "In production · Powering outbound for [N] sales teams · 24/7 dialing"
+  
+  ASK SHUSHANT FOR THE REAL NUMBERS — do not keep "50+ teams served" or 
+  "1,285 dials/day" unless he confirms these are real, verifiable, 
+  current-state metrics from production usage.
+
+RESULT PARAGRAPH:
+  CURRENT: "Teams report reps spend 100% of their on-phone time with live 
+            prospects. Open Humana is live and serving sales teams today."
+  CHANGE TO: "Reps now spend nearly all of their phone time with live 
+              prospects instead of voicemails. Open Humana is live in 
+              production today."
+  
+  (Remove the "100%" because nothing is ever truly 100% — softens the claim 
+  to something defensible.)
+
+PROBLEM PARAGRAPH:
+  CURRENT: "Reps waste 70% of their day on unanswered dials and voicemails."
+  CHANGE TO: "SDR teams spend most of their day reaching voicemails, dead 
+              numbers, and gatekeepers — by the time a real prospect picks 
+              up, the energy is gone."
+  
+  (Removes the unverifiable "70%" claim while keeping the pain point sharp.)
+
+DASHBOARD MOCKUP:
+  Replace the gray redacted name bars with realistic placeholder names 
+  (P. Sharma, R. Verma, S. Kapoor, A. Singh, M. Khan). This makes the 
+  dashboard feel like a real working product instead of a wireframe with 
+  loading skeletons.
+
+═══════════════════════════════════════════════════════════════════
+PART 4 — ADD ONECLICKASSIST AS A SECOND IN-HOUSE PRODUCT SECTION
+═══════════════════════════════════════════════════════════════════
+
+Directly below the Open Humana section, add a mirrored section for our 
+second in-house product. Same visual structure as Open Humana (eyebrow tag, 
+headline with italic accent, stats row, problem/built/result, dual CTAs, 
+dashboard mockup on the left or right — alternate the side for visual 
+rhythm).
+
+EYEBROW TAG: "IN-HOUSE PRODUCT · SOCIAL & LEAD GEN SAAS"
+
+HEADLINE: 
+  "The all-in-one platform where social posting *meets pipeline*."
+  (italic gold accent on "meets pipeline")
+
+STATS ROW (honest — replace with real numbers if known, otherwise use 
+honest descriptors):
+  - "In production"
+  - "Multi-platform" 
+  - "Indian SMB focus"
+  
+  Or if Shushant has real numbers, use them — e.g., "[N] users · [X] posts 
+  scheduled · [Y] leads captured." Default to honest descriptors if numbers 
+  aren't verifiable.
+
+PROBLEM:
+  "Small businesses lose hours every week posting on Instagram, LinkedIn, 
+  and Facebook — then lose track of the leads those posts actually generate."
+
+WHAT WE BUILT:
+  "OneClickAssist: schedule posts across platforms, auto-engage with 
+  comments, and capture every lead that comes in — straight into a unified 
+  inbox. Built solo, in-house, designed for Indian SMB workflows."
+
+RESULT:
+  "Owners reclaim 5–10 hours a week and stop losing leads in DM threads. 
+  Now live, taking design partners for the 2026 cohort."
+
+DUAL CTAs:
+  Primary (gold): "Visit oneclickassist.com" (or whatever the live URL is — 
+                  if no live URL yet, change to "Coming soon")
+  Secondary (ghost): "Build something similar"
+
+DASHBOARD MOCKUP:
+  Create a similar app.oneclickassist.com mockup window with realistic 
+  social media post scheduling, lead capture rows, and engagement stats. 
+  Use realistic placeholder data — Instagram/LinkedIn/Facebook icons, post 
+  thumbnails as gold/dark rectangles, lead names like the Open Humana 
+  example.
+
+═══════════════════════════════════════════════════════════════════
+PART 5 — RESTRUCTURE THE "SELECTED WORK" SECTION
+═══════════════════════════════════════════════════════════════════
+
+After all the deletions in Part 1, the work section will have only Quasar 
+as a real case study. Restructure it as follows:
+
+NEW SECTION ORDER (top to bottom):
+
+  1. SECTION HEADER: "Selected work — *built & shipped.*"
+     Subhead: "One flagship client build. Two products we use ourselves 
+              every day. Real work, real code, real proof."
+  
+  2. FEATURED CASE STUDY: Quasar Salon (large, full-width card — keep the 
+     existing design with the screen-01.png image, problem/built/result 
+     story, owner quote, and two CTAs)
+  
+  3. SUBSECTION HEADER: "Our own products."
+     Subhead: "We don't just build for clients — we ship products of our 
+              own. Two AI-native platforms used in production today."
+  
+  4. PRODUCT 1: Open Humana (the existing section with all fixes from Part 3)
+  
+  5. PRODUCT 2: OneClickAssist (the new section from Part 4)
+  
+  6. CLOSING CTA: "Want this kind of work for your business? [Start a 
+     Project →]"
+
+Remove the existing 6-card case study grid entirely — it will be replaced 
+by this new structure.
+
+═══════════════════════════════════════════════════════════════════
+PART 6 — TRUST STRIP UPDATE
+═══════════════════════════════════════════════════════════════════
+
+CURRENT trust strip shows: "Trusted by Tricity's most ambitious brands" 
+with QS, TRG, MP, GS logos.
+
+CHANGE the heading to: "Featured client — Tricity's leading service brand"
+SHOW ONLY: Quasar Salon (full size, prominent)
+
+OR: Remove the trust strip entirely until we have a second real client. A 
+single client doesn't visually justify a "trusted by" wall.
+
+DEFAULT TO: Removing it entirely until we have 3+ real clients. Replace with 
+a single line below the hero CTAs: "Featured 2026 build: Quasar Salon, 
+Tricity's premier wellness destination."
+
+═══════════════════════════════════════════════════════════════════
+PART 7 — NAV "SOLUTIONS" MENU
+═══════════════════════════════════════════════════════════════════
+
+The Solutions menu currently lists: Salons & Spas, Real Estate, Clinics & 
+Healthcare, Restaurants & Cafes — but only the Salons solution is real.
+
+REMOVE from nav: Real Estate, Clinics & Healthcare, Restaurants & Cafes
+KEEP in nav: Salons & Spas (this links to a real page with the Quasar context)
+
+ALSO REMOVE the same three from the footer's Solutions section.
+
+We'll add the others back to the nav as we ship real case studies in those 
+verticals.
+
+═══════════════════════════════════════════════════════════════════
+PART 8 — FAQ ANSWERS NOT VISIBLE
+═══════════════════════════════════════════════════════════════════
+
+The FAQ section shows the 7 questions but the answers don't appear to be 
+expanding/showing on the live page. Verify the accordion is working — 
+clicking a question should expand to show the answer. If broken, fix the 
+JavaScript so the accordion functions properly. Only one Q open at a time.
+
+═══════════════════════════════════════════════════════════════════
+PART 9 — HERO CTA BUTTON LABEL
+═══════════════════════════════════════════════════════════════════
+
+CURRENT primary hero CTA: "Start a Project"
+CURRENT nav button: "Get a Free Quote"
+
+These are inconsistent and "Get a Free Quote" is the wrong positioning 
+(implies we're price-shopping competitors). 
+
+UNIFY both to: "Start a Project"
+
+Everywhere "Get a Free Quote" appears on the site, change to "Start a Project".
+
+═══════════════════════════════════════════════════════════════════
+EXECUTION ORDER
+═══════════════════════════════════════════════════════════════════
+
+1. Do all DELETIONS first (Part 1, Part 6, Part 7)
+2. Do all COPY CHANGES next (Part 2, Part 3, Part 9)
+3. Build the OneClickAssist section (Part 4) using the Open Humana section 
+   as the structural template
+4. Reorganize the work section (Part 5)
+5. Verify FAQ accordion is working (Part 8)
+6. Build, test, deploy
+7. Confirm the changes are live on production at 
+   https://www.everydaydigitalsolutions.com/ (not just Replit preview)
+
+After deployment, verify by viewing the live site in an incognito browser 
+window. The five fabricated case studies should be completely gone. The 
+Quasar metrics should reference "Launching May 2026" instead of fake 
+post-launch numbers. The two in-house products (Open Humana, OneClickAssist) 
+should be prominently featured as our real proof of capability.
+
+NOTHING on the site should make a claim we cannot defend with verifiable 
+evidence.
