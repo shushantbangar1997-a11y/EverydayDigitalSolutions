@@ -21,9 +21,9 @@ export const caseStudies = {
       ]
     },
     story: {
-      problem: "Small service businesses know they need to be active on Instagram, Facebook, and LinkedIn — but between running the shop, managing staff, and serving clients, social media is the first thing dropped. And when a potential client comments or DMs, no-one follows up fast enough.",
-      solution: "OneClickAssist is a SaaS dashboard where business owners schedule posts across all three platforms in one shot, generate AI-assisted captions, and capture every inbound lead from social comments and DMs into a simple CRM. One click to post. Every lead in one inbox.",
-      result: "OneClickAssist is live at oneclickassist.com, built and run in-house. The product serves Indian small business owners with content scheduling and lead capture across Instagram, Facebook, and LinkedIn."
+      problem: "Small service businesses need a consistent social presence to stay in the pipeline — but posting across Instagram, Facebook, and LinkedIn every day is a part-time job. Missed posts mean missed visibility. Missed DMs and comments mean missed leads.",
+      solution: "OneClickAssist is a SaaS dashboard that lets business owners schedule posts across all three platforms in one go, generate captions with AI, and capture every inbound lead from comments and DMs into a lightweight CRM. One click to post. Every enquiry in one inbox.",
+      result: "OneClickAssist is live at oneclickassist.com, built and run in-house. The platform serves Indian small business owners who need to stay visible and capture pipeline leads without hiring a social media team."
     },
     features: [
       "Post scheduling for Instagram, Facebook & LinkedIn",
@@ -70,7 +70,7 @@ export const caseStudies = {
     story: {
       problem: "Sales reps at high-volume outbound teams spend the majority of their dial time on unanswered calls — ringing out, hitting voicemail, navigating call trees. By the time a real human picks up, the rep's energy and call list are both depleted.",
       solution: "Open Humana deploys Alex, an AI voice agent that handles every outbound dial autonomously. Alex navigates voicemail, leaves personalised messages, and detects live pickups within milliseconds — instantly transferring the live call to a human rep with full context.",
-      result: "Open Humana is live and in production, serving sales teams across Indian and US markets. Calls are handled in Hindi, English, and Punjabi. The platform is actively used — results vary by team and campaign."
+      result: "Open Humana is live at openhumana.com. The platform serves sales teams across Indian and US markets with calls in Hindi, English, and Punjabi. Results depend on team size, call volume, and campaign type — contact us or visit the site for a demo."
     },
     features: [
       "Autonomous AI outbound dialling (Alex)",
@@ -114,7 +114,7 @@ export const caseStudies = {
     story: {
       problem: "Quasar Salon was growing fast, but their booking process was stuck in the past. Customers were calling the front desk, stylists were being double-booked, and loyalty points were tracked on paper cards. They needed a digital experience that matched their premium in-salon service.",
       solution: "We designed and shipped a custom iOS and Android app in 30 days. It features real-time booking, stylist availability, an automated loyalty programme, and push notifications for appointments.",
-      result: "The app is built, tested, and launching May 2026. All 13 features shipped within the 30-day window — booking, loyalty, payments, staff dashboard, and push notifications. Quasar is Tricity's first salon with a fully custom-branded booking app."
+      result: "The app is built, tested, and launching May 2026. All 13 features shipped within the 30-day build window. We will update this page with real impact numbers once the app is live — no made-up metrics here."
     },
     features: [
       "Real-time Appointment Booking",

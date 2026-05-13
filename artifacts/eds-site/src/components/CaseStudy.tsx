@@ -144,6 +144,7 @@ export function CaseStudy() {
         className="mb-8"
       >
         <p className="text-xs font-bold uppercase tracking-widest text-muted-foreground">Our own products</p>
+        <p className="text-sm text-muted-foreground mt-1">Built on our own time and conviction — no client, no client budget.</p>
       </motion.div>
 
       {/* Featured — Open Humana */}
@@ -271,15 +272,15 @@ export function CaseStudy() {
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,var(--accent-soft)_0%,transparent_70%)] opacity-10 pointer-events-none" />
 
         <div className="relative z-10 grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
-          {/* Content — left */}
-          <div className="flex flex-col items-start">
+          {/* Content */}
+          <div className="order-1 lg:order-2 flex flex-col items-start">
             <span className="inline-block bg-[var(--accent-soft)] text-primary px-3 py-1 text-xs font-bold tracking-wider rounded-full mb-6">
               {oca.tag}
             </span>
 
             <h3 className="text-3xl lg:text-4xl font-serif mb-10 leading-tight">
-              We built the social scheduler and lead-capture tool{" "}
-              <em className="text-primary italic">small businesses actually use</em>.
+              We built the social and pipeline tool that{" "}
+              <em className="text-primary italic">runs while you run your business</em>.
             </h3>
 
             <div className="grid grid-cols-3 gap-4 w-full mb-12 border-y border-border/40 py-6">
@@ -324,8 +325,8 @@ export function CaseStudy() {
             </div>
           </div>
 
-          {/* Dashboard mockup — right */}
-          <div>
+          {/* Dashboard mockup */}
+          <div className="order-2 lg:order-1">
             <div className="rounded-xl border border-border/60 overflow-hidden shadow-xl">
               <div className="bg-[#1a1a1a] border-b border-border/40 px-3 py-2.5 flex items-center gap-2.5">
                 <div className="flex gap-1.5">
