@@ -109,7 +109,9 @@ export const caseStudies = {
       "/photos/quasar/screen-02.png",
       "/photos/quasar/screen-03.png",
       "/photos/quasar/screen-04.png",
-      "/photos/quasar/screen-05.png"
+      "/photos/quasar/screen-05.png",
+      "/photos/quasar/screen-06.png",
+      "/photos/quasar/screen-07.png"
     ],
     story: {
       problem: "Quasar Salon was growing fast, but their booking process was stuck in the past. Customers were calling the front desk, stylists were being double-booked, and loyalty points were tracked on paper cards. They needed a digital experience that matched their premium in-salon service.",
