@@ -60,7 +60,7 @@ export function Footer() {
             <h4 className="font-serif text-base lg:text-lg mb-5">Get in touch</h4>
             <ul className="flex flex-col gap-3">
               <li>
-                <Link href="/contact" className="text-sm text-primary font-medium hover:text-primary/80 transition-colors">
+                <Link href="/contact" data-float="" className="text-sm text-primary font-medium hover:text-primary/80 transition-colors">
                   Start a Project
                 </Link>
               </li>

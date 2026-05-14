@@ -351,10 +351,10 @@ export function Navbar() {
 
               <div className="kn-overlay-footer" data-menu-fade>
                 <div style={{ display: "flex", gap: "12px", flexWrap: "wrap" }}>
-                  <Link href="/get-a-quote" className="kn-cta-btn kn-cta-btn--large" onClick={closeMenu}>
+                  <Link href="/get-a-quote" data-float="" className="kn-cta-btn kn-cta-btn--large" onClick={closeMenu}>
                     Get a Quote
                   </Link>
-                  <Link href="/contact" className="kn-cta-btn kn-cta-btn--large" style={{ background: "transparent", border: "1px solid rgba(255,255,255,0.2)", color: "inherit" }} onClick={closeMenu}>
+                  <Link href="/contact" data-float="" className="kn-cta-btn kn-cta-btn--large" style={{ background: "transparent", border: "1px solid rgba(255,255,255,0.2)", color: "inherit" }} onClick={closeMenu}>
                     Start a Project
                   </Link>
                 </div>

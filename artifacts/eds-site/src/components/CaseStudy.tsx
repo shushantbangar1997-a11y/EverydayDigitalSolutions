@@ -120,12 +120,14 @@ export function CaseStudy() {
             <div className="flex flex-wrap gap-4">
               <Link
                 href="/work/quasar-salon"
+                data-float=""
                 className="bg-primary text-black px-6 py-3 rounded-sm font-medium hover:bg-primary/90 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background"
               >
                 Read full case study
               </Link>
               <Link
                 href="/contact"
+                data-float=""
                 className="border border-border bg-transparent text-foreground px-6 py-3 rounded-sm font-medium hover:bg-muted transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background"
               >
                 Want this for your business
@@ -399,6 +401,7 @@ export function CaseStudy() {
         </p>
         <Link
           href="/contact"
+          data-float=""
           className="inline-flex items-center gap-2 bg-primary text-black px-8 py-3.5 rounded-sm font-medium hover:bg-primary/90 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background"
         >
           Start a Project

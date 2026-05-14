@@ -33,6 +33,7 @@ export function FinalCTA() {
         <div className="flex flex-wrap items-center justify-center gap-4">
           <Link
             href="/contact"
+            data-float=""
             className="bg-primary text-black px-8 py-4 rounded-sm font-medium hover:bg-primary/90 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background text-lg"
           >
             Start a Project
@@ -41,6 +42,7 @@ export function FinalCTA() {
             href={site.whatsapp}
             target="_blank"
             rel="noopener noreferrer"
+            data-float=""
             className="border border-border bg-transparent text-foreground px-8 py-4 rounded-sm font-medium hover:bg-muted transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background text-lg"
           >
             WhatsApp us

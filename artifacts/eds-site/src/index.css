@@ -609,6 +609,58 @@
 
 /* ─── End Glass utility classes ─────────────────────────────────────────── */
 
+/* ─── Glass Float — liquid lens lift on hover ────────────────────────────── */
+
+@media (hover: hover) {
+  @media (prefers-reduced-motion: no-preference) {
+    /* Elevated shadow when an element is floating — overrides base glass shadow */
+    .glass-float-active,
+    .glass.glass-float-active,
+    .glass-elevated.glass-float-active {
+      position: relative;
+      z-index: 10;
+      box-shadow:
+        0 32px 80px -12px rgba(0, 0, 0, 0.24),
+        0 10px 28px -8px  rgba(0, 0, 0, 0.14),
+        0 0 0 1px         rgba(255, 255, 255, 0.28),
+        inset 0 1px 0     rgba(255, 255, 255, 0.45);
+    }
+
+    .dark .glass-float-active,
+    .dark .glass.glass-float-active,
+    .dark .glass-elevated.glass-float-active {
+      box-shadow:
+        0 32px 80px -12px rgba(0, 0, 0, 0.55),
+        0 10px 28px -8px  rgba(0, 0, 0, 0.32),
+        0 0 0 1px         rgba(255, 255, 255, 0.12),
+        inset 0 1px 0     rgba(255, 255, 255, 0.14);
+    }
+
+    /* Specular glass sheen overlay — opaque [data-float] buttons only (not glass cards) */
+    [data-float]:not(.glass):not(.glass-elevated).glass-float-active {
+      position: relative;
+    }
+    [data-float]:not(.glass):not(.glass-elevated).glass-float-active::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border-radius: inherit;
+      background: linear-gradient(
+        135deg,
+        rgba(255, 255, 255, 0.22) 0%,
+        rgba(255, 255, 255, 0.04) 45%,
+        rgba(255, 255, 255, 0.14) 80%,
+        transparent 100%
+      );
+      pointer-events: none;
+      z-index: 1;
+      mix-blend-mode: overlay;
+    }
+  }
+}
+
+/* ─── End Glass Float ────────────────────────────────────────────────────── */
+
 /* ─── Smooth scrolling ───────────────────────────────────────────────────── */
 
 @media (prefers-reduced-motion: no-preference) {

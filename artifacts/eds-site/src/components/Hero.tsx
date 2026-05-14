@@ -49,6 +49,7 @@ export function Hero() {
           <motion.div variants={variants} className="flex flex-col sm:flex-row gap-3 sm:gap-4">
             <Link
               href="/contact"
+              data-float=""
               className="w-full sm:w-auto text-center bg-primary text-black px-6 py-3.5 sm:py-3 rounded-sm font-medium hover:bg-primary/90 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background"
             >
               Start a Project
