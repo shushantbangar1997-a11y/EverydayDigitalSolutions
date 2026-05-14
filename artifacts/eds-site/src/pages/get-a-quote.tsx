@@ -525,7 +525,7 @@ export default function GetAQuote() {
               <p className="font-serif text-5xl text-black">{fmtFull(quote.total)}</p>
               <p className="text-xs text-black/60 mt-2">+ GST / applicable taxes</p>
             </div>
-            <div className="bg-card border border-border/40 rounded-md p-8">
+            <div className="glass rounded-md p-8">
               <p className="text-xs font-bold uppercase tracking-widest text-muted-foreground mb-2">Delivery Window</p>
               <p className="font-serif text-5xl">{quote.delivery.minDays}–{quote.delivery.maxDays}</p>
               <p className="text-xs text-muted-foreground mt-2">working days from signed agreement</p>
@@ -533,13 +533,13 @@ export default function GetAQuote() {
           </div>
 
           {/* Executive summary */}
-          <div className="bg-card border border-border/40 rounded-md p-6 sm:p-8 mb-6">
+          <div className="glass rounded-md p-6 sm:p-8 mb-6">
             <h2 className="text-xs font-bold uppercase tracking-widest text-muted-foreground mb-4">Executive Summary</h2>
             <p className="text-base leading-relaxed">{quote.executiveSummary}</p>
           </div>
 
           {/* Scope items */}
-          <div className="bg-card border border-border/40 rounded-md p-6 sm:p-8 mb-6">
+          <div className="glass rounded-md p-6 sm:p-8 mb-6">
             <h2 className="text-xs font-bold uppercase tracking-widest text-muted-foreground mb-4">Scope of Work</h2>
             <ul className="space-y-3">
               {quote.scopeItems.map((item, i) => (
@@ -552,7 +552,7 @@ export default function GetAQuote() {
           </div>
 
           {/* Cost breakdown */}
-          <div className="bg-card border border-border/40 rounded-md overflow-hidden mb-6">
+          <div className="glass rounded-md overflow-hidden mb-6">
             <div className="px-6 sm:px-8 pt-6 pb-4">
               <h2 className="text-xs font-bold uppercase tracking-widest text-muted-foreground">Investment Breakdown</h2>
             </div>
@@ -576,7 +576,7 @@ export default function GetAQuote() {
           </div>
 
           {/* PDF email gate */}
-          <div className="bg-card border border-border/40 rounded-md p-6 sm:p-8 mb-4">
+          <div className="glass-elevated rounded-md p-6 sm:p-8 mb-4">
             {!pdfUnlocked ? (
               <>
                 <h2 className="text-xs font-bold uppercase tracking-widest text-muted-foreground mb-1">Download your proposal</h2>

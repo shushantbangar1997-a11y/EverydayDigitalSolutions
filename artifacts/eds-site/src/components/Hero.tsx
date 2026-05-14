@@ -23,7 +23,7 @@ export function Hero() {
         animate="visible"
       >
         <div className="max-w-3xl">
-          <motion.div variants={variants} className="inline-flex items-center gap-2 border border-border px-3 py-1 rounded-full text-xs font-medium tracking-wide text-muted-foreground mb-6 lg:mb-8">
+          <motion.div variants={variants} className="inline-flex items-center gap-2 glass px-3 py-1 rounded-full text-xs font-medium tracking-wide text-muted-foreground mb-6 lg:mb-8">
             <span className="relative flex h-2 w-2">
               <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75" />
               <span className="relative inline-flex rounded-full h-2 w-2 bg-primary" />
@@ -55,7 +55,7 @@ export function Hero() {
         <motion.div variants={variants} className="flex flex-col gap-6 lg:pl-10 lg:border-l border-border/40 pt-6 lg:pt-0 border-t lg:border-t-0 border-border/40 min-w-0">
           {/* Mini app preview — desktop only */}
           <div className="hidden lg:block">
-            <div className="bg-card border border-border/60 rounded-xl p-5 shadow-sm">
+            <div className="glass-elevated rounded-xl p-5">
               <div className="flex items-center justify-between mb-4">
                 <span className="text-[11px] font-medium text-muted-foreground uppercase tracking-widest">Quasar Salon · App</span>
                 <span className="flex h-2 w-2">

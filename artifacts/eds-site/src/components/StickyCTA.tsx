@@ -47,7 +47,7 @@ export function StickyCTA() {
 
   return (
     <div className="fixed bottom-0 inset-x-0 z-40 md:bottom-4 md:right-4 md:left-auto md:inset-x-auto md:max-w-md pointer-events-none">
-      <div className="pointer-events-auto bg-card border border-border md:rounded-md shadow-2xl px-4 py-3 md:px-5 md:py-4 flex items-center gap-3">
+      <div className="pointer-events-auto glass-elevated md:rounded-md px-4 py-3 md:px-5 md:py-4 flex items-center gap-3">
         <div className="flex-1 min-w-0">
           <p className="text-sm font-medium text-foreground leading-snug">
             Free 15-min scoping call.

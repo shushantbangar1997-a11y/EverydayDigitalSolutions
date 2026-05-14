@@ -53,7 +53,7 @@ Marketing site + lead-capture engine for an AI & custom software studio based in
 - **Lead capture is fail-soft**: a lead is persisted to Postgres BEFORE the WhatsApp call, and `sendWhatsApp()` never throws. If CallMeBot is down or env is missing, the lead is still saved and visible in `/admin`.
 - **Admin auth is intentionally minimal**: single password compared with `crypto.timingSafeEqual`, signed with `SESSION_SECRET`-keyed HMAC into an httpOnly cookie. There is no user table — this is a 1–2-person studio.
 - **Static-first frontend**: prerendered HTML for all marketing routes via `build-scripts/prerender.mjs`. `/admin` and `/resources/*` are deliberately excluded from the prerender list (admin is auth-gated, the resource page is reached from the lead magnet).
-- **No emojis, no purple/blue, no glassmorphism** anywhere in the UI — see User preferences.
+- **No emojis, no purple/blue** anywhere in the UI — see User preferences. Glass language is intentional (see below).
 
 ## Product
 
@@ -69,7 +69,7 @@ Marketing site + lead-capture engine for an AI & custom software studio based in
 
 - **No emojis** in UI copy or commit messages.
 - **No purple/blue accents.** Brand color is the gold/ochre primary already in the theme.
-- **No glassmorphism** (no frosted blurs over busy backgrounds).
+- **Intentional glass language** (not glassmorphism): semi-transparent fills + gradient edge highlights + soft shadow on cards, panels, navbar, and modals. `.glass` and `.glass-elevated` utility classes are defined in `index.css`. Text always sits on a solid tinted sublayer — never directly on a blurred backdrop. No frosted blurs over busy photo backgrounds.
 - **Smart guided form, NOT an AI chat.**
 - **No external email service** (Mailchimp, Brevo, etc.) — capture only.
 - **No Calendly or external scheduling** — the founder responds on WhatsApp.

@@ -92,7 +92,7 @@ export function LeadMagnet({
   }
 
   return (
-    <section className="bg-card/40 border-y border-border/50">
+    <section className="border-y border-border/50" style={{ background: "var(--glass-fill)" }}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 lg:py-20">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 items-center">
           <div>
@@ -112,7 +112,7 @@ export function LeadMagnet({
               <li className="flex items-start gap-2"><span className="text-primary mt-1">·</span><span>How to cut 30–50% by sequencing features correctly</span></li>
             </ul>
           </div>
-          <div className="bg-card border border-border rounded-md p-6 sm:p-8">
+          <div className="glass-elevated rounded-md p-6 sm:p-8">
             <h3 className="font-serif text-xl text-foreground mb-1">Get the guide</h3>
             <p className="text-sm text-muted-foreground mb-5">Enter your email — opens immediately in a new tab.</p>
             {submitted ? (

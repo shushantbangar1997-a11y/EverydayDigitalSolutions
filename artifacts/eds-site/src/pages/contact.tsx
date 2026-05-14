@@ -526,7 +526,7 @@ export default function Contact() {
             </div>
           </div>
 
-          <div className="bg-card border border-border/40 rounded-md p-6 sm:p-8 lg:p-10">
+          <div className="glass-elevated rounded-md p-6 sm:p-8 lg:p-10">
             <StepDots step={step} />
 
             {step === 0 && (
