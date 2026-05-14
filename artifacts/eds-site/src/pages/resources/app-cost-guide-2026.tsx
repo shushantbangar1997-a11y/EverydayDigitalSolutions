@@ -116,7 +116,7 @@ export default function AppCostGuide2026() {
           </ol>
 
           <h2>Want a sanity-check on your project?</h2>
-          <p className="not-prose bg-card border border-border rounded-md p-6 my-8">
+          <p className="not-prose bg-card border border-border rounded-xl p-6 my-8">
             We do free 15-minute scoping calls. No pitch — just a number, a timeline, and what to watch out for. WhatsApp{" "}
             <a href={site.whatsapp} target="_blank" rel="noopener noreferrer" className="text-primary underline">
               {site.phone}

@@ -28,7 +28,7 @@ export function AboutSection() {
         whileInView="visible"
         viewport={{ once: true, margin: "-100px" }}
         variants={variants}
-        className="glass rounded-md p-6 sm:p-8 lg:p-12"
+        className="glass rounded-2xl p-6 sm:p-8 lg:p-12"
       >
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 items-start">
 

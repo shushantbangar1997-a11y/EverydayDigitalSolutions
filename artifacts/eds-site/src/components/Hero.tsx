@@ -81,7 +81,7 @@ export function Hero() {
                   </span>
                 </div>
                 <div className="space-y-2 mb-4">
-                  <div className="flex items-center gap-2.5 p-2.5 bg-background rounded-md border border-border/40">
+                  <div className="flex items-center gap-2.5 p-2.5 bg-background rounded-xl border border-border/40">
                     <div className="w-6 h-6 rounded-full bg-primary/20 shrink-0" />
                     <div className="flex-1 min-w-0">
                       <div className="text-xs font-medium text-foreground">Appointment confirmed</div>
@@ -89,14 +89,14 @@ export function Hero() {
                     </div>
                     <Check className="w-3.5 h-3.5 text-primary shrink-0" />
                   </div>
-                  <div className="flex items-center gap-2.5 p-2.5 bg-background rounded-md border border-border/40 opacity-60">
+                  <div className="flex items-center gap-2.5 p-2.5 bg-background rounded-xl border border-border/40 opacity-60">
                     <div className="w-6 h-6 rounded-full bg-border shrink-0" />
                     <div className="flex-1 min-w-0">
                       <div className="text-xs text-foreground">New booking request</div>
                       <div className="text-[10px] text-muted-foreground">Tomorrow, 11:00 AM</div>
                     </div>
                   </div>
-                  <div className="flex items-center gap-2.5 p-2.5 bg-background rounded-md border border-border/40 opacity-40">
+                  <div className="flex items-center gap-2.5 p-2.5 bg-background rounded-xl border border-border/40 opacity-40">
                     <div className="w-6 h-6 rounded-full bg-border shrink-0" />
                     <div className="flex-1 min-w-0">
                       <div className="text-xs text-foreground">Loyalty reward earned</div>

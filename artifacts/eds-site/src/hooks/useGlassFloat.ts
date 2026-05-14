@@ -19,7 +19,7 @@ function floatTarget(node: Element | null): HTMLElement | null {
   while (el && el !== document.documentElement) {
     if (el instanceof HTMLElement) {
       const hasFloat = el.dataset.float !== undefined;
-      const hasGlass = el.classList.contains("glass") || el.classList.contains("glass-elevated");
+      const hasGlass = el.classList.contains("glass") || el.classList.contains("glass-elevated") || el.classList.contains("btn-glass-primary") || el.classList.contains("btn-glass-neutral");
       if (hasFloat || hasGlass) {
         const pos = getComputedStyle(el).position;
         if (pos === "fixed" || pos === "sticky") return null;

@@ -19,7 +19,7 @@ const DEFAULT_TEMPLATE = (name: string, project: string, url: string) =>
 function LockGate() {
   return (
     <main className="min-h-[100dvh] flex items-center justify-center px-4 bg-background">
-      <div className="w-full max-w-sm bg-card border border-border rounded-md p-8 space-y-4 text-center">
+      <div className="w-full max-w-sm bg-card border border-border rounded-2xl p-8 space-y-4 text-center">
         <Lock className="w-6 h-6 text-primary mx-auto" />
         <h1 className="font-serif text-2xl text-foreground">Admin only</h1>
         <p className="text-sm text-muted-foreground">

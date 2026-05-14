@@ -207,7 +207,7 @@ export default function OpenHumanaCaseStudy() {
             ].map((tech) => (
               <span
                 key={tech}
-                className="px-3 py-1.5 text-xs font-mono border border-border/60 rounded text-muted-foreground bg-card"
+                className="px-3 py-1.5 text-xs font-mono border border-border/60 rounded-full text-muted-foreground bg-card"
               >
                 {tech}
               </span>
@@ -217,7 +217,7 @@ export default function OpenHumanaCaseStudy() {
 
         {/* Live product link */}
         <div className="max-w-xl mx-auto px-4 sm:px-6 lg:px-8 mb-10">
-          <div className="bg-card border border-border/40 p-6 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 rounded-lg">
+          <div className="bg-card border border-border/40 p-6 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 rounded-2xl">
             <div>
               <p className="text-xs font-mono text-muted-foreground mb-1">Live Product</p>
               <p className="text-sm font-medium text-foreground">Open Humana is live and serving teams today.</p>

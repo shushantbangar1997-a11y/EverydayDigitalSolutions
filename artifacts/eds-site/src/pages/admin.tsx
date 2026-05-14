@@ -39,7 +39,7 @@ function LoginForm({ onSuccess }: { onSuccess: () => void }) {
 
   return (
     <main className="min-h-[100dvh] flex items-center justify-center px-4 bg-background">
-      <form onSubmit={submit} className="w-full max-w-sm bg-card border border-border rounded-md p-8 space-y-5">
+      <form onSubmit={submit} className="w-full max-w-sm bg-card border border-border rounded-2xl p-8 space-y-5">
         <div className="flex items-center gap-3">
           <Lock className="w-5 h-5 text-primary" />
           <h1 className="font-serif text-2xl text-foreground">Admin</h1>
@@ -109,7 +109,7 @@ function LeadRow({ lead }: { lead: import("@workspace/api-client-react").Lead })
   };
 
   return (
-    <div className="border border-border rounded-md bg-card">
+    <div className="border border-border rounded-2xl bg-card">
       <button
         onClick={() => setOpen((o) => !o)}
         className="w-full text-left p-4 flex flex-wrap items-center gap-3 hover:bg-muted/30 transition-colors"
@@ -284,7 +284,7 @@ function Dashboard({ onLogout }: { onLogout: () => void }) {
           <TabsContent value="subscribers" className="mt-6">
             {subs.isLoading && <p className="text-sm text-muted-foreground">Loading…</p>}
             {subs.data?.length === 0 && <p className="text-sm text-muted-foreground">No subscribers yet.</p>}
-            <div className="border border-border rounded-md bg-card overflow-hidden">
+            <div className="border border-border rounded-2xl bg-card overflow-hidden">
               {subs.data?.map((s) => (
                 <div key={s.id} className="px-4 py-3 border-b last:border-0 border-border flex items-center justify-between gap-3 text-sm">
                   <span className="text-foreground">{s.email}</span>

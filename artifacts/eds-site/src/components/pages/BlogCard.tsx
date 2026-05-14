@@ -8,7 +8,7 @@ interface BlogCardProps {
 
 export function BlogCard({ post }: BlogCardProps) {
   return (
-    <article className="bg-card border border-border/40 p-6 sm:p-8 flex flex-col hover:border-primary transition-colors duration-300 group">
+    <article className="glass rounded-2xl p-6 sm:p-8 flex flex-col hover:border-primary/60 transition-colors duration-300 group">
       <div className="flex flex-wrap gap-2 mb-4">
         {post.tags.slice(0, 2).map((tag) => (
           <span
@@ -34,6 +34,7 @@ export function BlogCard({ post }: BlogCardProps) {
         </span>
         <Link
           href={`/blog/${post.slug}`}
+          data-float=""
           className="inline-flex items-center gap-1 text-sm font-medium text-primary hover:gap-2 transition-all"
         >
           Read <ArrowRight className="w-3 h-3" />
