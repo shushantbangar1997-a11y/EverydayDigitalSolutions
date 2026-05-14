@@ -160,7 +160,7 @@ export function LocalityPageView({ page }: { page: LocalityPage }) {
             <h2 className="text-lg font-serif mb-4 text-muted-foreground">We also serve</h2>
             <div className="flex flex-wrap gap-3">
               {page.nearbyLocalities.map((link) => (
-                <Link key={link.href} href={link.href} className="border border-border/40 text-sm text-muted-foreground hover:text-foreground hover:border-primary px-4 py-2 transition-colors">
+                <Link key={link.href} href={link.href} className="glass rounded-full text-sm text-muted-foreground hover:text-foreground hover:border-primary/60 px-4 py-2 transition-colors">
                   {link.label}
                 </Link>
               ))}

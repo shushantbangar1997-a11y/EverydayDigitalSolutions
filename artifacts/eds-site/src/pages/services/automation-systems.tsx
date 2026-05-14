@@ -57,11 +57,11 @@ export default function AutomationSystems() {
 
         {/* Problem / Solution */}
         <section className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 pb-16 lg:pb-24 grid grid-cols-1 md:grid-cols-2 gap-10">
-          <div className="bg-card border border-border/40 p-8">
+          <div className="glass rounded-2xl p-8">
             <h2 className="font-serif text-xl mb-4">{page.problemHeading}</h2>
             <p className="text-sm text-muted-foreground leading-relaxed">{page.problemText}</p>
           </div>
-          <div className="bg-primary/5 border border-primary/20 p-8">
+          <div className="bg-[var(--accent-soft)] border border-primary/20 rounded-2xl p-8">
             <h2 className="font-serif text-xl mb-4">{page.solutionHeading}</h2>
             <p className="text-sm text-muted-foreground leading-relaxed">{page.solutionText}</p>
           </div>
@@ -74,7 +74,7 @@ export default function AutomationSystems() {
           <h2 className="text-2xl font-serif mb-6 text-center">Tools we work with</h2>
           <div className="flex flex-wrap gap-3 justify-center">
             {tools.map((tool) => (
-              <span key={tool} className="border border-border/40 bg-card text-sm text-muted-foreground px-4 py-2 font-mono">
+              <span key={tool} className="border border-border/40 rounded-full text-sm text-muted-foreground px-4 py-2 font-mono">
                 {tool}
               </span>
             ))}
@@ -88,7 +88,7 @@ export default function AutomationSystems() {
           <h2 className="text-2xl font-serif mb-6 text-center">Who we automate for</h2>
           <div className="flex flex-wrap gap-3 justify-center">
             {page.industries.map((ind) => (
-              <span key={ind} className="border border-border/40 text-sm text-muted-foreground px-4 py-2">
+              <span key={ind} className="border border-border/40 rounded-full text-sm text-muted-foreground px-4 py-2">
                 {ind}
               </span>
             ))}
@@ -97,7 +97,7 @@ export default function AutomationSystems() {
 
         {/* Blog link */}
         <section className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 pb-10">
-          <div className="bg-card border border-border/40 p-6 sm:p-8 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+          <div className="glass rounded-2xl p-6 sm:p-8 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
             <div>
               <p className="text-xs font-mono text-muted-foreground mb-1">Blog</p>
               <p className="font-serif text-lg">Business automation for service businesses in Punjab: what to automate first and why.</p>
@@ -112,11 +112,11 @@ export default function AutomationSystems() {
         <section className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 pb-16">
           <h2 className="text-xl font-serif mb-6">Related services</h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            <Link href="/services/ai-voice-agents" className="border border-border/40 bg-card p-5 hover:border-primary transition-colors group">
+            <Link href="/services/ai-voice-agents" className="glass rounded-2xl p-5 hover:border-primary/60 transition-colors group">
               <p className="font-medium text-foreground mb-1 text-sm group-hover:text-primary transition-colors">AI Voice Agents</p>
               <p className="text-xs text-muted-foreground">Automated lead qualification in Hindi, English & Punjabi. 60-second first call response.</p>
             </Link>
-            <Link href="/services/mobile-app-development" className="border border-border/40 bg-card p-5 hover:border-primary transition-colors group">
+            <Link href="/services/mobile-app-development" className="glass rounded-2xl p-5 hover:border-primary/60 transition-colors group">
               <p className="font-medium text-foreground mb-1 text-sm group-hover:text-primary transition-colors">Custom Mobile Apps</p>
               <p className="text-xs text-muted-foreground">Native iOS & Android apps for service businesses. Shipped in 30 days.</p>
             </Link>

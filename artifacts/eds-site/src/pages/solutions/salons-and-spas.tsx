@@ -54,11 +54,11 @@ export default function SalonsAndSpas() {
 
         {/* Problem / Solution */}
         <section className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 pb-16 lg:pb-24 grid grid-cols-1 md:grid-cols-2 gap-10">
-          <div className="bg-card border border-border/40 p-8">
+          <div className="glass rounded-2xl p-8">
             <h2 className="font-serif text-xl mb-4">{page.problemHeading}</h2>
             <p className="text-sm text-muted-foreground leading-relaxed">{page.problemText}</p>
           </div>
-          <div className="bg-primary/5 border border-primary/20 p-8">
+          <div className="bg-[var(--accent-soft)] border border-primary/20 rounded-2xl p-8">
             <h2 className="font-serif text-xl mb-4">{page.solutionHeading}</h2>
             <p className="text-sm text-muted-foreground leading-relaxed">{page.solutionText}</p>
           </div>
@@ -69,7 +69,7 @@ export default function SalonsAndSpas() {
         {/* Case study callout */}
         {page.caseStudyLink && (
           <section className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-10 pb-16">
-            <div className="bg-card border border-primary/30 p-6 sm:p-8 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+            <div className="glass border border-primary/30 rounded-2xl p-6 sm:p-8 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
               <div>
                 <p className="text-xs font-mono text-primary mb-1">Case Study</p>
                 <p className="font-serif text-lg">Quasar Salon — Tricity's first celebrity-grade booking app. Built in 30 days. 60% of bookings digital in month one.</p>
@@ -85,11 +85,11 @@ export default function SalonsAndSpas() {
         <section className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 pb-16">
           <h2 className="text-xl font-serif mb-6">Take it further</h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            <Link href="/services/mobile-app-development" className="border border-border/40 bg-card p-5 hover:border-primary transition-colors group">
+            <Link href="/services/mobile-app-development" className="glass rounded-2xl p-5 hover:border-primary/60 transition-colors group">
               <p className="font-medium text-foreground mb-1 text-sm group-hover:text-primary transition-colors">Custom Mobile App Development</p>
               <p className="text-xs text-muted-foreground">Everything that goes into building your branded iOS & Android app.</p>
             </Link>
-            <Link href="/services/automation-systems" className="border border-border/40 bg-card p-5 hover:border-primary transition-colors group">
+            <Link href="/services/automation-systems" className="glass rounded-2xl p-5 hover:border-primary/60 transition-colors group">
               <p className="font-medium text-foreground mb-1 text-sm group-hover:text-primary transition-colors">Automation & AI Systems</p>
               <p className="text-xs text-muted-foreground">WhatsApp reminders, re-engagement campaigns, and CRM automation for your salon.</p>
             </Link>

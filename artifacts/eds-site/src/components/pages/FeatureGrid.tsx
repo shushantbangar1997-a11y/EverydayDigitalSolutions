@@ -16,7 +16,7 @@ export function FeatureGrid({ heading, features }: FeatureGridProps) {
         {features.map((f) => (
           <div
             key={f.title}
-            className="bg-card border border-border/40 p-6 hover:border-primary transition-colors duration-300"
+            className="glass rounded-2xl p-6 hover:border-primary/60 transition-colors duration-300"
           >
             <span className="block w-1.5 h-1.5 rounded-full bg-primary mb-4" />
             <h3 className="font-medium text-foreground mb-2 text-sm">{f.title}</h3>

@@ -19,10 +19,10 @@ export function InlinePageFAQ({ heading = "Frequently Asked Questions", items }:
       <h2 className="text-2xl sm:text-3xl font-serif mb-10">{heading}</h2>
       <div className="flex flex-col gap-3">
         {items.map((item, i) => (
-          <div key={i} className="border border-border/40 bg-card">
+          <div key={i} className="glass rounded-2xl overflow-hidden">
             <button
               onClick={() => setOpen(open === i ? null : i)}
-              className="w-full flex items-center justify-between gap-4 p-5 text-left hover:bg-muted/30 transition-colors"
+              className="w-full flex items-center justify-between gap-4 p-5 text-left hover:bg-[var(--glass-fill)] transition-colors"
               aria-expanded={open === i}
             >
               <span className="font-medium text-foreground text-sm sm:text-base">{item.q}</span>

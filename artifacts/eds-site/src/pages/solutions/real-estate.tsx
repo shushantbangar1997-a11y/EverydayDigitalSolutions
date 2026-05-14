@@ -54,7 +54,7 @@ export default function RealEstate() {
 
         {/* Stat bar */}
         <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 pb-12">
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 border border-border/40 bg-card p-6 sm:p-8">
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 glass rounded-2xl p-6 sm:p-8">
             {[
               { stat: "60 sec", label: "First lead response time" },
               { stat: "40–60%", label: "Leads lost to response lag (industry average)" },
@@ -70,11 +70,11 @@ export default function RealEstate() {
 
         {/* Problem / Solution */}
         <section className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 pb-16 lg:pb-24 grid grid-cols-1 md:grid-cols-2 gap-10">
-          <div className="bg-card border border-border/40 p-8">
+          <div className="glass rounded-2xl p-8">
             <h2 className="font-serif text-xl mb-4">{page.problemHeading}</h2>
             <p className="text-sm text-muted-foreground leading-relaxed">{page.problemText}</p>
           </div>
-          <div className="bg-primary/5 border border-primary/20 p-8">
+          <div className="bg-[var(--accent-soft)] border border-primary/20 rounded-2xl p-8">
             <h2 className="font-serif text-xl mb-4">{page.solutionHeading}</h2>
             <p className="text-sm text-muted-foreground leading-relaxed">{page.solutionText}</p>
           </div>
@@ -84,7 +84,7 @@ export default function RealEstate() {
 
         {/* Blog callout */}
         <section className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-10 pb-16">
-          <div className="bg-card border border-border/40 p-6 sm:p-8 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+          <div className="glass rounded-2xl p-6 sm:p-8 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
             <div>
               <p className="text-xs font-mono text-muted-foreground mb-1">Blog</p>
               <p className="font-serif text-lg">AI voice agents for real estate in India — how developers are closing leads while they sleep.</p>
@@ -99,11 +99,11 @@ export default function RealEstate() {
         <section className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 pb-16">
           <h2 className="text-xl font-serif mb-6">Related services</h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            <Link href="/services/ai-voice-agents" className="border border-border/40 bg-card p-5 hover:border-primary transition-colors group">
+            <Link href="/services/ai-voice-agents" className="glass rounded-2xl p-5 hover:border-primary/60 transition-colors group">
               <p className="font-medium text-foreground mb-1 text-sm group-hover:text-primary transition-colors">AI Voice Agents</p>
               <p className="text-xs text-muted-foreground">Full detail on how our AI voice agents work and what they cost to deploy.</p>
             </Link>
-            <Link href="/services/automation-systems" className="border border-border/40 bg-card p-5 hover:border-primary transition-colors group">
+            <Link href="/services/automation-systems" className="glass rounded-2xl p-5 hover:border-primary/60 transition-colors group">
               <p className="font-medium text-foreground mb-1 text-sm group-hover:text-primary transition-colors">Automation & AI Systems</p>
               <p className="text-xs text-muted-foreground">WhatsApp drip sequences, CRM automation, and lead nurture workflows.</p>
             </Link>
