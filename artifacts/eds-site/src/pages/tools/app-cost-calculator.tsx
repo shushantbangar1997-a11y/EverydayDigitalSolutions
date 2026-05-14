@@ -178,7 +178,7 @@ export default function AppCostCalculator() {
 
         <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 pb-20 grid grid-cols-1 lg:grid-cols-[1.4fr_1fr] gap-8">
           {/* Form */}
-          <div className="space-y-8 bg-card border border-border rounded-md p-6 sm:p-8">
+          <div className="space-y-8 glass-elevated rounded-2xl p-6 sm:p-8">
             {/* App type */}
             <div>
               <Label className="text-xs font-bold uppercase tracking-widest text-muted-foreground mb-3 block">App type</Label>
@@ -188,8 +188,8 @@ export default function AppCostCalculator() {
                     key={t}
                     type="button"
                     onClick={() => setAppType(t)}
-                    className={`text-left p-4 border rounded-sm transition-colors ${
-                      appType === t ? "border-primary bg-primary/5" : "border-border hover:border-primary/40"
+                    className={`text-left p-4 border rounded-xl transition-colors ${
+                      appType === t ? "border-primary/60 bg-[var(--accent-soft)]" : "border-[var(--glass-stroke)] bg-[var(--glass-fill)] hover:border-primary/30 hover:bg-[var(--glass-fill-elevated)]"
                     }`}
                   >
                     <p className="font-medium text-sm text-foreground">{APP_TYPE_BASE[t].label}</p>
@@ -208,8 +208,8 @@ export default function AppCostCalculator() {
                     key={p}
                     type="button"
                     onClick={() => togglePlatform(p)}
-                    className={`p-3 border rounded-sm text-sm font-medium transition-colors ${
-                      platforms.has(p) ? "border-primary bg-primary/5 text-primary" : "border-border text-muted-foreground hover:border-primary/40"
+                    className={`p-3 border rounded-xl text-sm font-medium transition-colors ${
+                      platforms.has(p) ? "border-primary/60 bg-[var(--accent-soft)] text-foreground" : "border-[var(--glass-stroke)] bg-[var(--glass-fill)] text-muted-foreground hover:border-primary/30 hover:bg-[var(--glass-fill-elevated)]"
                     }`}
                   >
                     {PLATFORM_MULTIPLIER[p].label}
@@ -227,8 +227,8 @@ export default function AppCostCalculator() {
                     key={f.id}
                     type="button"
                     onClick={() => toggleFeature(f.id)}
-                    className={`text-left p-3 border rounded-sm transition-colors ${
-                      features.has(f.id) ? "border-primary bg-primary/5" : "border-border hover:border-primary/40"
+                    className={`text-left p-3 border rounded-xl transition-colors ${
+                      features.has(f.id) ? "border-primary/60 bg-[var(--accent-soft)]" : "border-[var(--glass-stroke)] bg-[var(--glass-fill)] hover:border-primary/30 hover:bg-[var(--glass-fill-elevated)]"
                     }`}
                   >
                     <p className="text-sm font-medium text-foreground">{f.label}</p>
@@ -247,8 +247,8 @@ export default function AppCostCalculator() {
                     key={r}
                     type="button"
                     onClick={() => setRegion(r)}
-                    className={`w-full text-left p-3 border rounded-sm transition-colors ${
-                      region === r ? "border-primary bg-primary/5" : "border-border hover:border-primary/40"
+                    className={`w-full text-left p-3 border rounded-xl transition-colors ${
+                      region === r ? "border-primary/60 bg-[var(--accent-soft)]" : "border-[var(--glass-stroke)] bg-[var(--glass-fill)] hover:border-primary/30 hover:bg-[var(--glass-fill-elevated)]"
                     }`}
                   >
                     <div className="flex items-baseline justify-between gap-3">
@@ -264,7 +264,7 @@ export default function AppCostCalculator() {
 
           {/* Result */}
           <div className="space-y-6">
-            <div className="bg-card border border-primary/40 rounded-md p-6">
+            <div className="glass-elevated border border-primary/40 rounded-2xl p-6">
               <p className="text-xs font-bold uppercase tracking-widest text-muted-foreground mb-3">Estimated budget</p>
               <p className="font-serif text-3xl sm:text-4xl text-foreground">
                 {formatINR(result.low)} <span className="text-muted-foreground">—</span> {formatINR(result.high)}
@@ -274,7 +274,7 @@ export default function AppCostCalculator() {
               </p>
             </div>
 
-            <div className="bg-card border border-border rounded-md p-6 text-sm space-y-2">
+            <div className="glass rounded-2xl p-6 text-sm space-y-2">
               <p className="text-xs font-bold uppercase tracking-widest text-muted-foreground mb-2">Breakdown</p>
               <div className="flex justify-between"><span className="text-muted-foreground">Base ({APP_TYPE_BASE[appType].label})</span><span className="tabular-nums">{formatINR(result.base)}</span></div>
               <div className="flex justify-between"><span className="text-muted-foreground">Features ({features.size})</span><span className="tabular-nums">{formatINR(result.featuresCost)}</span></div>
@@ -282,7 +282,7 @@ export default function AppCostCalculator() {
               <div className="flex justify-between"><span className="text-muted-foreground">Team region</span><span className="tabular-nums">×{REGION_MULTIPLIER[region].multiplier.toFixed(2)}</span></div>
             </div>
 
-            <div className="bg-card border border-border rounded-md p-6">
+            <div className="glass-elevated rounded-2xl p-6">
               <h3 className="font-serif text-lg text-foreground mb-2">Email me this estimate</h3>
               <p className="text-xs text-muted-foreground mb-4">
                 We'll send the breakdown to your inbox so you can share it internally. No spam — just this one email.
@@ -300,12 +300,12 @@ export default function AppCostCalculator() {
                     placeholder="you@business.com"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
-                    className="bg-background border-border rounded-sm"
+                    className="bg-[var(--glass-fill)] border-[var(--glass-stroke)] rounded-xl"
                   />
                   <Button
                     type="submit"
                     disabled={subscribe.isPending}
-                    className="w-full rounded-sm font-medium"
+                    className="w-full rounded-full font-medium"
                   >
                     {subscribe.isPending ? "Sending..." : "Email me this estimate"}
                   </Button>

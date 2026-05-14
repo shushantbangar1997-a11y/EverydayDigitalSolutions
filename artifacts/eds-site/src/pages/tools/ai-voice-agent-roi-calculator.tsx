@@ -158,7 +158,7 @@ export default function AIVoiceAgentROICalculator() {
 
         <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 pb-20 grid grid-cols-1 lg:grid-cols-[1.4fr_1fr] gap-8">
           {/* Form */}
-          <div className="space-y-6 bg-card border border-border rounded-md p-6 sm:p-8">
+          <div className="space-y-6 glass-elevated rounded-2xl p-6 sm:p-8">
             <div>
               <Label htmlFor="leads" className="text-xs font-bold uppercase tracking-widest text-muted-foreground mb-2 block">
                 Monthly leads
@@ -169,7 +169,7 @@ export default function AIVoiceAgentROICalculator() {
                 min={1}
                 value={monthlyLeads}
                 onChange={(e) => setMonthlyLeads(Math.max(1, Number(e.target.value) || 0))}
-                className="bg-background border-border rounded-sm"
+                className="bg-[var(--glass-fill)] border-[var(--glass-stroke)] rounded-xl"
               />
               <p className="text-xs text-muted-foreground mt-1">Inbound enquiries per month across all channels.</p>
             </div>
@@ -184,7 +184,7 @@ export default function AIVoiceAgentROICalculator() {
                 min={1}
                 value={avgDealValue}
                 onChange={(e) => setAvgDealValue(Math.max(1, Number(e.target.value) || 0))}
-                className="bg-background border-border rounded-sm"
+                className="bg-[var(--glass-fill)] border-[var(--glass-stroke)] rounded-xl"
               />
               <p className="text-xs text-muted-foreground mt-1">Average lifetime revenue per converted lead.</p>
             </div>
@@ -199,7 +199,7 @@ export default function AIVoiceAgentROICalculator() {
                 min={0}
                 value={responseMinutes}
                 onChange={(e) => setResponseMinutes(Math.max(0, Number(e.target.value) || 0))}
-                className="bg-background border-border rounded-sm"
+                className="bg-[var(--glass-fill)] border-[var(--glass-stroke)] rounded-xl"
               />
               <p className="text-xs text-muted-foreground mt-1">How long your team typically takes to call back a new lead.</p>
             </div>
@@ -215,7 +215,7 @@ export default function AIVoiceAgentROICalculator() {
                 max={100}
                 value={currentConversionPct}
                 onChange={(e) => setCurrentConversionPct(Math.max(0, Math.min(100, Number(e.target.value) || 0)))}
-                className="bg-background border-border rounded-sm"
+                className="bg-[var(--glass-fill)] border-[var(--glass-stroke)] rounded-xl"
               />
               <p className="text-xs text-muted-foreground mt-1">Percentage of leads that convert to paying customers today.</p>
             </div>
@@ -227,13 +227,13 @@ export default function AIVoiceAgentROICalculator() {
 
           {/* Result */}
           <div className="space-y-6">
-            <div className="bg-card border border-primary/40 rounded-md p-6">
+            <div className="glass-elevated border border-primary/40 rounded-2xl p-6">
               <p className="text-xs font-bold uppercase tracking-widest text-muted-foreground mb-3">Estimated additional revenue</p>
               <p className="font-serif text-3xl sm:text-4xl text-foreground">{formatINR(result.additionalRevenuePerYear)}<span className="text-base text-muted-foreground"> / year</span></p>
               <p className="text-sm text-muted-foreground mt-1 tabular-nums">+{result.additionalConversionsPerMonth.toFixed(1)} conversions/month · {(result.lift * 100).toFixed(1)}% conversion lift</p>
             </div>
 
-            <div className="bg-card border border-border rounded-md p-6 text-sm space-y-2">
+            <div className="glass rounded-2xl p-6 text-sm space-y-2">
               <p className="text-xs font-bold uppercase tracking-widest text-muted-foreground mb-2">12-month picture</p>
               <div className="flex justify-between"><span className="text-muted-foreground">Additional revenue</span><span className="tabular-nums">{formatINR(result.additionalRevenuePerYear)}</span></div>
               <div className="flex justify-between"><span className="text-muted-foreground">Year-1 cost (setup + run)</span><span className="tabular-nums">{formatINR(result.yearOneCost)}</span></div>
@@ -242,7 +242,7 @@ export default function AIVoiceAgentROICalculator() {
               <div className="flex justify-between"><span className="text-muted-foreground">Setup payback</span><span className="tabular-nums">{Number.isFinite(result.paybackMonths) ? `${result.paybackMonths.toFixed(1)} months` : "—"}</span></div>
             </div>
 
-            <div className="bg-card border border-border rounded-md p-6">
+            <div className="glass-elevated rounded-2xl p-6">
               <h3 className="font-serif text-lg text-foreground mb-2">Email me this estimate</h3>
               <p className="text-xs text-muted-foreground mb-4">
                 We'll send the breakdown to your inbox so you can share it internally. No spam — just this one email.
@@ -260,12 +260,12 @@ export default function AIVoiceAgentROICalculator() {
                     placeholder="you@business.com"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
-                    className="bg-background border-border rounded-sm"
+                    className="bg-[var(--glass-fill)] border-[var(--glass-stroke)] rounded-xl"
                   />
                   <Button
                     type="submit"
                     disabled={subscribe.isPending}
-                    className="w-full rounded-sm font-medium"
+                    className="w-full rounded-full font-medium"
                   >
                     {subscribe.isPending ? "Sending..." : "Email me this estimate"}
                   </Button>

@@ -529,12 +529,12 @@ export default function GetAQuote() {
 
           {/* Total + delivery hero */}
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-10">
-            <div className="bg-primary rounded-md p-8">
+            <div className="bg-primary rounded-2xl p-8">
               <p className="text-xs font-bold uppercase tracking-widest text-black/60 mb-2">Total Investment</p>
               <p className="font-serif text-5xl text-black">{fmtFull(quote.total)}</p>
               <p className="text-xs text-black/60 mt-2">+ GST / applicable taxes</p>
             </div>
-            <div className="glass rounded-md p-8 relative overflow-hidden">
+            <div className="glass rounded-2xl p-8 relative overflow-hidden">
               {showGlassLens && (
                 <Suspense fallback={null}>
                   <GlassLens />
@@ -549,13 +549,13 @@ export default function GetAQuote() {
           </div>
 
           {/* Executive summary */}
-          <div className="glass rounded-md p-6 sm:p-8 mb-6">
+          <div className="glass rounded-2xl p-6 sm:p-8 mb-6">
             <h2 className="text-xs font-bold uppercase tracking-widest text-muted-foreground mb-4">Executive Summary</h2>
             <p className="text-base leading-relaxed">{quote.executiveSummary}</p>
           </div>
 
           {/* Scope items */}
-          <div className="glass rounded-md p-6 sm:p-8 mb-6">
+          <div className="glass rounded-2xl p-6 sm:p-8 mb-6">
             <h2 className="text-xs font-bold uppercase tracking-widest text-muted-foreground mb-4">Scope of Work</h2>
             <ul className="space-y-3">
               {quote.scopeItems.map((item, i) => (
@@ -568,7 +568,7 @@ export default function GetAQuote() {
           </div>
 
           {/* Cost breakdown */}
-          <div className="glass rounded-md overflow-hidden mb-6">
+          <div className="glass rounded-2xl overflow-hidden mb-6">
             <div className="px-6 sm:px-8 pt-6 pb-4">
               <h2 className="text-xs font-bold uppercase tracking-widest text-muted-foreground">Investment Breakdown</h2>
             </div>
@@ -592,7 +592,7 @@ export default function GetAQuote() {
           </div>
 
           {/* PDF email gate */}
-          <div className="glass-elevated rounded-md p-6 sm:p-8 mb-4">
+          <div className="glass-elevated rounded-2xl p-6 sm:p-8 mb-4">
             {!pdfUnlocked ? (
               <>
                 <h2 className="text-xs font-bold uppercase tracking-widest text-muted-foreground mb-1">Download your proposal</h2>
@@ -612,7 +612,7 @@ export default function GetAQuote() {
                   <button
                     onClick={handlePdfDownload}
                     disabled={pdfGateSubmitting}
-                    className="inline-flex items-center justify-center gap-2 btn-glass-primary px-6 py-3 rounded-sm font-medium transition-colors disabled:opacity-60 disabled:pointer-events-none whitespace-nowrap"
+                    className="inline-flex items-center justify-center gap-2 btn-glass-primary px-6 py-3 rounded-full font-medium transition-colors disabled:opacity-60 disabled:pointer-events-none whitespace-nowrap"
                   >
                     {pdfGateSubmitting
                       ? "Preparing..."
@@ -629,7 +629,7 @@ export default function GetAQuote() {
                 </div>
                 <button
                   onClick={() => downloadProposalPdf(quote, form.industry as Industry, form.projectType as ProjectType)}
-                  className="inline-flex items-center justify-center gap-2 btn-glass-primary px-6 py-3 rounded-sm font-medium transition-colors"
+                  className="inline-flex items-center justify-center gap-2 btn-glass-primary px-6 py-3 rounded-full font-medium transition-colors"
                 >
                   <Download className="w-4 h-4" /> Download PDF again
                 </button>
@@ -643,13 +643,13 @@ export default function GetAQuote() {
               href={waLink}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center justify-center gap-2 btn-glass-neutral text-foreground px-6 py-3.5 rounded-sm font-medium transition-colors"
+              className="inline-flex items-center justify-center gap-2 btn-glass-neutral text-foreground px-6 py-3.5 rounded-full font-medium transition-colors"
             >
               <MessageCircle className="w-4 h-4" /> Discuss on WhatsApp
             </a>
             <Link
               href="/contact"
-              className="inline-flex items-center justify-center gap-2 btn-glass-neutral text-foreground px-6 py-3.5 rounded-sm font-medium transition-colors"
+              className="inline-flex items-center justify-center gap-2 btn-glass-neutral text-foreground px-6 py-3.5 rounded-full font-medium transition-colors"
             >
               <FileText className="w-4 h-4" /> Start a Project
             </Link>
@@ -714,7 +714,7 @@ export default function GetAQuote() {
           </div>
 
           {/* Right column — form */}
-          <div className="bg-card border border-border/40 rounded-md p-6 sm:p-8 lg:p-10">
+          <div className="glass-elevated rounded-2xl p-6 sm:p-8 lg:p-10">
             <StepDots step={step} total={5} />
 
             {/* Step 0: Industry */}
@@ -730,10 +730,10 @@ export default function GetAQuote() {
                       key={ind.value}
                       type="button"
                       onClick={() => update("industry", ind.value)}
-                      className={`px-4 py-3 text-left text-sm rounded-sm border transition-colors ${
+                      className={`px-4 py-3 text-left text-sm rounded-xl border transition-colors ${
                         form.industry === ind.value
-                          ? "bg-primary text-black border-primary font-medium"
-                          : "border-border hover:border-primary/50 hover:bg-muted"
+                          ? "bg-[var(--accent-soft)] border-primary/60 font-medium"
+                          : "border-[var(--glass-stroke)] bg-[var(--glass-fill)] hover:border-primary/40 hover:bg-[var(--glass-fill-elevated)]"
                       }`}
                     >
                       {ind.label}
@@ -761,14 +761,14 @@ export default function GetAQuote() {
                       key={pt.value}
                       type="button"
                       onClick={() => { update("projectType", pt.value); update("features", []); }}
-                      className={`px-4 py-3.5 text-left rounded-sm border transition-colors ${
+                      className={`px-4 py-3.5 text-left rounded-xl border transition-colors ${
                         form.projectType === pt.value
-                          ? "bg-primary text-black border-primary"
-                          : "border-border hover:border-primary/50 hover:bg-muted"
+                          ? "bg-[var(--accent-soft)] border-primary/60 text-foreground"
+                          : "border-[var(--glass-stroke)] bg-[var(--glass-fill)] hover:border-primary/40 hover:bg-[var(--glass-fill-elevated)]"
                       }`}
                     >
                       <p className="font-medium text-sm">{pt.label}</p>
-                      <p className={`text-xs mt-0.5 ${form.projectType === pt.value ? "text-black/70" : "text-muted-foreground"}`}>{pt.description}</p>
+                      <p className="text-xs mt-0.5 text-muted-foreground">{pt.description}</p>
                     </button>
                   ))}
                 </div>
@@ -791,12 +791,12 @@ export default function GetAQuote() {
                         key={f.key}
                         type="button"
                         onClick={() => toggleFeature(f.key)}
-                        className={`flex items-start gap-3 px-4 py-3 text-left rounded-sm border transition-colors ${
-                          selected ? "bg-primary/10 border-primary/60" : "border-border hover:border-primary/30 hover:bg-muted/50"
+                        className={`flex items-start gap-3 px-4 py-3 text-left rounded-xl border transition-colors ${
+                          selected ? "bg-[var(--accent-soft)] border-primary/60" : "border-[var(--glass-stroke)] bg-[var(--glass-fill)] hover:border-primary/30 hover:bg-[var(--glass-fill-elevated)]"
                         }`}
                       >
-                        <div className={`w-4 h-4 rounded-sm border flex-shrink-0 mt-0.5 flex items-center justify-center transition-colors ${
-                          selected ? "bg-primary border-primary text-black" : "border-border"
+                        <div className={`w-4 h-4 rounded-md border flex-shrink-0 mt-0.5 flex items-center justify-center transition-colors ${
+                          selected ? "bg-primary border-primary text-black" : "border-[var(--glass-stroke)]"
                         }`}>
                           {selected && <Check className="w-2.5 h-2.5" />}
                         </div>
@@ -825,14 +825,14 @@ export default function GetAQuote() {
                       key={s.value}
                       type="button"
                       onClick={() => update("scale", s.value)}
-                      className={`px-4 py-4 text-left rounded-sm border transition-colors ${
+                      className={`px-4 py-4 text-left rounded-xl border transition-colors ${
                         form.scale === s.value
-                          ? "bg-primary text-black border-primary"
-                          : "border-border hover:border-primary/50 hover:bg-muted"
+                          ? "bg-[var(--accent-soft)] border-primary/60 text-foreground"
+                          : "border-[var(--glass-stroke)] bg-[var(--glass-fill)] hover:border-primary/50 hover:bg-[var(--glass-fill-elevated)]"
                       }`}
                     >
                       <p className="font-medium text-sm">{s.label}</p>
-                      <p className={`text-xs mt-0.5 ${form.scale === s.value ? "text-black/70" : "text-muted-foreground"}`}>{s.description}</p>
+                      <p className="text-xs mt-0.5 text-muted-foreground">{s.description}</p>
                     </button>
                   ))}
                 </div>
@@ -845,10 +845,10 @@ export default function GetAQuote() {
                         key={t.value}
                         type="button"
                         onClick={() => update("timeline", t.value)}
-                        className={`px-3 py-2.5 text-sm text-left rounded-sm border transition-colors ${
+                        className={`px-3 py-2.5 text-sm text-left rounded-xl border transition-colors ${
                           form.timeline === t.value
-                            ? "bg-primary text-black border-primary font-medium"
-                            : "border-border hover:border-primary/50 hover:bg-muted"
+                            ? "bg-[var(--accent-soft)] border-primary/60 font-medium"
+                            : "border-[var(--glass-stroke)] bg-[var(--glass-fill)] hover:border-primary/50 hover:bg-[var(--glass-fill-elevated)]"
                         }`}
                       >
                         {t.label}
@@ -895,7 +895,7 @@ export default function GetAQuote() {
                   {errors["email"] && <p className="text-xs text-destructive">{errors["email"]}</p>}
                 </div>
                 {apiError && (
-                  <div className="bg-destructive/10 border border-destructive/30 text-destructive text-sm rounded-sm px-4 py-3">
+                  <div className="bg-destructive/10 border border-destructive/30 text-destructive text-sm rounded-xl px-4 py-3">
                     {apiError}
                   </div>
                 )}

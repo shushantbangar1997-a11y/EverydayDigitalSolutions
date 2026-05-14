@@ -420,20 +420,20 @@ export default function Contact() {
                 href={waLink}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 btn-glass-primary px-6 py-3 rounded-sm font-medium transition-colors"
+                className="inline-flex items-center gap-2 btn-glass-primary px-6 py-3 rounded-full font-medium transition-colors"
               >
                 <MessageCircle className="w-4 h-4" /> WhatsApp us with my brief
               </a>
               <button
                 type="button"
                 onClick={() => downloadBriefPdf(submittedForm, finalBrief)}
-                className="inline-flex items-center gap-2 btn-glass-neutral text-foreground px-6 py-3 rounded-sm font-medium transition-colors"
+                className="inline-flex items-center gap-2 btn-glass-neutral text-foreground px-6 py-3 rounded-full font-medium transition-colors"
               >
                 <Download className="w-4 h-4" /> Download brief as PDF
               </button>
               <Link
                 href="/"
-                className="inline-flex items-center gap-2 btn-glass-neutral text-foreground px-6 py-3 rounded-sm font-medium transition-colors"
+                className="inline-flex items-center gap-2 btn-glass-neutral text-foreground px-6 py-3 rounded-full font-medium transition-colors"
               >
                 <ArrowLeft className="w-4 h-4" /> Back to home
               </Link>
@@ -526,7 +526,7 @@ export default function Contact() {
             </div>
           </div>
 
-          <div className="glass-elevated rounded-md p-6 sm:p-8 lg:p-10">
+          <div className="glass-elevated rounded-2xl p-6 sm:p-8 lg:p-10">
             <StepDots step={step} />
 
             {step === 0 && (
@@ -543,10 +543,10 @@ export default function Contact() {
                         key={opt.value}
                         type="button"
                         onClick={() => update("industry", opt.value)}
-                        className={`text-left px-4 py-3 rounded-sm border text-sm transition-colors ${
+                        className={`text-left px-4 py-3 rounded-xl border text-sm transition-colors ${
                           form.industry === opt.value
-                            ? "border-primary bg-primary/5 text-foreground"
-                            : "border-border hover:border-foreground/30 text-foreground"
+                            ? "border-primary/60 bg-[var(--accent-soft)] text-foreground"
+                            : "border-[var(--glass-stroke)] bg-[var(--glass-fill)] hover:border-primary/30 hover:bg-[var(--glass-fill-elevated)] text-foreground"
                         }`}
                       >
                         {opt.label}
@@ -562,7 +562,7 @@ export default function Contact() {
                     value={form.businessName}
                     onChange={(e) => update("businessName", e.target.value)}
                     placeholder="e.g. Quasar Salon"
-                    className="bg-background border-border rounded-sm"
+                    className="bg-[var(--glass-fill)] border-[var(--glass-stroke)] rounded-xl"
                   />
                 </div>
                 <div className="space-y-2">
@@ -572,7 +572,7 @@ export default function Contact() {
                     value={form.city}
                     onChange={(e) => update("city", e.target.value)}
                     placeholder="e.g. Mohali"
-                    className="bg-background border-border rounded-sm"
+                    className="bg-[var(--glass-fill)] border-[var(--glass-stroke)] rounded-xl"
                   />
                   {errors["city"] && <p className="text-xs text-destructive">{errors["city"]}</p>}
                 </div>
@@ -596,7 +596,7 @@ export default function Contact() {
                         value={form.industryDetails[q.key] ?? ""}
                         onChange={(e) => updateIndustryDetail(q.key, e.target.value)}
                         placeholder={q.placeholder}
-                        className="bg-background border-border rounded-sm"
+                        className="bg-[var(--glass-fill)] border-[var(--glass-stroke)] rounded-xl"
                       />
                     </div>
                   ))
@@ -617,7 +617,7 @@ export default function Contact() {
                     value={form.problem}
                     onChange={(e) => update("problem", e.target.value)}
                     placeholder="e.g. Too many no-shows. Front desk wastes 2 hours a day chasing confirmations."
-                    className="min-h-[120px] bg-background border-border rounded-sm resize-y"
+                    className="min-h-[120px] bg-[var(--glass-fill)] border-[var(--glass-stroke)] rounded-xl resize-y"
                   />
                   {errors["problem"] && <p className="text-xs text-destructive">{errors["problem"]}</p>}
                 </div>
@@ -628,7 +628,7 @@ export default function Contact() {
                     value={form.currentSolution}
                     onChange={(e) => update("currentSolution", e.target.value)}
                     placeholder="e.g. WhatsApp + Excel sheet. Manual reminders."
-                    className="min-h-[80px] bg-background border-border rounded-sm resize-y"
+                    className="min-h-[80px] bg-[var(--glass-fill)] border-[var(--glass-stroke)] rounded-xl resize-y"
                   />
                 </div>
                 <div className="space-y-2">
@@ -638,7 +638,7 @@ export default function Contact() {
                     value={form.goalIn3Months}
                     onChange={(e) => update("goalIn3Months", e.target.value)}
                     placeholder="e.g. 40% fewer no-shows. Front desk does zero confirmations."
-                    className="min-h-[80px] bg-background border-border rounded-sm resize-y"
+                    className="min-h-[80px] bg-[var(--glass-fill)] border-[var(--glass-stroke)] rounded-xl resize-y"
                   />
                   {errors["goalIn3Months"] && <p className="text-xs text-destructive">{errors["goalIn3Months"]}</p>}
                 </div>
@@ -659,8 +659,8 @@ export default function Contact() {
                         key={opt.value}
                         type="button"
                         onClick={() => update("budget", opt.value)}
-                        className={`text-left px-4 py-3 rounded-sm border text-sm transition-colors ${
-                          form.budget === opt.value ? "border-primary bg-primary/5" : "border-border hover:border-foreground/30"
+                        className={`text-left px-4 py-3 rounded-xl border text-sm transition-colors ${
+                          form.budget === opt.value ? "border-primary/60 bg-[var(--accent-soft)]" : "border-[var(--glass-stroke)] bg-[var(--glass-fill)] hover:border-primary/30 hover:bg-[var(--glass-fill-elevated)]"
                         }`}
                       >
                         {opt.label}
@@ -677,8 +677,8 @@ export default function Contact() {
                         key={opt.value}
                         type="button"
                         onClick={() => update("timeline", opt.value)}
-                        className={`text-left px-4 py-3 rounded-sm border text-sm transition-colors ${
-                          form.timeline === opt.value ? "border-primary bg-primary/5" : "border-border hover:border-foreground/30"
+                        className={`text-left px-4 py-3 rounded-xl border text-sm transition-colors ${
+                          form.timeline === opt.value ? "border-primary/60 bg-[var(--accent-soft)]" : "border-[var(--glass-stroke)] bg-[var(--glass-fill)] hover:border-primary/30 hover:bg-[var(--glass-fill-elevated)]"
                         }`}
                       >
                         {opt.label}
@@ -698,17 +698,17 @@ export default function Contact() {
                 </div>
                 <div className="space-y-2">
                   <Label htmlFor="name">Your name</Label>
-                  <Input id="name" value={form.name} onChange={(e) => update("name", e.target.value)} placeholder="e.g. Aman Singh" className="bg-background border-border rounded-sm" />
+                  <Input id="name" value={form.name} onChange={(e) => update("name", e.target.value)} placeholder="e.g. Aman Singh" className="bg-[var(--glass-fill)] border-[var(--glass-stroke)] rounded-xl" />
                   {errors["name"] && <p className="text-xs text-destructive">{errors["name"]}</p>}
                 </div>
                 <div className="space-y-2">
                   <Label htmlFor="whatsappNumber">WhatsApp number</Label>
-                  <Input id="whatsappNumber" type="tel" value={form.whatsappNumber} onChange={(e) => update("whatsappNumber", e.target.value)} placeholder="+91 98765 43210" className="bg-background border-border rounded-sm" />
+                  <Input id="whatsappNumber" type="tel" value={form.whatsappNumber} onChange={(e) => update("whatsappNumber", e.target.value)} placeholder="+91 98765 43210" className="bg-[var(--glass-fill)] border-[var(--glass-stroke)] rounded-xl" />
                   {errors["whatsappNumber"] && <p className="text-xs text-destructive">{errors["whatsappNumber"]}</p>}
                 </div>
                 <div className="space-y-2">
                   <Label htmlFor="email">Email (optional)</Label>
-                  <Input id="email" type="email" value={form.email} onChange={(e) => update("email", e.target.value)} placeholder="you@business.com" className="bg-background border-border rounded-sm" />
+                  <Input id="email" type="email" value={form.email} onChange={(e) => update("email", e.target.value)} placeholder="you@business.com" className="bg-[var(--glass-fill)] border-[var(--glass-stroke)] rounded-xl" />
                   {errors["email"] && <p className="text-xs text-destructive">{errors["email"]}</p>}
                 </div>
               </div>
@@ -720,7 +720,7 @@ export default function Contact() {
                   <h2 className="font-serif text-2xl text-foreground mb-1">Quick review</h2>
                   <p className="text-sm text-muted-foreground">Make sure this looks right before we WhatsApp you.</p>
                 </div>
-                <dl className="divide-y divide-border/60 border border-border/60 rounded-sm">
+                <dl className="divide-y divide-border/60 border border-border/60 rounded-2xl overflow-hidden">
                   {([
                     ["Industry", labelFor(INDUSTRY_OPTIONS, form.industry)],
                     ["Business", form.businessName || "—"],
@@ -741,7 +741,7 @@ export default function Contact() {
                   ))}
                 </dl>
 
-                <div className="bg-primary/5 border border-primary/30 rounded-sm p-5 space-y-4">
+                <div className="bg-[var(--accent-soft)] border border-primary/20 rounded-2xl p-5 space-y-4">
                   <p className="text-xs uppercase tracking-widest text-primary font-medium">Your brief — at a glance</p>
                   {(() => {
                     const brief = computeBrief(form);
@@ -797,7 +797,7 @@ export default function Contact() {
                 <Button
                   type="button"
                   onClick={next}
-                  className="rounded-sm font-medium px-6"
+                  className="rounded-full font-medium px-6"
                 >
                   Continue <ArrowRight className="w-4 h-4 ml-2" />
                 </Button>
@@ -806,7 +806,7 @@ export default function Contact() {
                   type="button"
                   onClick={submit}
                   disabled={mutation.isPending}
-                  className="rounded-sm font-medium px-6"
+                  className="rounded-full font-medium px-6"
                 >
                   {mutation.isPending ? "Sending..." : "Send my brief"}
                 </Button>
