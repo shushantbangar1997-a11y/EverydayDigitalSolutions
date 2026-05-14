@@ -74,12 +74,12 @@ export function LeadMagnet({
               placeholder="you@business.com"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              className="bg-background border-border rounded-sm"
+              className="bg-[var(--glass-fill)] border-[var(--glass-stroke)] rounded-xl"
             />
             <Button
               type="submit"
               disabled={mutation.isPending}
-              className="w-full rounded-sm font-medium"
+              className="w-full rounded-full font-medium"
             >
               {mutation.isPending ? "Sending..." : "Send me the guide"}
             </Button>
@@ -137,12 +137,12 @@ export function LeadMagnet({
                   placeholder="you@business.com"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  className="bg-background border-border rounded-sm py-6"
+                  className="bg-[var(--glass-fill)] border-[var(--glass-stroke)] rounded-xl py-6"
                 />
                 <Button
                   type="submit"
                   disabled={mutation.isPending}
-                  className="w-full rounded-sm font-medium py-6 text-base"
+                  className="w-full rounded-full font-medium py-6 text-base"
                 >
                   {mutation.isPending ? "Sending..." : "Send me the guide"}
                 </Button>

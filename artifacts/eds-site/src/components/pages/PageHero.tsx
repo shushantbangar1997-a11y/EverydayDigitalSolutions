@@ -23,7 +23,7 @@ export function PageHero({ tag, headline, paragraph, cta }: PageHeroProps) {
         <a
           href={cta.href}
           data-float=""
-          className="inline-flex items-center gap-2 btn-glass-primary px-8 py-4 rounded-sm font-medium transition-colors"
+          className="inline-flex items-center gap-2 btn-glass-primary px-8 py-4 rounded-full font-medium transition-colors"
         >
           {cta.label}
         </a>

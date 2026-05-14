@@ -115,7 +115,7 @@ function RequestReviewDashboard() {
                 key={l.id}
                 type="button"
                 onClick={() => { setSelectedId(l.id); setOverrideMessage(null); }}
-                className={`w-full text-left p-3 border rounded-sm transition-colors ${
+                className={`w-full text-left p-3 border rounded-xl transition-colors ${
                   selectedId === l.id ? "border-primary bg-primary/5" : "border-border hover:border-primary/40"
                 }`}
               >
@@ -140,7 +140,7 @@ function RequestReviewDashboard() {
               value={project}
               onChange={(e) => { setProject(e.target.value); setOverrideMessage(null); }}
               placeholder="e.g. Quasar Salon app"
-              className="bg-background border-border rounded-sm"
+              className="bg-[var(--glass-fill)] border-[var(--glass-stroke)] rounded-xl"
             />
           </div>
 
@@ -150,7 +150,7 @@ function RequestReviewDashboard() {
               id="url"
               value={reviewUrl}
               onChange={(e) => { setReviewUrl(e.target.value); setOverrideMessage(null); }}
-              className="bg-background border-border rounded-sm font-mono text-xs"
+              className="bg-[var(--glass-fill)] border-[var(--glass-stroke)] rounded-xl font-mono text-xs"
             />
             <p className="text-[11px] text-muted-foreground mt-1">
               Default placeholder. Replace with your real review link from Google Business Profile → Get more reviews → Share review form.
@@ -164,7 +164,7 @@ function RequestReviewDashboard() {
               value={message}
               onChange={(e) => setOverrideMessage(e.target.value)}
               disabled={!selected}
-              className="bg-background border-border rounded-sm min-h-[140px]"
+              className="bg-[var(--glass-fill)] border-[var(--glass-stroke)] rounded-xl min-h-[140px]"
               placeholder={!selected ? "Pick a client on the left first." : ""}
             />
           </div>
@@ -175,7 +175,7 @@ function RequestReviewDashboard() {
               onClick={copy}
               disabled={!selected}
               variant="outline"
-              className="rounded-sm"
+              className="rounded-full"
             >
               {copied ? <Check className="w-4 h-4 mr-1.5" /> : <Copy className="w-4 h-4 mr-1.5" />}
               {copied ? "Copied" : "Copy text"}
@@ -190,13 +190,13 @@ function RequestReviewDashboard() {
                     (window as unknown as { plausible: (e: string) => void }).plausible("RequestReviewSent");
                   }
                 }}
-                className="inline-flex items-center btn-glass-primary rounded-sm font-medium px-4 py-2 text-sm"
+                className="inline-flex items-center btn-glass-primary rounded-full font-medium px-4 py-2 text-sm"
               >
                 <ExternalLink className="w-4 h-4 mr-1.5" />
                 Open in WhatsApp
               </a>
             ) : (
-              <Button disabled className="rounded-sm" title={selected ? "This lead has no valid WhatsApp number on file." : undefined}>Open in WhatsApp</Button>
+              <Button disabled className="rounded-full" title={selected ? "This lead has no valid WhatsApp number on file." : undefined}>Open in WhatsApp</Button>
             )}
           </div>
 

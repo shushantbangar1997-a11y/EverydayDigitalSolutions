@@ -190,7 +190,7 @@ export default function OpenHumanaCaseStudy() {
           <h3 className="text-xl sm:text-2xl font-serif mb-6 text-center">Who uses it</h3>
           <div className="flex flex-wrap justify-center gap-3">
             {cs.industries.map((industry) => (
-              <span key={industry} className="px-4 py-2 border border-border/60 rounded-sm text-sm text-foreground font-medium">
+              <span key={industry} className="px-4 py-2 border border-border/60 rounded-full text-sm text-foreground font-medium">
                 {industry}
               </span>
             ))}
@@ -238,10 +238,10 @@ export default function OpenHumanaCaseStudy() {
           <h2 className="text-2xl sm:text-3xl font-serif mb-4 sm:mb-6">Want something like this for your team?</h2>
           <p className="text-muted-foreground text-sm mb-8">We build bespoke AI voice agents, dialler platforms, and outbound automation for sales teams across any industry.</p>
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-            <Link href="/contact" className="btn-glass-primary px-8 py-4 rounded-sm font-medium transition-colors w-full sm:w-auto text-center">
+            <Link href="/contact" className="btn-glass-primary px-8 py-4 rounded-full font-medium transition-colors w-full sm:w-auto text-center">
               Start your project
             </Link>
-            <Link href="/services/ai-voice-agents" className="btn-glass-neutral text-foreground px-8 py-4 rounded-sm font-medium transition-colors w-full sm:w-auto text-center">
+            <Link href="/services/ai-voice-agents" className="btn-glass-neutral text-foreground px-8 py-4 rounded-full font-medium transition-colors w-full sm:w-auto text-center">
               Our AI voice service
             </Link>
           </div>

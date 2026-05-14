@@ -121,14 +121,14 @@ export function CaseStudy() {
               <Link
                 href="/work/quasar-salon"
                 data-float=""
-                className="btn-glass-primary px-6 py-3 rounded-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background"
+                className="btn-glass-primary px-6 py-3 rounded-full font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background"
               >
                 Read full case study
               </Link>
               <Link
                 href="/contact"
                 data-float=""
-                className="btn-glass-neutral text-foreground px-6 py-3 rounded-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background"
+                className="btn-glass-neutral text-foreground px-6 py-3 rounded-full font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background"
               >
                 Want this for your business
               </Link>
@@ -248,13 +248,13 @@ export function CaseStudy() {
                 href={oh.liveUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 btn-glass-primary px-6 py-3 rounded-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background"
+                className="inline-flex items-center gap-2 btn-glass-primary px-6 py-3 rounded-full font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background"
               >
                 Visit openhumana.com <ArrowUpRight className="w-4 h-4" />
               </a>
               <Link
                 href="/work/open-humana"
-                className="btn-glass-neutral text-foreground px-6 py-3 rounded-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background"
+                className="btn-glass-neutral text-foreground px-6 py-3 rounded-full font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background"
               >
                 Read the build story
               </Link>
@@ -314,13 +314,13 @@ export function CaseStudy() {
                 href={oca.liveUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 btn-glass-primary px-6 py-3 rounded-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background"
+                className="inline-flex items-center gap-2 btn-glass-primary px-6 py-3 rounded-full font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background"
               >
                 Visit oneclickassist.com <ArrowUpRight className="w-4 h-4" />
               </a>
               <Link
                 href="/contact"
-                className="btn-glass-neutral text-foreground px-6 py-3 rounded-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background"
+                className="btn-glass-neutral text-foreground px-6 py-3 rounded-full font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background"
               >
                 Build something similar
               </Link>
@@ -402,7 +402,7 @@ export function CaseStudy() {
         <Link
           href="/contact"
           data-float=""
-          className="inline-flex items-center gap-2 btn-glass-primary px-8 py-3.5 rounded-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background"
+          className="inline-flex items-center gap-2 btn-glass-primary px-8 py-3.5 rounded-full font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background"
         >
           Start a Project
         </Link>

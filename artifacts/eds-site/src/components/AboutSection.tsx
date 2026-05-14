@@ -33,7 +33,7 @@ export function AboutSection() {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 items-start">
 
           {/* Brand block — hidden on mobile to save space, shown on desktop */}
-          <div className="hidden lg:flex relative aspect-[4/5] bg-gradient-to-b from-[#111008] to-background border border-border/60 rounded-sm overflow-hidden flex-col items-center justify-center gap-6 p-8">
+          <div className="hidden lg:flex relative aspect-[4/5] bg-gradient-to-b from-[#111008] to-background border border-border/60 rounded-2xl overflow-hidden flex-col items-center justify-center gap-6 p-8">
             <div className="flex flex-col items-center gap-2">
               <OptimizedImage
                 src="/logo.png"
@@ -63,7 +63,7 @@ export function AboutSection() {
           {/* Stats strip — mobile only */}
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 lg:hidden">
             {stats.map((s) => (
-              <div key={s.label} className="flex flex-col items-center text-center p-3 bg-background/60 border border-border/40 rounded-sm">
+              <div key={s.label} className="flex flex-col items-center text-center p-3 bg-background/60 border border-border/40 rounded-xl">
                 <span className="text-xl font-serif text-primary">{s.value}</span>
                 <span className="text-[10px] uppercase tracking-widest text-muted-foreground mt-1">{s.label}</span>
               </div>

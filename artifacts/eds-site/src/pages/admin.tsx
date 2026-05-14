@@ -52,14 +52,14 @@ function LoginForm({ onSuccess }: { onSuccess: () => void }) {
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             autoFocus
-            className="bg-background border-border rounded-sm"
+            className="bg-[var(--glass-fill)] border-[var(--glass-stroke)] rounded-xl"
           />
         </div>
         {error && <p className="text-sm text-destructive">{error}</p>}
         <Button
           type="submit"
           disabled={mutation.isPending || password.length === 0}
-          className="w-full rounded-sm font-medium"
+          className="w-full rounded-full font-medium"
         >
           {mutation.isPending ? "Signing in..." : "Sign in"}
         </Button>
@@ -123,7 +123,7 @@ function LeadRow({ lead }: { lead: import("@workspace/api-client-react").Lead })
             {lead.industry} · {lead.city} · {lead.budget} · {lead.timeline}
           </p>
         </div>
-        <span className={`text-xs font-medium px-2 py-1 rounded-sm ${statusColor[lead.status] ?? ""}`}>
+        <span className={`text-xs font-medium px-2 py-1 rounded-full ${statusColor[lead.status] ?? ""}`}>
           {lead.status}
         </span>
         {lead.status === "new" && (
@@ -138,7 +138,7 @@ function LeadRow({ lead }: { lead: import("@workspace/api-client-react").Lead })
               }
             }}
             aria-label="Mark as contacted"
-            className={`inline-flex items-center gap-1 text-xs font-medium px-2 py-1 rounded-sm border border-border hover:border-primary hover:text-primary transition-colors ${
+            className={`inline-flex items-center gap-1 text-xs font-medium px-2 py-1 rounded-full border border-border hover:border-primary hover:text-primary transition-colors ${
               quickContacted.isPending ? "opacity-50" : ""
             }`}
           >
@@ -185,7 +185,7 @@ function LeadRow({ lead }: { lead: import("@workspace/api-client-react").Lead })
             {lead.industryDetails && Object.keys(lead.industryDetails).length > 0 && (
               <div className="md:col-span-2">
                 <p className="text-xs text-muted-foreground mb-1">Industry details</p>
-                <pre className="text-xs bg-muted/40 rounded-sm p-3 overflow-x-auto">
+                <pre className="text-xs bg-muted/40 rounded-xl p-3 overflow-x-auto">
                   {JSON.stringify(lead.industryDetails, null, 2)}
                 </pre>
               </div>
@@ -200,7 +200,7 @@ function LeadRow({ lead }: { lead: import("@workspace/api-client-react").Lead })
               <select
                 value={status}
                 onChange={(e) => setStatus(e.target.value as typeof status)}
-                className="w-full bg-background border border-border rounded-sm px-3 py-2 text-sm"
+                className="w-full bg-[var(--glass-fill)] border border-[var(--glass-stroke)] rounded-xl px-3 py-2 text-sm"
               >
                 {STATUSES.map((s) => (
                   <option key={s} value={s}>
@@ -214,7 +214,7 @@ function LeadRow({ lead }: { lead: import("@workspace/api-client-react").Lead })
               <Textarea
                 value={notes}
                 onChange={(e) => setNotes(e.target.value)}
-                className="bg-background border-border rounded-sm min-h-[80px]"
+                className="bg-[var(--glass-fill)] border-[var(--glass-stroke)] rounded-xl min-h-[80px]"
                 placeholder="Internal notes…"
               />
             </div>
@@ -222,7 +222,7 @@ function LeadRow({ lead }: { lead: import("@workspace/api-client-react").Lead })
           <Button
             onClick={save}
             disabled={mutation.isPending}
-            className="rounded-sm"
+            className="rounded-full"
           >
             {mutation.isPending ? "Saving..." : "Save"}
           </Button>

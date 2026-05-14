@@ -23,7 +23,7 @@ export default function AppCostGuide2026() {
             </Link>
             <button
               onClick={handlePrint}
-              className="inline-flex items-center gap-2 btn-glass-primary px-4 py-2 rounded-sm text-sm font-medium"
+              className="inline-flex items-center gap-2 btn-glass-primary px-4 py-2 rounded-full text-sm font-medium"
             >
               <Printer className="w-4 h-4" /> Save as PDF / Print
             </button>

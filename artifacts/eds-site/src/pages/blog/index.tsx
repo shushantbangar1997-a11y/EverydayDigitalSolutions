@@ -68,7 +68,7 @@ export default function BlogIndex() {
             </p>
             <a
               href="/contact"
-              className="inline-flex items-center gap-2 btn-glass-primary px-8 py-4 rounded-sm font-medium transition-colors"
+              className="inline-flex items-center gap-2 btn-glass-primary px-8 py-4 rounded-full font-medium transition-colors"
             >
               Start a Project
             </a>

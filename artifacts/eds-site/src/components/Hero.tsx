@@ -50,14 +50,14 @@ export function Hero() {
             <Link
               href="/contact"
               data-float=""
-              className="w-full sm:w-auto text-center btn-glass-primary px-6 py-3.5 sm:py-3 rounded-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background"
+              className="w-full sm:w-auto text-center btn-glass-primary px-6 py-3.5 sm:py-3 rounded-full font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background"
             >
               Start a Project
             </Link>
             <a
               href="#work"
               data-float=""
-              className="w-full sm:w-auto text-center glass text-foreground px-6 py-3.5 sm:py-3 rounded-sm font-medium hover:brightness-95 transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background"
+              className="w-full sm:w-auto text-center glass text-foreground px-6 py-3.5 sm:py-3 rounded-full font-medium hover:brightness-95 transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background"
             >
               See our work
             </a>
@@ -104,7 +104,7 @@ export function Hero() {
                     </div>
                   </div>
                 </div>
-                <div className="w-full py-2 bg-primary rounded-sm text-center text-[11px] font-bold text-black tracking-wide">
+                <div className="w-full py-2 bg-primary rounded-full text-center text-[11px] font-bold text-black tracking-wide">
                   Book Now
                 </div>
                 <p className="text-center text-[10px] text-muted-foreground mt-2">Shipped in 30 days · Launching May 2026</p>
