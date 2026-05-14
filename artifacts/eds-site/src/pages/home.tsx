@@ -168,7 +168,7 @@ export default function Home() {
         Skip to content
       </a>
       <Navbar />
-      <main id="main-content" className="pt-[4.5rem]">
+      <main id="main-content" className="pt-[5.75rem]">
         <Hero />
         <ServicesGrid />
         <CaseStudy />
