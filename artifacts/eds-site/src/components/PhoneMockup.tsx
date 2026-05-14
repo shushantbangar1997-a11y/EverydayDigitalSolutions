@@ -13,7 +13,7 @@ export function PhoneMockup({ screens }: PhoneMockupProps) {
 
     const interval = setInterval(() => {
       setCurrentIndex((prev) => (prev + 1) % screens.length);
-    }, 3000);
+    }, 5000);
 
     return () => clearInterval(interval);
   }, [screens]);
@@ -35,7 +35,7 @@ export function PhoneMockup({ screens }: PhoneMockupProps) {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            transition={{ duration: 0.8, ease: "easeInOut" }}
+            transition={{ duration: 1.4, ease: "easeInOut" }}
             className="absolute inset-0 w-full h-full object-cover object-top"
           />
         </AnimatePresence>
