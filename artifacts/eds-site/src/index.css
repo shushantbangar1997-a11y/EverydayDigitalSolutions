@@ -356,12 +356,17 @@
       background 0.3s,
       border-color 0.3s,
       box-shadow 0.45s cubic-bezier(0.23, 1, 0.32, 1),
+      transform 0.12s cubic-bezier(0.34, 1.56, 0.64, 1),
       backdrop-filter 0.45s ease,
       -webkit-backdrop-filter 0.45s ease;
   }
   .btn-glass-primary:hover:not(.glass-float-active) {
     background: var(--glass-fill-elevated);
     border-color: var(--border-default);
+  }
+  .btn-glass-primary:active:not(.glass-float-active) {
+    transform: scale(0.96);
+    box-shadow: var(--glass-shadow-sm), inset 0 1px 0 var(--glass-highlight);
   }
 
   /* Neutral glass button (secondary / outline) */
@@ -376,12 +381,16 @@
       background 0.3s,
       border-color 0.3s,
       box-shadow 0.45s cubic-bezier(0.23, 1, 0.32, 1),
+      transform 0.12s cubic-bezier(0.34, 1.56, 0.64, 1),
       backdrop-filter 0.45s ease,
       -webkit-backdrop-filter 0.45s ease;
   }
   .btn-glass-neutral:hover:not(.glass-float-active) {
     background: var(--glass-fill-elevated);
     border-color: var(--border-default);
+  }
+  .btn-glass-neutral:active:not(.glass-float-active) {
+    transform: scale(0.96);
   }
 }
 
