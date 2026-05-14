@@ -14,7 +14,7 @@ export function Footer() {
               <OptimizedImage
                 src="/logo.png"
                 alt="Everyday Digital Solutions"
-                className="h-8 w-auto invert brightness-105 mt-0.5 flex-shrink-0"
+                className="h-8 w-auto dark:invert dark:brightness-105 mt-0.5 flex-shrink-0"
                 width={32}
                 height={32}
                 loading="lazy"
