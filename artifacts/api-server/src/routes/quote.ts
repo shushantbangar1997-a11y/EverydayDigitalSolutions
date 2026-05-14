@@ -10,43 +10,80 @@ const openai = new OpenAI({
   apiKey: process.env["AI_INTEGRATIONS_OPENAI_API_KEY"] ?? "placeholder",
 });
 
-// ─── Pricing tables ───────────────────────────────────────────────────────────
+// ─── Pricing model ────────────────────────────────────────────────────────────
+//
+// Everything is effort-based: person-days × blended daily team rate.
+//
+// DAILY_RATE  = all-in blended rate for the team that builds this type of
+//               project (devs + designer + PM overhead + EDS margin).
+//               Based on Mohali/Tricity 2026 market rates.
+//
+// BASE_EFFORT = person-days to build the core platform with no optional
+//               features (login, basic CRUD, deployment pipeline, etc.)
+//
+// FEATURE_DAYS = additional person-days each optional feature adds on top.
+//               Derived from real sprint estimates — auth is ~3 days,
+//               a payment gateway integration is ~6 days of dev + testing, etc.
+//
+// PHASES split the base effort into:
+//   • Discovery & UX  — 20 % of base (wireframes, flows, architecture)
+//   • Development     — 80 % of base + 100 % of each feature's days
+//   • QA & testing    — 15 % of total dev days (manual + automated cycle)
+//   • Deployment      — fixed per project type (CI/CD, store submission, DNS)
+//
+// Scale and urgency are applied as explicit line-item adjustments on the
+// pre-adjustment subtotal so the client can see exactly what they add.
+// ─────────────────────────────────────────────────────────────────────────────
 
-const BASE_COST: Record<string, number> = {
-  mobile_app_cross:  220000,
-  mobile_app_single: 160000,
-  web_app:           150000,
-  website:            90000,
-  ai_automation:     160000,
-  ai_voice_agent:    180000,
+/** Blended daily team rate in ₹ (devs + design + PM + EDS margin, all-in) */
+const DAILY_RATE: Record<string, number> = {
+  mobile_app_cross:  16500,   // senior dev × 2 + designer — both platforms
+  mobile_app_single: 13000,   // senior dev + mid dev + designer
+  web_app:           11500,   // 2 devs + designer, part-time PM
+  website:            9500,   // mid dev + designer
+  ai_automation:     15500,   // AI engineer + backend dev
+  ai_voice_agent:    19000,   // AI specialist + infra engineer
 };
 
+/** Base effort in person-days to build the core platform */
+const BASE_EFFORT: Record<string, number> = {
+  mobile_app_cross:  26,
+  mobile_app_single: 19,
+  web_app:           15,
+  website:            9,
+  ai_automation:     22,
+  ai_voice_agent:    26,
+};
+
+/** Human-readable project type labels */
 const BASE_LABEL: Record<string, string> = {
-  mobile_app_cross:  "Cross-platform Mobile App (iOS + Android) — Base Platform",
-  mobile_app_single: "Single-platform Mobile App — Base Platform",
-  web_app:           "Web Application — Base Platform",
-  website:           "Marketing Website — Base Build",
-  ai_automation:     "AI Automation System — Base Platform",
-  ai_voice_agent:    "AI Voice Agent Platform — Base Build",
+  mobile_app_cross:  "Cross-platform Mobile App (iOS + Android)",
+  mobile_app_single: "Single-platform Mobile App",
+  web_app:           "Web Application",
+  website:           "Marketing Website",
+  ai_automation:     "AI Automation System",
+  ai_voice_agent:    "AI Voice Agent Platform",
 };
 
-const FEATURE_COST: Record<string, number> = {
-  user_auth:           25000,
-  payments:            35000,
-  admin_dashboard:     40000,
-  push_notifications:  20000,
-  booking_scheduling:  45000,
-  loyalty_rewards:     30000,
-  real_time_tracking:  35000,
-  analytics_reporting: 30000,
-  multi_language:      20000,
-  crm_integration:     35000,
-  whatsapp_automation: 25000,
-  ai_chatbot:          45000,
-  maps_location:       20000,
-  file_uploads:        15000,
+/** Additional person-days each optional feature adds */
+const FEATURE_DAYS: Record<string, number> = {
+  user_auth:            3,   // OTP/email auth, session management
+  payments:             6,   // gateway API, webhook handling, reconciliation
+  admin_dashboard:      7,   // full CRUD portal, roles, export
+  push_notifications:   3,   // FCM/APNS setup, template engine
+  booking_scheduling:   9,   // calendar engine, conflict resolution, staff availability
+  loyalty_rewards:      5,   // points ledger, expiry logic, redemption UI
+  real_time_tracking:   6,   // websocket/SSE, live sync, conflict handling
+  analytics_reporting:  5,   // dashboards, charting, data aggregation
+  multi_language:       4,   // i18n setup, 3-language content extraction
+  crm_integration:      6,   // API mapping, field sync, error handling
+  whatsapp_automation:  4,   // CallMeBot / WABA API, message templates
+  ai_chatbot:           9,   // model wiring, context management, fallback/escalation
+  maps_location:        3,   // Maps SDK, geocoding, search
+  file_uploads:         2,   // storage, resizing, CDN delivery
 };
 
+/** Human-readable feature labels */
 const FEATURE_LABEL: Record<string, string> = {
   user_auth:           "User Authentication & Profiles",
   payments:            "Payment Gateway (UPI, Card, Net Banking)",
@@ -64,61 +101,52 @@ const FEATURE_LABEL: Record<string, string> = {
   file_uploads:        "Photo & Document Upload Handling",
 };
 
-// Days added per feature (complex vs simple)
-const FEATURE_DAYS: Record<string, number> = {
-  user_auth:           3,
-  payments:            6,
-  admin_dashboard:     7,
-  push_notifications:  3,
-  booking_scheduling:  8,
-  loyalty_rewards:     5,
-  real_time_tracking:  6,
-  analytics_reporting: 5,
-  multi_language:      4,
-  crm_integration:     6,
-  whatsapp_automation: 4,
-  ai_chatbot:          8,
-  maps_location:       4,
-  file_uploads:        3,
+/** Fixed deployment cost per project type */
+const DEPLOYMENT_COST: Record<string, number> = {
+  mobile_app_cross:  35000,  // both stores + CI/CD + OTA updates setup
+  mobile_app_single: 22000,  // one store + CI/CD
+  web_app:           14000,  // hosting, env setup, monitoring
+  website:            9000,  // hosting, DNS, CDN, SSL
+  ai_automation:     17000,  // infra provisioning, API gateway, monitoring
+  ai_voice_agent:    22000,  // telephony stack, SIP config, monitoring
 };
 
-const BASE_DELIVERY: Record<string, { min: number; max: number }> = {
-  mobile_app_cross:  { min: 35, max: 50 },
-  mobile_app_single: { min: 25, max: 40 },
-  web_app:           { min: 20, max: 35 },
-  website:           { min: 10, max: 20 },
-  ai_automation:     { min: 20, max: 35 },
-  ai_voice_agent:    { min: 25, max: 40 },
-};
-
+/** Scale multiplier applied to pre-adjustment subtotal */
 const SCALE_MULTIPLIER: Record<string, number> = {
-  small:  1.00,
-  medium: 1.15,
-  large:  1.30,
+  small:  1.00,   // < 500 users — standard infra
+  medium: 1.20,   // 500–5K — load testing, autoscale, staging env
+  large:  1.45,   // 5K+ — distributed systems, CDN, performance audit
 };
 
-const SCALE_LABEL: Record<string, string> = {
-  small:  "Scale adjustment (< 500 active users)",
-  medium: "Scale adjustment (500–5,000 users) +15%",
-  large:  "Scale adjustment (5,000+ users) +30%",
+const SCALE_NOTE: Record<string, string> = {
+  medium: "Covers load testing, autoscaling infrastructure, and a full staging environment",
+  large:  "Covers distributed architecture, CDN, database sharding, and performance audit",
 };
 
+/** Urgency markup/discount applied after scale */
 const TIMELINE_MARKUP: Record<string, number> = {
-  asap:           0.30,
-  within_1_month: 0.15,
-  "1_to_3_months": 0.00,
-  "3_to_6_months": -0.05,
-  exploring:      0.00,
+  asap:             0.35,   // dedicated team, overtime, expedited reviews
+  within_1_month:   0.18,   // accelerated sprint cadence
+  "1_to_3_months":  0.00,
+  "3_to_6_months": -0.08,   // allows better planning, less rework
+  exploring:        0.00,
 };
 
-const MARGIN = 0.35;
-const FLOOR  = 300000;
+/** Phases as fractions of base effort */
+const DISCOVERY_FRACTION = 0.20;  // discovery + UX out of base effort
+const QA_FRACTION        = 0.15;  // QA days as fraction of total dev days
+
+const FLOOR      = 300000;
 const VALID_DAYS = 30;
 
-// ─── Helper: round to nearest 1000 ───────────────────────────────────────────
+// ─── Helpers ─────────────────────────────────────────────────────────────────
 
 function r1k(n: number): number {
   return Math.round(n / 1000) * 1000;
+}
+
+function fmtRate(rate: number): string {
+  return `₹${(rate / 1000).toFixed(1)}K`;
 }
 
 // ─── Quote route ──────────────────────────────────────────────────────────────
@@ -133,111 +161,184 @@ router.post("/quote/generate", async (req, res): Promise<void> => {
 
   const input = parsed.data;
 
-  // ── 1. Deterministic pricing math ──────────────────────────────────────────
+  // ── 1. Effort calculation ─────────────────────────────────────────────────
+
+  const dailyRate   = DAILY_RATE[input.projectType] ?? 11500;
+  const baseDays    = BASE_EFFORT[input.projectType] ?? 15;
+
+  const discoveryDays = Math.round(baseDays * DISCOVERY_FRACTION);
+  const baseDev       = baseDays - discoveryDays;                      // 80 % of base
+
+  const featureDaysMap: { key: string; days: number }[] = input.features
+    .filter((f) => FEATURE_DAYS[f] !== undefined)
+    .map((f) => ({ key: f, days: FEATURE_DAYS[f]! }));
+
+  const totalFeatureDays = featureDaysMap.reduce((s, f) => s + f.days, 0);
+  const totalDevDays     = baseDays + totalFeatureDays;
+  const qaDays           = Math.round(totalDevDays * QA_FRACTION);
+  const deploymentCost   = DEPLOYMENT_COST[input.projectType] ?? 15000;
+
+  // ── 2. Build line items ───────────────────────────────────────────────────
 
   const lineItems: { label: string; amount: number; note: string | null }[] = [];
 
-  // Base cost
-  const baseCost = BASE_COST[input.projectType] ?? 150000;
-  lineItems.push({ label: BASE_LABEL[input.projectType] ?? "Base Platform", amount: baseCost, note: null });
-
-  // Feature costs
-  let featureCost = 0;
-  for (const f of input.features) {
-    const cost = FEATURE_COST[f];
-    if (cost !== undefined) {
-      featureCost += cost;
-      lineItems.push({ label: FEATURE_LABEL[f] ?? f, amount: cost, note: null });
-    }
-  }
-
-  // Scale multiplier
-  const scaleMult = SCALE_MULTIPLIER[input.scale] ?? 1.0;
-  const beforeScale = baseCost + featureCost;
-  const scaleAdd = r1k(beforeScale * (scaleMult - 1));
-  if (scaleMult > 1) {
-    lineItems.push({ label: SCALE_LABEL[input.scale] ?? "Scale adjustment", amount: scaleAdd, note: null });
-  }
-
-  // Timeline urgency markup
-  const timelineRate = TIMELINE_MARKUP[input.timeline] ?? 0;
-  const preUrgency = beforeScale + scaleAdd;
-  const urgencyAdd = r1k(preUrgency * timelineRate);
-  if (urgencyAdd > 0) {
-    const urgencyLabel = input.timeline === "asap"
-      ? "Express delivery premium (+30%)"
-      : "Accelerated timeline premium (+15%)";
-    lineItems.push({ label: urgencyLabel, amount: urgencyAdd, note: null });
-  } else if (urgencyAdd < 0) {
-    lineItems.push({ label: "Flexible timeline discount (−5%)", amount: urgencyAdd, note: null });
-  }
-
-  const subtotalBeforeMargin = preUrgency + urgencyAdd;
-
-  // EDS margin
-  const marginAmount = r1k(subtotalBeforeMargin * MARGIN);
+  // Discovery & UX
+  const discoveryAmt = r1k(discoveryDays * dailyRate);
   lineItems.push({
-    label: "EDS design, testing & delivery",
-    amount: marginAmount,
-    note: "Covers UX/UI design, QA, App Store submission, and post-launch support"
+    label:  "Discovery, UX design & technical architecture",
+    amount: discoveryAmt,
+    note:   `${discoveryDays} days — wireframes, user flows, data model, API design`,
   });
 
-  const rawTotal = subtotalBeforeMargin + marginAmount;
-  const subtotal = r1k(rawTotal);
-  const total = Math.max(r1k(rawTotal), FLOOR);
+  // Base platform development
+  const baseDevAmt = r1k(baseDev * dailyRate);
+  lineItems.push({
+    label:  `${BASE_LABEL[input.projectType] ?? "Platform"} — core development`,
+    amount: baseDevAmt,
+    note:   `${baseDev} days × ${fmtRate(dailyRate)}/day`,
+  });
 
-  // ── 2. Delivery estimate ────────────────────────────────────────────────────
-
-  const base = BASE_DELIVERY[input.projectType] ?? { min: 25, max: 40 };
-  let featureDays = 0;
-  for (const f of input.features) {
-    featureDays += FEATURE_DAYS[f] ?? 3;
+  // Per-feature items
+  for (const { key, days } of featureDaysMap) {
+    const amt = r1k(days * dailyRate);
+    lineItems.push({
+      label:  FEATURE_LABEL[key] ?? key,
+      amount: amt,
+      note:   `${days} days × ${fmtRate(dailyRate)}/day`,
+    });
   }
-  const scaleDayMult = scaleMult > 1.2 ? 1.15 : 1.0;
-  const urgencyDayMult = input.timeline === "asap" ? 0.75 : 1.0;
-  const minDays = Math.round((base.min + featureDays * 0.5) * scaleDayMult * urgencyDayMult);
-  const maxDays = Math.round((base.max + featureDays * 0.7) * scaleDayMult * urgencyDayMult);
 
-  // ── 3. AI: executive summary + scope items ──────────────────────────────────
+  // QA & testing
+  const qaAmt = r1k(qaDays * dailyRate);
+  lineItems.push({
+    label:  "QA, testing & bug resolution",
+    amount: qaAmt,
+    note:   `${qaDays} days — manual + automated testing across all features`,
+  });
 
-  const selectedFeatureLabels = input.features.map((f) => FEATURE_LABEL[f] ?? f);
+  // Deployment
+  lineItems.push({
+    label:  input.projectType.startsWith("mobile")
+              ? "App Store & Play Store submission + production deployment"
+              : "Production deployment, infrastructure setup & monitoring",
+    amount: deploymentCost,
+    note:   input.projectType.startsWith("mobile")
+              ? "CI/CD pipeline, over-the-air update config, both stores"
+              : "Hosting, SSL, domain, CDN, env config",
+  });
+
+  // Pre-adjustment subtotal (all dev + deployment, before scale/urgency)
+  const preAdjustment = lineItems.reduce((s, l) => s + l.amount, 0);
+
+  // Scale adjustment
+  const scaleMult = SCALE_MULTIPLIER[input.scale] ?? 1.0;
+  const scaleAdd  = r1k(preAdjustment * (scaleMult - 1));
+  if (scaleAdd > 0) {
+    const pct = Math.round((scaleMult - 1) * 100);
+    lineItems.push({
+      label:  `Scale adjustment — ${input.scale} (+${pct}%)`,
+      amount: scaleAdd,
+      note:   SCALE_NOTE[input.scale] ?? null,
+    });
+  }
+
+  // Urgency
+  const urgencyRate = TIMELINE_MARKUP[input.timeline] ?? 0;
+  const preUrgency  = preAdjustment + scaleAdd;
+  const urgencyAdd  = r1k(preUrgency * urgencyRate);
+  if (urgencyAdd > 0) {
+    const pct = Math.round(urgencyRate * 100);
+    lineItems.push({
+      label:  input.timeline === "asap"
+                ? `Express delivery premium (+${pct}%)`
+                : `Accelerated timeline premium (+${pct}%)`,
+      amount: urgencyAdd,
+      note:   input.timeline === "asap"
+                ? "Dedicated team, parallel sprints, expedited reviews"
+                : "Condensed sprint cadence, priority scheduling",
+    });
+  } else if (urgencyAdd < 0) {
+    const pct = Math.abs(Math.round(urgencyRate * 100));
+    lineItems.push({
+      label:  `Flexible timeline discount (−${pct}%)`,
+      amount: urgencyAdd,
+      note:   "Allows better sprint planning and reduced rework",
+    });
+  }
+
+  const rawTotal = preUrgency + urgencyAdd;
+  const subtotal = r1k(rawTotal);
+  const total    = Math.max(subtotal, FLOOR);
+
+  // ── 3. Delivery estimate ──────────────────────────────────────────────────
+  //
+  // Delivery = totalDevDays + qaDays (in calendar days, accounting for
+  // parallel work across team members).
+  // A 2-person team working in parallel means we apply a parallelism
+  // factor of 0.65 — not every day of effort maps to a calendar day.
+  // Urgency (ASAP) compresses this by running two tracks simultaneously.
+
+  const parallelismFactor = input.projectType.startsWith("mobile_app")
+    ? 0.62   // larger teams, more parallelism
+    : 0.70;
+
+  const urgencyTimeFactor = input.timeline === "asap"
+    ? 0.75
+    : input.timeline === "within_1_month"
+    ? 0.88
+    : 1.00;
+
+  const scaleDayFactor = scaleMult > 1.3 ? 1.18 : scaleMult > 1.0 ? 1.08 : 1.00;
+
+  const rawCalendarDays = (totalDevDays + qaDays) * parallelismFactor * scaleDayFactor * urgencyTimeFactor;
+  const minDays = Math.round(rawCalendarDays * 0.92);
+  const maxDays = Math.round(rawCalendarDays * 1.12);
+
+  // ── 4. AI scope copy ─────────────────────────────────────────────────────
+
+  const selectedFeatureLabels = featureDaysMap.map(({ key }) => FEATURE_LABEL[key] ?? key);
 
   const promptMessages: OpenAI.ChatCompletionMessageParam[] = [
     {
       role: "system",
-      content: `You are a senior solutions architect at Everyday Digital Solutions (EDS), a software studio based in Mohali, Punjab, India. You write precise, confident, client-facing proposal copy. No fluff. No emojis. Write in plain British English.`,
+      content: `You are a senior solutions architect at Everyday Digital Solutions (EDS), a software studio in Mohali, Punjab, India. You write precise, confident, client-facing proposal copy. No fluff. No emojis. Plain British English.`,
     },
     {
       role: "user",
-      content: `
-Write a project proposal summary for the following brief.
+      content: `Write a project proposal summary for this brief.
 
 Client: ${input.businessName ?? input.contactName}
 Industry: ${input.industry}
 Project type: ${BASE_LABEL[input.projectType] ?? input.projectType}
-Features selected: ${selectedFeatureLabels.length > 0 ? selectedFeatureLabels.join(", ") : "none specified"}
+Features: ${selectedFeatureLabels.length > 0 ? selectedFeatureLabels.join(", ") : "core platform only"}
 Scale: ${input.scale}
-Project description from client: "${input.projectDescription}"
+Timeline: ${input.timeline}
+Client's description: "${input.projectDescription}"
+Total investment: ₹${total.toLocaleString("en-IN")}
+Delivery window: ${minDays}–${maxDays} working days
 
-Return ONLY valid JSON with this exact shape:
+Return ONLY valid JSON:
 {
-  "executiveSummary": "<2–3 sentences describing the client's problem and what EDS will build to solve it. Mention the specific project type and top 2–3 features by name. End with a confident statement about the business outcome.>",
+  "executiveSummary": "<2–3 sentences: client's problem, what EDS will build, specific project type + top 2–3 features by name, business outcome. Confident tone.>",
   "scopeItems": [
-    "<precise deliverable 1>",
-    "<precise deliverable 2>",
-    "<precise deliverable 3>",
-    "<precise deliverable 4>",
-    "<precise deliverable 5>",
-    "<precise deliverable 6>"
+    "<deliverable 1 — specific, not a feature name repeat>",
+    "<deliverable 2>",
+    "<deliverable 3>",
+    "<deliverable 4>",
+    "<deliverable 5>",
+    "<deliverable 6>"
   ]
 }
 
-scopeItems must be 6 items. Each is a one-sentence deliverable that will appear in the proposal. Be specific to this project. Do not repeat the feature names verbatim — describe what will actually be built.`.trim(),
+scopeItems must be exactly 6 items. Each is one sentence describing what will actually be built and delivered.`.trim(),
     },
   ];
 
-  let executiveSummary = `EDS will design and ship a custom ${BASE_LABEL[input.projectType] ?? "digital product"} for ${input.businessName ?? input.contactName}. The build includes ${selectedFeatureLabels.slice(0, 3).join(", ")} and is scoped to deliver within ${minDays}–${maxDays} days.`;
-  let scopeItems: string[] = selectedFeatureLabels.slice(0, 6).map((f) => `${f} — fully designed and integrated`);
+  let executiveSummary = `EDS will design and ship a custom ${BASE_LABEL[input.projectType] ?? "digital product"} for ${input.businessName ?? input.contactName}. The build covers ${selectedFeatureLabels.slice(0, 3).join(", ")} and is scoped to deliver within ${minDays}–${maxDays} working days at a total investment of ₹${total.toLocaleString("en-IN")}.`;
+  let scopeItems: string[] = [
+    ...selectedFeatureLabels.slice(0, 5).map((f) => `${f} — fully designed, built, and integrated`),
+    "Production deployment, App Store submission, and 30-day post-launch support",
+  ];
 
   try {
     const completion = await openai.chat.completions.create({
@@ -249,23 +350,27 @@ scopeItems must be 6 items. Each is a one-sentence deliverable that will appear 
     const raw = completion.choices[0]?.message?.content ?? "";
     const jsonMatch = raw.match(/\{[\s\S]*\}/);
     if (jsonMatch) {
-      const parsed2 = JSON.parse(jsonMatch[0]) as { executiveSummary?: string; scopeItems?: string[] };
-      if (typeof parsed2.executiveSummary === "string") executiveSummary = parsed2.executiveSummary;
-      if (Array.isArray(parsed2.scopeItems) && parsed2.scopeItems.length > 0) scopeItems = parsed2.scopeItems;
+      const p = JSON.parse(jsonMatch[0]) as { executiveSummary?: string; scopeItems?: string[] };
+      if (typeof p.executiveSummary === "string" && p.executiveSummary.length > 20) {
+        executiveSummary = p.executiveSummary;
+      }
+      if (Array.isArray(p.scopeItems) && p.scopeItems.length >= 4) {
+        scopeItems = p.scopeItems;
+      }
     }
   } catch (err) {
     req.log.warn({ err }, "AI generation failed — using fallback copy");
   }
 
-  // ── 4. Build response ───────────────────────────────────────────────────────
+  // ── 5. Response ───────────────────────────────────────────────────────────
 
   const quoteRef = `EDS-${new Date().getFullYear()}-${randomBytes(3).toString("hex").toUpperCase()}`;
 
   res.status(200).json({
     quoteRef,
     businessName: input.businessName ?? null,
-    contactName: input.contactName,
-    generatedAt: new Date().toISOString(),
+    contactName:  input.contactName,
+    generatedAt:  new Date().toISOString(),
     lineItems,
     subtotal,
     total,
