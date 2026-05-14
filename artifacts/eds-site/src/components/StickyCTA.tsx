@@ -60,6 +60,7 @@ export function StickyCTA() {
           href={site.whatsapp}
           target="_blank"
           rel="noopener noreferrer"
+          data-float=""
           className="hidden sm:inline-flex items-center gap-1.5 text-xs font-medium text-foreground hover:text-primary transition-colors"
           aria-label="Message us on WhatsApp"
         >
@@ -68,6 +69,7 @@ export function StickyCTA() {
         </a>
         <Link
           href="/contact"
+          data-float=""
           className="inline-flex items-center gap-1 bg-primary text-black px-3 py-2 rounded-sm text-xs sm:text-sm font-medium hover:bg-primary/90 transition-colors whitespace-nowrap"
         >
           Start a Project <ArrowRight className="w-3.5 h-3.5" />

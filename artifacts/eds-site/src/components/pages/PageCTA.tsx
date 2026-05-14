@@ -23,12 +23,14 @@ export function PageCTA({
         <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
           <Link
             href="/contact"
+            data-float=""
             className="bg-primary text-black px-8 py-4 rounded-sm font-medium hover:bg-primary/90 transition-colors w-full sm:w-auto text-center"
           >
             {primaryLabel}
           </Link>
           <Link
             href={secondaryHref}
+            data-float=""
             className="border border-border bg-transparent text-foreground px-8 py-4 rounded-sm font-medium hover:bg-muted transition-colors w-full sm:w-auto text-center"
           >
             {secondaryLabel}

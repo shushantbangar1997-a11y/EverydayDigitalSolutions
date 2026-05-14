@@ -6,8 +6,10 @@
  *   1. Applies the SVG liquid-glass backdropFilter via LiquidGlassFilter.attachLiquidGlass()
  *   2. GSAP-animates the element up and slightly scaled (the "float off the page" motion)
  *   3. Adds the .glass-float-active CSS class (elevated box-shadow, glass sheen)
+ *   4. Tracks cursor position via --glass-x / --glass-y CSS vars so the
+ *      specular highlight follows the cursor live inside the element
  *
- * On cursor-leave the filter is removed and the element settles back.
+ * On cursor-leave the filter, class, and CSS vars are all cleaned up.
  * Disabled on touch/mobile (≤767 px) and prefers-reduced-motion.
  */
 import { useEffect } from "react";
@@ -49,6 +51,20 @@ function floatTarget(node: Element | null): HTMLElement | null {
   return null;
 }
 
+/** Update --glass-x / --glass-y on the active element to track cursor. */
+function updateCursorVars(el: HTMLElement, clientX: number, clientY: number): void {
+  const r = el.getBoundingClientRect();
+  if (r.width <= 0 || r.height <= 0) return;
+  el.style.setProperty("--glass-x", ((clientX - r.left) / r.width  * 100).toFixed(1) + "%");
+  el.style.setProperty("--glass-y", ((clientY - r.top)  / r.height * 100).toFixed(1) + "%");
+}
+
+/** Remove cursor tracking vars from the element. */
+function clearCursorVars(el: HTMLElement): void {
+  el.style.removeProperty("--glass-x");
+  el.style.removeProperty("--glass-y");
+}
+
 export function useGlassFloat(): void {
   useEffect(() => {
     if (typeof window === "undefined") return;
@@ -57,9 +73,10 @@ export function useGlassFloat(): void {
 
     let active: HTMLElement | null = null;
 
-    function enter(el: HTMLElement) {
+    function enter(el: HTMLElement, clientX: number, clientY: number) {
       active = el;
       el.classList.add("glass-float-active");
+      updateCursorVars(el, clientX, clientY);
       attachLiquidGlass(el);
       gsap.to(el, {
         y:         LIFT_Y,
@@ -72,6 +89,7 @@ export function useGlassFloat(): void {
 
     function leave(el: HTMLElement) {
       detachLiquidGlass(el);
+      clearCursorVars(el);
       el.classList.remove("glass-float-active");
       gsap.to(el, {
         y:         0,
@@ -88,11 +106,15 @@ export function useGlassFloat(): void {
 
       if (target !== active) {
         if (active) leave(active);
-        if (target) enter(target);
+        if (target) enter(target, e.clientX, e.clientY);
       }
 
-      // Keep filter snapped to the element on every frame (handles page scroll mid-hover)
-      if (active) attachLiquidGlass(active);
+      if (active) {
+        // Keep filter snapped (handles page scroll mid-hover)
+        attachLiquidGlass(active);
+        // Keep specular highlight tracking cursor
+        updateCursorVars(active, e.clientX, e.clientY);
+      }
     }
 
     function onLeaveDoc() {
@@ -108,6 +130,7 @@ export function useGlassFloat(): void {
       if (active) {
         const el = active;
         detachLiquidGlass(el);
+        clearCursorVars(el);
         el.classList.remove("glass-float-active");
         gsap.killTweensOf(el);
         gsap.set(el, { y: 0, scale: 1 });

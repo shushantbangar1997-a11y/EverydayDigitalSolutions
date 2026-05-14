@@ -636,7 +636,27 @@
         inset 0 1px 0     rgba(255, 255, 255, 0.14);
     }
 
-    /* Specular glass sheen overlay — opaque [data-float] buttons only (not glass cards) */
+    /* Cursor-tracked specular highlight — glass cards */
+    .glass.glass-float-active,
+    .glass-elevated.glass-float-active {
+      overflow: visible;
+    }
+    .glass.glass-float-active::before,
+    .glass-elevated.glass-float-active::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border-radius: inherit;
+      background: radial-gradient(
+        ellipse 70% 50% at var(--glass-x, 50%) var(--glass-y, 30%),
+        rgba(255, 255, 255, 0.14) 0%,
+        transparent 68%
+      );
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    /* Cursor-tracked specular highlight — opaque [data-float] buttons */
     [data-float]:not(.glass):not(.glass-elevated).glass-float-active {
       position: relative;
     }
@@ -645,12 +665,11 @@
       position: absolute;
       inset: 0;
       border-radius: inherit;
-      background: linear-gradient(
-        135deg,
-        rgba(255, 255, 255, 0.22) 0%,
-        rgba(255, 255, 255, 0.04) 45%,
-        rgba(255, 255, 255, 0.14) 80%,
-        transparent 100%
+      background: radial-gradient(
+        ellipse 90% 70% at var(--glass-x, 50%) var(--glass-y, 30%),
+        rgba(255, 255, 255, 0.26) 0%,
+        rgba(255, 255, 255, 0.06) 45%,
+        transparent 80%
       );
       pointer-events: none;
       z-index: 1;

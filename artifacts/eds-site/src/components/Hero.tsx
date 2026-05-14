@@ -56,6 +56,7 @@ export function Hero() {
             </Link>
             <a
               href="#work"
+              data-float=""
               className="w-full sm:w-auto text-center glass text-foreground px-6 py-3.5 sm:py-3 rounded-sm font-medium hover:brightness-95 transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background"
             >
               See our work

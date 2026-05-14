@@ -88,6 +88,7 @@ export function ServicesGrid() {
                     </div>
                     <Link
                       href="/contact"
+                      data-float=""
                       className="inline-flex items-center gap-2 bg-primary text-black px-5 py-3 rounded-2xl text-sm font-medium hover:bg-primary/90 transition-all duration-150 whitespace-nowrap focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background"
                     >
                       <MessageCircle className="w-4 h-4" />
