@@ -24,14 +24,14 @@ export function PageCTA({
           <Link
             href="/contact"
             data-float=""
-            className="bg-primary text-black px-8 py-4 rounded-sm font-medium hover:bg-primary/90 transition-colors w-full sm:w-auto text-center"
+            className="btn-glass-primary px-8 py-4 rounded-sm font-medium transition-colors w-full sm:w-auto text-center"
           >
             {primaryLabel}
           </Link>
           <Link
             href={secondaryHref}
             data-float=""
-            className="border border-border bg-transparent text-foreground px-8 py-4 rounded-sm font-medium hover:bg-muted transition-colors w-full sm:w-auto text-center"
+            className="btn-glass-neutral text-foreground px-8 py-4 rounded-sm font-medium transition-colors w-full sm:w-auto text-center"
           >
             {secondaryLabel}
           </Link>

@@ -305,7 +305,7 @@ export default function AppCostCalculator() {
                   <Button
                     type="submit"
                     disabled={subscribe.isPending}
-                    className="w-full bg-primary text-black hover:bg-primary/90 rounded-sm font-medium"
+                    className="w-full rounded-sm font-medium"
                   >
                     {subscribe.isPending ? "Sending..." : "Email me this estimate"}
                   </Button>

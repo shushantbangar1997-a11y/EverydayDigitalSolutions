@@ -238,10 +238,10 @@ export default function OpenHumanaCaseStudy() {
           <h2 className="text-2xl sm:text-3xl font-serif mb-4 sm:mb-6">Want something like this for your team?</h2>
           <p className="text-muted-foreground text-sm mb-8">We build bespoke AI voice agents, dialler platforms, and outbound automation for sales teams across any industry.</p>
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-            <Link href="/contact" className="bg-primary text-black px-8 py-4 rounded-sm font-medium hover:bg-primary/90 transition-colors w-full sm:w-auto text-center">
+            <Link href="/contact" className="btn-glass-primary px-8 py-4 rounded-sm font-medium transition-colors w-full sm:w-auto text-center">
               Start your project
             </Link>
-            <Link href="/services/ai-voice-agents" className="border border-border bg-transparent text-foreground px-8 py-4 rounded-sm font-medium hover:bg-muted transition-colors w-full sm:w-auto text-center">
+            <Link href="/services/ai-voice-agents" className="btn-glass-neutral text-foreground px-8 py-4 rounded-sm font-medium transition-colors w-full sm:w-auto text-center">
               Our AI voice service
             </Link>
           </div>

@@ -612,7 +612,7 @@ export default function GetAQuote() {
                   <button
                     onClick={handlePdfDownload}
                     disabled={pdfGateSubmitting}
-                    className="inline-flex items-center justify-center gap-2 bg-primary text-black px-6 py-3 rounded-sm font-medium hover:bg-primary/90 transition-colors disabled:opacity-60 disabled:pointer-events-none whitespace-nowrap"
+                    className="inline-flex items-center justify-center gap-2 btn-glass-primary px-6 py-3 rounded-sm font-medium transition-colors disabled:opacity-60 disabled:pointer-events-none whitespace-nowrap"
                   >
                     {pdfGateSubmitting
                       ? "Preparing..."
@@ -629,7 +629,7 @@ export default function GetAQuote() {
                 </div>
                 <button
                   onClick={() => downloadProposalPdf(quote, form.industry as Industry, form.projectType as ProjectType)}
-                  className="inline-flex items-center justify-center gap-2 bg-primary text-black px-6 py-3 rounded-sm font-medium hover:bg-primary/90 transition-colors"
+                  className="inline-flex items-center justify-center gap-2 btn-glass-primary px-6 py-3 rounded-sm font-medium transition-colors"
                 >
                   <Download className="w-4 h-4" /> Download PDF again
                 </button>
@@ -643,13 +643,13 @@ export default function GetAQuote() {
               href={waLink}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center justify-center gap-2 border border-border bg-transparent text-foreground px-6 py-3.5 rounded-sm font-medium hover:bg-muted transition-colors"
+              className="inline-flex items-center justify-center gap-2 btn-glass-neutral text-foreground px-6 py-3.5 rounded-sm font-medium transition-colors"
             >
               <MessageCircle className="w-4 h-4" /> Discuss on WhatsApp
             </a>
             <Link
               href="/contact"
-              className="inline-flex items-center justify-center gap-2 border border-border bg-transparent text-foreground px-6 py-3.5 rounded-sm font-medium hover:bg-muted transition-colors"
+              className="inline-flex items-center justify-center gap-2 btn-glass-neutral text-foreground px-6 py-3.5 rounded-sm font-medium transition-colors"
             >
               <FileText className="w-4 h-4" /> Start a Project
             </Link>

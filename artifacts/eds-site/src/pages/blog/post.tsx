@@ -188,7 +188,7 @@ export default function BlogPost() {
             </p>
             <Link
               href="/contact"
-              className="inline-flex items-center gap-2 bg-primary text-black px-8 py-4 rounded-sm font-medium hover:bg-primary/90 transition-colors"
+              className="inline-flex items-center gap-2 btn-glass-primary px-8 py-4 rounded-sm font-medium transition-colors"
             >
               Start a Project
             </Link>

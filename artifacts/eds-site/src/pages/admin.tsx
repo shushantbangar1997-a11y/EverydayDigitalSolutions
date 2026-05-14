@@ -59,7 +59,7 @@ function LoginForm({ onSuccess }: { onSuccess: () => void }) {
         <Button
           type="submit"
           disabled={mutation.isPending || password.length === 0}
-          className="w-full bg-primary text-black hover:bg-primary/90 rounded-sm font-medium"
+          className="w-full rounded-sm font-medium"
         >
           {mutation.isPending ? "Signing in..." : "Sign in"}
         </Button>
@@ -222,7 +222,7 @@ function LeadRow({ lead }: { lead: import("@workspace/api-client-react").Lead })
           <Button
             onClick={save}
             disabled={mutation.isPending}
-            className="bg-primary text-black hover:bg-primary/90 rounded-sm"
+            className="rounded-sm"
           >
             {mutation.isPending ? "Saving..." : "Save"}
           </Button>

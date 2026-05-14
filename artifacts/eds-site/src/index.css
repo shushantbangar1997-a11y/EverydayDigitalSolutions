@@ -72,6 +72,9 @@
   --glass-shadow-sm:     0 1px 2px rgba(26, 23, 20, 0.04), 0 3px 10px rgba(26, 23, 20, 0.04);
   --glass-shadow-md:     0 2px 4px rgba(26, 23, 20, 0.06), 0 8px 24px rgba(26, 23, 20, 0.06);
   --glass-blur:          14px;
+  /* Gold-tinted glass palette for buttons */
+  --glass-btn-primary-fill:   rgba(184, 144, 0, 0.18);
+  --glass-btn-primary-stroke: rgba(184, 144, 0, 0.52);
 }
 
 /* ── Dark mode ── */
@@ -97,6 +100,8 @@
   --glass-shadow-sm:     0 1px 2px rgba(0, 0, 0, 0.22), 0 3px 10px rgba(0, 0, 0, 0.15);
   --glass-shadow-md:     0 2px 4px rgba(0, 0, 0, 0.28), 0 8px 24px rgba(0, 0, 0, 0.20);
   --glass-blur:          14px;
+  --glass-btn-primary-fill:   rgba(245, 212, 36, 0.18);
+  --glass-btn-primary-stroke: rgba(245, 212, 36, 0.45);
 }
 
 @layer base {
@@ -242,20 +247,35 @@
   .kn-logo-wordmark { display: flex; }
 }
 
-/* CTA button */
+/* CTA button — gold glass */
 .kn-cta-btn {
   display: inline-block;
-  background: var(--accent);
-  color: #000;
+  background: var(--glass-btn-primary-fill);
+  backdrop-filter: blur(var(--glass-blur));
+  -webkit-backdrop-filter: blur(var(--glass-blur));
+  color: var(--text-primary);
   font-size: 0.875rem;
   font-weight: 600;
   padding: 0.625rem 1.25rem;
   border-radius: 2px;
+  border: 1px solid var(--glass-btn-primary-stroke);
+  box-shadow: var(--glass-shadow-sm), inset 0 1px 0 var(--glass-highlight);
   text-decoration: none;
-  transition: background 0.2s;
+  transition:
+    background 0.3s,
+    border-color 0.3s,
+    box-shadow 0.45s cubic-bezier(0.23, 1, 0.32, 1),
+    backdrop-filter 0.45s ease;
   white-space: nowrap;
 }
-.kn-cta-btn:hover { background: var(--accent-deep); }
+.kn-cta-btn:hover {
+  background: rgba(184, 144, 0, 0.28);
+  border-color: rgba(184, 144, 0, 0.72);
+}
+.dark .kn-cta-btn:hover {
+  background: rgba(245, 212, 36, 0.27);
+  border-color: rgba(245, 212, 36, 0.65);
+}
 .kn-cta-btn--large {
   font-size: 1rem;
   padding: 0.875rem 2rem;
@@ -579,6 +599,49 @@
       backdrop-filter 0.45s ease,
       -webkit-backdrop-filter 0.45s ease;
   }
+
+  /* Gold-tinted glass button */
+  .btn-glass-primary {
+    background: var(--glass-btn-primary-fill);
+    backdrop-filter: blur(var(--glass-blur));
+    -webkit-backdrop-filter: blur(var(--glass-blur));
+    border: 1px solid var(--glass-btn-primary-stroke);
+    box-shadow: var(--glass-shadow-sm), inset 0 1px 0 var(--glass-highlight);
+    color: var(--text-primary);
+    transition:
+      background 0.3s,
+      border-color 0.3s,
+      box-shadow 0.45s cubic-bezier(0.23, 1, 0.32, 1),
+      backdrop-filter 0.45s ease,
+      -webkit-backdrop-filter 0.45s ease;
+  }
+  .btn-glass-primary:hover:not(.glass-float-active) {
+    background: rgba(184, 144, 0, 0.28);
+    border-color: rgba(184, 144, 0, 0.72);
+  }
+  .dark .btn-glass-primary:hover:not(.glass-float-active) {
+    background: rgba(245, 212, 36, 0.27);
+    border-color: rgba(245, 212, 36, 0.65);
+  }
+
+  /* Neutral glass button (secondary / outline) */
+  .btn-glass-neutral {
+    background: var(--glass-fill);
+    backdrop-filter: blur(var(--glass-blur));
+    -webkit-backdrop-filter: blur(var(--glass-blur));
+    border: 1px solid var(--glass-stroke);
+    box-shadow: var(--glass-shadow-sm), inset 0 1px 0 var(--glass-highlight);
+    transition:
+      background 0.3s,
+      border-color 0.3s,
+      box-shadow 0.45s cubic-bezier(0.23, 1, 0.32, 1),
+      backdrop-filter 0.45s ease,
+      -webkit-backdrop-filter 0.45s ease;
+  }
+  .btn-glass-neutral:hover:not(.glass-float-active) {
+    background: var(--glass-fill-elevated);
+    border-color: var(--border-default);
+  }
 }
 
 /* ─── Glass hover depth — mouse devices only ────────────────────────────── */
@@ -637,13 +700,17 @@
         inset 0 1px 0     rgba(255, 255, 255, 0.14);
     }
 
-    /* Cursor-tracked specular highlight — glass cards */
+    /* Cursor-tracked specular highlight — glass cards and glass buttons */
     .glass.glass-float-active,
-    .glass-elevated.glass-float-active {
+    .glass-elevated.glass-float-active,
+    .btn-glass-primary.glass-float-active,
+    .btn-glass-neutral.glass-float-active {
       overflow: visible;
     }
     .glass.glass-float-active::before,
-    .glass-elevated.glass-float-active::before {
+    .glass-elevated.glass-float-active::before,
+    .btn-glass-primary.glass-float-active::before,
+    .btn-glass-neutral.glass-float-active::before {
       content: '';
       position: absolute;
       inset: 0;
@@ -657,11 +724,11 @@
       z-index: 1;
     }
 
-    /* Cursor-tracked specular highlight — opaque [data-float] buttons */
-    [data-float]:not(.glass):not(.glass-elevated).glass-float-active {
+    /* Cursor-tracked specular highlight — truly opaque [data-float] buttons */
+    [data-float]:not(.glass):not(.glass-elevated):not(.btn-glass-primary):not(.btn-glass-neutral).glass-float-active {
       position: relative;
     }
-    [data-float]:not(.glass):not(.glass-elevated).glass-float-active::after {
+    [data-float]:not(.glass):not(.glass-elevated):not(.btn-glass-primary):not(.btn-glass-neutral).glass-float-active::after {
       content: '';
       position: absolute;
       inset: 0;

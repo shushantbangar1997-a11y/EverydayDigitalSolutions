@@ -79,7 +79,7 @@ export function LeadMagnet({
             <Button
               type="submit"
               disabled={mutation.isPending}
-              className="w-full bg-primary text-black hover:bg-primary/90 rounded-sm font-medium"
+              className="w-full rounded-sm font-medium"
             >
               {mutation.isPending ? "Sending..." : "Send me the guide"}
             </Button>
@@ -142,7 +142,7 @@ export function LeadMagnet({
                 <Button
                   type="submit"
                   disabled={mutation.isPending}
-                  className="w-full bg-primary text-black hover:bg-primary/90 rounded-sm font-medium py-6 text-base"
+                  className="w-full rounded-sm font-medium py-6 text-base"
                 >
                   {mutation.isPending ? "Sending..." : "Send me the guide"}
                 </Button>

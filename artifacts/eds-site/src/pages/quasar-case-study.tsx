@@ -210,10 +210,10 @@ export default function QuasarCaseStudy() {
         <div className="max-w-xl mx-auto px-4 sm:px-6 lg:px-8 text-center bg-card border border-border/40 p-8 sm:p-12 rounded-xl">
           <h2 className="text-2xl sm:text-3xl font-serif mb-6 sm:mb-8">Ready for your version?</h2>
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-            <Link href="/contact" className="bg-primary text-black px-8 py-4 rounded-sm font-medium hover:bg-primary/90 transition-colors w-full sm:w-auto text-center">
+            <Link href="/contact" className="btn-glass-primary px-8 py-4 rounded-sm font-medium transition-colors w-full sm:w-auto text-center">
               Let's talk
             </Link>
-            <Link href="/services/mobile-app-development" className="border border-border bg-transparent text-foreground px-8 py-4 rounded-sm font-medium hover:bg-muted transition-colors w-full sm:w-auto text-center">
+            <Link href="/services/mobile-app-development" className="btn-glass-neutral text-foreground px-8 py-4 rounded-sm font-medium transition-colors w-full sm:w-auto text-center">
               Our app service
             </Link>
           </div>

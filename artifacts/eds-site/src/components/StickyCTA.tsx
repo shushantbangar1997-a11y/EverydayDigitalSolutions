@@ -70,7 +70,7 @@ export function StickyCTA() {
         <Link
           href="/contact"
           data-float=""
-          className="inline-flex items-center gap-1 bg-primary text-black px-3 py-2 rounded-sm text-xs sm:text-sm font-medium hover:bg-primary/90 transition-colors whitespace-nowrap"
+          className="inline-flex items-center gap-1 btn-glass-primary px-3 py-2 rounded-sm text-xs sm:text-sm font-medium transition-colors whitespace-nowrap"
         >
           Start a Project <ArrowRight className="w-3.5 h-3.5" />
         </Link>

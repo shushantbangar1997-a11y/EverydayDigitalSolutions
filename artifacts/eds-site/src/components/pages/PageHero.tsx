@@ -22,7 +22,8 @@ export function PageHero({ tag, headline, paragraph, cta }: PageHeroProps) {
       {cta && (
         <a
           href={cta.href}
-          className="inline-flex items-center gap-2 bg-primary text-black px-8 py-4 rounded-sm font-medium hover:bg-primary/90 transition-colors"
+          data-float=""
+          className="inline-flex items-center gap-2 btn-glass-primary px-8 py-4 rounded-sm font-medium transition-colors"
         >
           {cta.label}
         </a>

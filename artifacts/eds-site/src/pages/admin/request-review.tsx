@@ -190,7 +190,7 @@ function RequestReviewDashboard() {
                     (window as unknown as { plausible: (e: string) => void }).plausible("RequestReviewSent");
                   }
                 }}
-                className="inline-flex items-center bg-primary text-black hover:bg-primary/90 rounded-sm font-medium px-4 py-2 text-sm"
+                className="inline-flex items-center btn-glass-primary rounded-sm font-medium px-4 py-2 text-sm"
               >
                 <ExternalLink className="w-4 h-4 mr-1.5" />
                 Open in WhatsApp

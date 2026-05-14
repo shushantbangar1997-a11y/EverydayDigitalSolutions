@@ -420,20 +420,20 @@ export default function Contact() {
                 href={waLink}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 bg-primary text-black px-6 py-3 rounded-sm font-medium hover:bg-primary/90 transition-colors"
+                className="inline-flex items-center gap-2 btn-glass-primary px-6 py-3 rounded-sm font-medium transition-colors"
               >
                 <MessageCircle className="w-4 h-4" /> WhatsApp us with my brief
               </a>
               <button
                 type="button"
                 onClick={() => downloadBriefPdf(submittedForm, finalBrief)}
-                className="inline-flex items-center gap-2 border border-border px-6 py-3 rounded-sm font-medium hover:bg-muted transition-colors"
+                className="inline-flex items-center gap-2 btn-glass-neutral text-foreground px-6 py-3 rounded-sm font-medium transition-colors"
               >
                 <Download className="w-4 h-4" /> Download brief as PDF
               </button>
               <Link
                 href="/"
-                className="inline-flex items-center gap-2 border border-border px-6 py-3 rounded-sm font-medium hover:bg-muted transition-colors"
+                className="inline-flex items-center gap-2 btn-glass-neutral text-foreground px-6 py-3 rounded-sm font-medium transition-colors"
               >
                 <ArrowLeft className="w-4 h-4" /> Back to home
               </Link>
@@ -797,7 +797,7 @@ export default function Contact() {
                 <Button
                   type="button"
                   onClick={next}
-                  className="bg-primary text-black hover:bg-primary/90 rounded-sm font-medium px-6"
+                  className="rounded-sm font-medium px-6"
                 >
                   Continue <ArrowRight className="w-4 h-4 ml-2" />
                 </Button>
@@ -806,7 +806,7 @@ export default function Contact() {
                   type="button"
                   onClick={submit}
                   disabled={mutation.isPending}
-                  className="bg-primary text-black hover:bg-primary/90 rounded-sm font-medium px-6"
+                  className="rounded-sm font-medium px-6"
                 >
                   {mutation.isPending ? "Sending..." : "Send my brief"}
                 </Button>

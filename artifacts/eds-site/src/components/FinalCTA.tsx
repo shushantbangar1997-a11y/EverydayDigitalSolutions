@@ -34,7 +34,7 @@ export function FinalCTA() {
           <Link
             href="/contact"
             data-float=""
-            className="bg-primary text-black px-8 py-4 rounded-sm font-medium hover:bg-primary/90 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background text-lg"
+            className="btn-glass-primary px-8 py-4 rounded-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background text-lg"
           >
             Start a Project
           </Link>
@@ -43,7 +43,7 @@ export function FinalCTA() {
             target="_blank"
             rel="noopener noreferrer"
             data-float=""
-            className="border border-border bg-transparent text-foreground px-8 py-4 rounded-sm font-medium hover:bg-muted transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background text-lg"
+            className="btn-glass-neutral text-foreground px-8 py-4 rounded-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background text-lg"
           >
             WhatsApp us
           </a>
