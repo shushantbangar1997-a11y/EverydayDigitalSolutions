@@ -72,9 +72,6 @@
   --glass-shadow-sm:     0 1px 2px rgba(26, 23, 20, 0.04), 0 3px 10px rgba(26, 23, 20, 0.04);
   --glass-shadow-md:     0 2px 4px rgba(26, 23, 20, 0.06), 0 8px 24px rgba(26, 23, 20, 0.06);
   --glass-blur:          14px;
-  /* Gold-tinted glass palette for buttons */
-  --glass-btn-primary-fill:   rgba(184, 144, 0, 0.18);
-  --glass-btn-primary-stroke: rgba(184, 144, 0, 0.52);
 }
 
 /* ── Dark mode ── */
@@ -100,8 +97,6 @@
   --glass-shadow-sm:     0 1px 2px rgba(0, 0, 0, 0.22), 0 3px 10px rgba(0, 0, 0, 0.15);
   --glass-shadow-md:     0 2px 4px rgba(0, 0, 0, 0.28), 0 8px 24px rgba(0, 0, 0, 0.20);
   --glass-blur:          14px;
-  --glass-btn-primary-fill:   rgba(245, 212, 36, 0.18);
-  --glass-btn-primary-stroke: rgba(245, 212, 36, 0.45);
 }
 
 @layer base {
@@ -247,19 +242,19 @@
   .kn-logo-wordmark { display: flex; }
 }
 
-/* CTA button — gold glass */
+/* CTA button — pure glass */
 .kn-cta-btn {
   display: inline-block;
-  background: var(--glass-btn-primary-fill);
+  background: var(--glass-fill-elevated);
   backdrop-filter: blur(var(--glass-blur));
   -webkit-backdrop-filter: blur(var(--glass-blur));
   color: var(--text-primary);
   font-size: 0.875rem;
   font-weight: 600;
   padding: 0.625rem 1.25rem;
-  border-radius: 2px;
-  border: 1px solid var(--glass-btn-primary-stroke);
-  box-shadow: var(--glass-shadow-sm), inset 0 1px 0 var(--glass-highlight);
+  border-radius: 9999px;
+  border: 1px solid var(--glass-stroke);
+  box-shadow: var(--glass-shadow-md), inset 0 1px 0 var(--glass-highlight);
   text-decoration: none;
   transition:
     background 0.3s,
@@ -269,17 +264,13 @@
   white-space: nowrap;
 }
 .kn-cta-btn:hover {
-  background: rgba(184, 144, 0, 0.28);
-  border-color: rgba(184, 144, 0, 0.72);
-}
-.dark .kn-cta-btn:hover {
-  background: rgba(245, 212, 36, 0.27);
-  border-color: rgba(245, 212, 36, 0.65);
+  background: var(--glass-fill-elevated);
+  border-color: var(--border-default);
 }
 .kn-cta-btn--large {
   font-size: 1rem;
   padding: 0.875rem 2rem;
-  border-radius: 2px;
+  border-radius: 9999px;
 }
 
 /* Theme toggle */
@@ -600,13 +591,14 @@
       -webkit-backdrop-filter 0.45s ease;
   }
 
-  /* Gold-tinted glass button */
+  /* Primary glass button */
   .btn-glass-primary {
-    background: var(--glass-btn-primary-fill);
+    background: var(--glass-fill-elevated);
     backdrop-filter: blur(var(--glass-blur));
     -webkit-backdrop-filter: blur(var(--glass-blur));
-    border: 1px solid var(--glass-btn-primary-stroke);
-    box-shadow: var(--glass-shadow-sm), inset 0 1px 0 var(--glass-highlight);
+    border: 1px solid var(--glass-stroke);
+    border-radius: 9999px;
+    box-shadow: var(--glass-shadow-md), inset 0 1px 0 var(--glass-highlight);
     color: var(--text-primary);
     transition:
       background 0.3s,
@@ -616,12 +608,8 @@
       -webkit-backdrop-filter 0.45s ease;
   }
   .btn-glass-primary:hover:not(.glass-float-active) {
-    background: rgba(184, 144, 0, 0.28);
-    border-color: rgba(184, 144, 0, 0.72);
-  }
-  .dark .btn-glass-primary:hover:not(.glass-float-active) {
-    background: rgba(245, 212, 36, 0.27);
-    border-color: rgba(245, 212, 36, 0.65);
+    background: var(--glass-fill-elevated);
+    border-color: var(--border-default);
   }
 
   /* Neutral glass button (secondary / outline) */
@@ -630,6 +618,7 @@
     backdrop-filter: blur(var(--glass-blur));
     -webkit-backdrop-filter: blur(var(--glass-blur));
     border: 1px solid var(--glass-stroke);
+    border-radius: 9999px;
     box-shadow: var(--glass-shadow-sm), inset 0 1px 0 var(--glass-highlight);
     transition:
       background 0.3s,
