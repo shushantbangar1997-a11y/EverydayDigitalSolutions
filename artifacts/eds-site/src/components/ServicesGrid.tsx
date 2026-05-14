@@ -48,7 +48,7 @@ export function ServicesGrid() {
                 viewport={{ once: true, margin: "-80px" }}
                 transition={{ duration: 0.55, delay: i * 0.1 }}
               >
-                <Card className="glass rounded-3xl p-6 flex flex-col gap-5 hover:shadow-lg hover:-translate-y-1 transition-all duration-300">
+                <Card className="glass rounded-3xl p-6 flex flex-col gap-5">
                   {/* Header */}
                   <div className="flex items-start justify-between gap-3">
                     <div>

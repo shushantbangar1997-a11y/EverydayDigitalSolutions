@@ -19,24 +19,40 @@ void main() {
   vec2 uv = gl_FragCoord.xy / u_res;
   uv.y = 1.0 - uv.y;
 
-  // ── Specular highlight (Gaussian blob, mouse-driven) ──────────────
+  // ── Primary specular blob (Gaussian, mouse-driven + slow liquid drift) ──
   vec2 specPos = vec2(
-    0.22 + u_mouse.x * 0.38 + 0.05 * sin(u_time * 0.38),
-    0.18 + u_mouse.y * 0.22 + 0.04 * cos(u_time * 0.27)
+    0.20 + u_mouse.x * 0.42 + 0.06 * sin(u_time * 0.41),
+    0.15 + u_mouse.y * 0.26 + 0.04 * cos(u_time * 0.29)
   );
-  float spec = exp(-dot(uv - specPos, uv - specPos) * 10.0) * 0.52;
+  float d1   = dot(uv - specPos, uv - specPos);
+  float spec = exp(-d1 * 8.5) * 0.72;
 
-  // ── Top-edge bevel (light coming from above) ──────────────────────
-  float topBevel  = pow(max(0.0, 1.0 - uv.y * 4.5), 2.0) * 0.28;
-  float leftBevel = pow(max(0.0, 1.0 - uv.x * 6.0), 2.0) * 0.10;
+  // ── Secondary catch-light (tight, offset — two-point glass lighting) ──
+  vec2 spec2Pos = specPos + vec2(
+    0.09 * cos(u_time * 0.19),
+   -0.07 * sin(u_time * 0.23)
+  );
+  float d2    = dot(uv - spec2Pos, uv - spec2Pos);
+  float spec2 = exp(-d2 * 32.0) * 0.38;
 
-  // ── Slow shimmer sweep across the surface ─────────────────────────
-  float sweepX  = fract(u_time * 0.055);
-  float sweep   = smoothstep(sweepX - 0.14, sweepX, uv.x)
-                * (1.0 - smoothstep(sweepX, sweepX + 0.14, uv.x));
-  sweep *= 0.09 * pow(1.0 - uv.y, 1.5);
+  // ── Top-edge bevel (dominant — pane lit from above) ───────────────────
+  float topBevel  = pow(max(0.0, 1.0 - uv.y * 4.0), 2.0) * 0.40;
+  float leftBevel = pow(max(0.0, 1.0 - uv.x * 5.5), 2.0) * 0.15;
 
-  float alpha = clamp(spec + topBevel + leftBevel + sweep, 0.0, 0.70);
+  // ── Fresnel rim glow on bottom + right edges ──────────────────────────
+  float bottomRim = pow(max(0.0, 1.0 - (1.0 - uv.y) * 7.0), 3.0) * 0.09;
+  float rightRim  = pow(max(0.0, 1.0 - (1.0 - uv.x) * 7.0), 3.0) * 0.07;
+
+  // ── Slow shimmer sweep ────────────────────────────────────────────────
+  float sweepX = fract(u_time * 0.05);
+  float sweep  = smoothstep(sweepX - 0.16, sweepX, uv.x)
+               * (1.0 - smoothstep(sweepX, sweepX + 0.16, uv.x));
+  sweep *= 0.13 * pow(1.0 - uv.y, 1.4);
+
+  float alpha = clamp(
+    spec + spec2 + topBevel + leftBevel + bottomRim + rightRim + sweep,
+    0.0, 0.84
+  );
   fragColor = vec4(1.0, 1.0, 1.0, alpha);
 }`;
 

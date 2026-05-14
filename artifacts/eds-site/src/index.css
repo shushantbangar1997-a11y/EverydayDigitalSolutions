@@ -556,6 +556,13 @@
     -webkit-backdrop-filter: blur(var(--glass-blur));
     border: 1px solid var(--glass-stroke);
     box-shadow: var(--glass-shadow-sm), inset 0 1px 0 var(--glass-highlight);
+    /* Smooth transitions for shadow + blur depth; GSAP owns transform */
+    transition:
+      background 0.3s,
+      border-color 0.3s,
+      box-shadow 0.45s cubic-bezier(0.23, 1, 0.32, 1),
+      backdrop-filter 0.45s ease,
+      -webkit-backdrop-filter 0.45s ease;
   }
 
   /* Elevated glass — modals, drawers, sticky UI, form cards */
@@ -565,7 +572,47 @@
     -webkit-backdrop-filter: blur(var(--glass-blur));
     border: 1px solid var(--glass-stroke);
     box-shadow: var(--glass-shadow-md), inset 0 1px 0 var(--glass-highlight);
+    transition:
+      background 0.3s,
+      border-color 0.3s,
+      box-shadow 0.45s cubic-bezier(0.23, 1, 0.32, 1),
+      backdrop-filter 0.45s ease,
+      -webkit-backdrop-filter 0.45s ease;
+  }
+}
+
+/* ─── Glass hover depth — mouse devices only ────────────────────────────── */
+
+@media (hover: hover) {
+  @media (prefers-reduced-motion: no-preference) {
+    .glass:hover,
+    .glass-elevated:hover {
+      box-shadow:
+        0 24px 64px -10px rgba(0, 0, 0, 0.16),
+        0 6px 20px -6px  rgba(0, 0, 0, 0.09),
+        0 0 0 1px        rgba(255, 255, 255, 0.22),
+        inset 0 1px 0    rgba(255, 255, 255, 0.36);
+      backdrop-filter: blur(22px) saturate(160%);
+      -webkit-backdrop-filter: blur(22px) saturate(160%);
+    }
+
+    .dark .glass:hover,
+    .dark .glass-elevated:hover {
+      box-shadow:
+        0 24px 64px -10px rgba(0, 0, 0, 0.50),
+        0 6px 20px -6px  rgba(0, 0, 0, 0.30),
+        0 0 0 1px        rgba(255, 255, 255, 0.10),
+        inset 0 1px 0    rgba(255, 255, 255, 0.13);
+    }
   }
 }
 
 /* ─── End Glass utility classes ─────────────────────────────────────────── */
+
+/* ─── Smooth scrolling ───────────────────────────────────────────────────── */
+
+@media (prefers-reduced-motion: no-preference) {
+  html {
+    scroll-behavior: smooth;
+  }
+}

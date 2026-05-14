@@ -4,6 +4,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { canUseWebGL } from "@/lib/canUseWebGL";
+import { useGlobalGlassTilt } from "@/hooks/useGlobalGlassTilt";
 import NotFound from "@/pages/not-found";
 
 const AmbientCanvas = lazy(() =>
@@ -107,6 +108,7 @@ function App() {
     if (typeof window === "undefined") return false;
     return canUseWebGL();
   });
+  useGlobalGlassTilt();
 
   return (
     <QueryClientProvider client={queryClient}>

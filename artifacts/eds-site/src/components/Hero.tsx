@@ -3,7 +3,6 @@ import { Link } from "wouter";
 import { motion, useReducedMotion } from "framer-motion";
 import { Check } from "lucide-react";
 import { canUseWebGL } from "@/lib/canUseWebGL";
-import { useTilt } from "@/hooks/useTilt";
 
 const GlassLens = lazy(() =>
   import("@/components/GlassLens").then((m) => ({ default: m.GlassLens }))
@@ -15,7 +14,6 @@ export function Hero() {
     if (typeof window === "undefined") return false;
     return canUseWebGL();
   });
-  const tiltRef = useTilt<HTMLDivElement>();
 
   const variants = {
     hidden: { opacity: 0, y: prefersReducedMotion ? 0 : 20 },
@@ -67,11 +65,7 @@ export function Hero() {
         <motion.div variants={variants} className="flex flex-col gap-6 lg:pl-10 lg:border-l border-border/40 pt-6 lg:pt-0 border-t lg:border-t-0 border-border/40 min-w-0">
           {/* Mini app preview — desktop only */}
           <div className="hidden lg:block">
-            <div
-              ref={tiltRef}
-              className="glass-elevated rounded-xl relative overflow-hidden"
-              style={{ transformStyle: "preserve-3d" }}
-            >
+            <div className="glass-elevated rounded-xl relative overflow-hidden">
               {showGlassLens && (
                 <Suspense fallback={null}>
                   <GlassLens />
