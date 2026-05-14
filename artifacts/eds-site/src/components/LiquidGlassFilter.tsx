@@ -112,10 +112,16 @@ export function attachLiquidGlass(el: HTMLElement): void {
   const scale = Math.max(14, Math.min(r.width, r.height) * 0.15);
   _feDisp.setAttribute("scale", String(scale));
 
-  // Apply as backdropFilter (bends the page content behind the element)
-  const f = `url(#${FILTER_ID}) blur(0.5px) contrast(1.18) brightness(1.06) saturate(1.18)`;
-  el.style.setProperty("backdrop-filter", f);
-  el.style.setProperty("-webkit-backdrop-filter", f);
+  // Only apply SVG backdrop-filter to semi-transparent glass surfaces where
+  // the refraction is actually visible. Fully-opaque [data-float] buttons get
+  // their glass look from the cursor-tracked ::after specular overlay in CSS.
+  const isSemiTransparent =
+    el.classList.contains("glass") || el.classList.contains("glass-elevated");
+  if (isSemiTransparent) {
+    const f = `url(#${FILTER_ID}) blur(0.5px) contrast(1.18) brightness(1.06) saturate(1.18)`;
+    el.style.setProperty("backdrop-filter", f);
+    el.style.setProperty("-webkit-backdrop-filter", f);
+  }
 }
 
 /** Remove the liquid-glass backdropFilter from `el`. */

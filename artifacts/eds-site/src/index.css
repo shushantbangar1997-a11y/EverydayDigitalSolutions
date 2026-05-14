@@ -585,8 +585,9 @@
 
 @media (hover: hover) {
   @media (prefers-reduced-motion: no-preference) {
-    .glass:hover,
-    .glass-elevated:hover {
+    /* Fallback hover depth — only fires when the JS float hook is NOT active */
+    .glass:hover:not(.glass-float-active),
+    .glass-elevated:hover:not(.glass-float-active) {
       box-shadow:
         0 24px 64px -10px rgba(0, 0, 0, 0.16),
         0 6px 20px -6px  rgba(0, 0, 0, 0.09),
@@ -596,8 +597,8 @@
       -webkit-backdrop-filter: blur(22px) saturate(160%);
     }
 
-    .dark .glass:hover,
-    .dark .glass-elevated:hover {
+    .dark .glass:hover:not(.glass-float-active),
+    .dark .glass-elevated:hover:not(.glass-float-active) {
       box-shadow:
         0 24px 64px -10px rgba(0, 0, 0, 0.50),
         0 6px 20px -6px  rgba(0, 0, 0, 0.30),

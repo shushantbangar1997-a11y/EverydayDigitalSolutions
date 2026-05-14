@@ -41,7 +41,7 @@ function floatTarget(node: Element | null): HTMLElement | null {
         const pos = getComputedStyle(el).position;
         if (pos === "fixed" || pos === "sticky") return null;
         const r = el.getBoundingClientRect();
-        if (r.width  > window.innerWidth  * 0.88) return null;
+        if (r.width  > window.innerWidth  * 0.85) return null;
         if (r.height > window.innerHeight * 0.78) return null;
         return el;
       }
