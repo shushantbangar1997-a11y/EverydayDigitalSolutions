@@ -45,7 +45,7 @@ export function Hero() {
             </Link>
             <a
               href="#work"
-              className="w-full sm:w-auto text-center border border-border bg-transparent text-foreground px-6 py-3.5 sm:py-3 rounded-sm font-medium hover:bg-muted transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background"
+              className="w-full sm:w-auto text-center glass text-foreground px-6 py-3.5 sm:py-3 rounded-sm font-medium hover:brightness-95 transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background"
             >
               See our work
             </a>

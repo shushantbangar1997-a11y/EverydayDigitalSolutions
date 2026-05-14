@@ -117,7 +117,7 @@ export function LocalityPageView({ page }: { page: LocalityPage }) {
           <h2 className="text-2xl font-serif mb-8">What we build for {page.localityName} businesses</h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
             {page.industriesServed.map((s) => (
-              <div key={s.title} className="bg-card border border-border/40 p-6">
+              <div key={s.title} className="glass rounded-sm p-6">
                 <h3 className="font-medium text-foreground mb-2">{s.title}</h3>
                 <p className="text-xs text-muted-foreground leading-relaxed">{s.body}</p>
               </div>
