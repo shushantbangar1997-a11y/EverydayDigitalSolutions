@@ -17,6 +17,7 @@ const navLinks = [
   { label: "About",     href: "/#about" },
   { label: "FAQ",       href: "/#faq" },
   { label: "Contact",   href: "/contact" },
+  { label: "Get a Quote", href: "/get-a-quote" },
 ];
 
 export function Navbar() {
@@ -335,9 +336,14 @@ export function Navbar() {
               </div>
 
               <div className="kn-overlay-footer" data-menu-fade>
-                <Link href="/contact" className="kn-cta-btn kn-cta-btn--large" onClick={closeMenu}>
-                  Start a Project
-                </Link>
+                <div style={{ display: "flex", gap: "12px", flexWrap: "wrap" }}>
+                  <Link href="/get-a-quote" className="kn-cta-btn kn-cta-btn--large" onClick={closeMenu}>
+                    Get a Quote
+                  </Link>
+                  <Link href="/contact" className="kn-cta-btn kn-cta-btn--large" style={{ background: "transparent", border: "1px solid rgba(255,255,255,0.2)", color: "inherit" }} onClick={closeMenu}>
+                    Start a Project
+                  </Link>
+                </div>
                 <p className="kn-overlay-tagline">AI &amp; Custom Software · Mohali · Jalandhar</p>
               </div>
             </div>

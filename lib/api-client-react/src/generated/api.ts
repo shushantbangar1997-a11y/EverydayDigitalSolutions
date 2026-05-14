@@ -24,6 +24,8 @@ import type {
   Lead,
   LeadInput,
   LeadUpdate,
+  QuoteInput,
+  QuoteResult,
   SiteStats,
   Subscriber,
   SubscriberInput,
@@ -829,3 +831,90 @@ export function useListSubscribers<
 
   return { ...query, queryKey: queryOptions.queryKey };
 }
+
+/**
+ * Accepts project details, runs the pricing engine, calls AI for scope copy, and returns a full quote with line items and delivery estimate.
+ * @summary Generate an AI-powered project quote
+ */
+export const getGenerateQuoteUrl = () => {
+  return `/api/quote/generate`;
+};
+
+export const generateQuote = async (
+  quoteInput: QuoteInput,
+  options?: RequestInit,
+): Promise<QuoteResult> => {
+  return customFetch<QuoteResult>(getGenerateQuoteUrl(), {
+    ...options,
+    method: "POST",
+    headers: { "Content-Type": "application/json", ...options?.headers },
+    body: JSON.stringify(quoteInput),
+  });
+};
+
+export const getGenerateQuoteMutationOptions = <
+  TError = ErrorType<ErrorResponse>,
+  TContext = unknown,
+>(options?: {
+  mutation?: UseMutationOptions<
+    Awaited<ReturnType<typeof generateQuote>>,
+    TError,
+    { data: BodyType<QuoteInput> },
+    TContext
+  >;
+  request?: SecondParameter<typeof customFetch>;
+}): UseMutationOptions<
+  Awaited<ReturnType<typeof generateQuote>>,
+  TError,
+  { data: BodyType<QuoteInput> },
+  TContext
+> => {
+  const mutationKey = ["generateQuote"];
+  const { mutation: mutationOptions, request: requestOptions } = options
+    ? options.mutation &&
+      "mutationKey" in options.mutation &&
+      options.mutation.mutationKey
+      ? options
+      : { ...options, mutation: { ...options.mutation, mutationKey } }
+    : { mutation: { mutationKey }, request: undefined };
+
+  const mutationFn: MutationFunction<
+    Awaited<ReturnType<typeof generateQuote>>,
+    { data: BodyType<QuoteInput> }
+  > = (props) => {
+    const { data } = props ?? {};
+
+    return generateQuote(data, requestOptions);
+  };
+
+  return { mutationFn, ...mutationOptions };
+};
+
+export type GenerateQuoteMutationResult = NonNullable<
+  Awaited<ReturnType<typeof generateQuote>>
+>;
+export type GenerateQuoteMutationBody = BodyType<QuoteInput>;
+export type GenerateQuoteMutationError = ErrorType<ErrorResponse>;
+
+/**
+ * @summary Generate an AI-powered project quote
+ */
+export const useGenerateQuote = <
+  TError = ErrorType<ErrorResponse>,
+  TContext = unknown,
+>(options?: {
+  mutation?: UseMutationOptions<
+    Awaited<ReturnType<typeof generateQuote>>,
+    TError,
+    { data: BodyType<QuoteInput> },
+    TContext
+  >;
+  request?: SecondParameter<typeof customFetch>;
+}): UseMutationResult<
+  Awaited<ReturnType<typeof generateQuote>>,
+  TError,
+  { data: BodyType<QuoteInput> },
+  TContext
+> => {
+  return useMutation(getGenerateQuoteMutationOptions(options));
+};

@@ -18,6 +18,8 @@ tags:
     description: Public site statistics (trust ticker)
   - name: admin
     description: Admin dashboard (password-protected)
+  - name: quote
+    description: AI-powered project quote generator
 paths:
   /healthz:
     get:
@@ -220,8 +222,162 @@ paths:
               schema:
                 $ref: "#/components/schemas/ErrorResponse"
 
+  /quote/generate:
+    post:
+      operationId: generateQuote
+      tags: [quote]
+      summary: Generate an AI-powered project quote
+      description: Accepts project details, runs the pricing engine, calls AI for scope copy, and returns a full quote with line items and delivery estimate.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/QuoteInput"
+      responses:
+        "200":
+          description: Quote generated
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/QuoteResult"
+        "400":
+          description: Invalid input
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "500":
+          description: Server error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+
 components:
   schemas:
+    QuoteProjectType:
+      type: string
+      enum:
+        - mobile_app_cross
+        - mobile_app_single
+        - web_app
+        - website
+        - ai_automation
+        - ai_voice_agent
+
+    QuoteScale:
+      type: string
+      enum:
+        - small
+        - medium
+        - large
+
+    QuoteInput:
+      type: object
+      required:
+        - contactName
+        - whatsappNumber
+        - industry
+        - projectType
+        - features
+        - scale
+        - timeline
+        - projectDescription
+      properties:
+        businessName:
+          type: ["string", "null"]
+        contactName:
+          type: string
+          minLength: 2
+        whatsappNumber:
+          type: string
+          minLength: 6
+        email:
+          type: ["string", "null"]
+        industry:
+          $ref: "#/components/schemas/Industry"
+        projectType:
+          $ref: "#/components/schemas/QuoteProjectType"
+        features:
+          type: array
+          items:
+            type: string
+        scale:
+          $ref: "#/components/schemas/QuoteScale"
+        timeline:
+          $ref: "#/components/schemas/Timeline"
+        projectDescription:
+          type: string
+          minLength: 10
+
+    QuoteLineItem:
+      type: object
+      required:
+        - label
+        - amount
+      properties:
+        label:
+          type: string
+        amount:
+          type: integer
+        note:
+          type: ["string", "null"]
+
+    QuoteDelivery:
+      type: object
+      required:
+        - minDays
+        - maxDays
+      properties:
+        minDays:
+          type: integer
+        maxDays:
+          type: integer
+
+    QuoteResult:
+      type: object
+      required:
+        - quoteRef
+        - businessName
+        - contactName
+        - generatedAt
+        - lineItems
+        - subtotal
+        - total
+        - delivery
+        - executiveSummary
+        - scopeItems
+        - validDays
+      properties:
+        quoteRef:
+          type: string
+        businessName:
+          type: ["string", "null"]
+        contactName:
+          type: string
+        generatedAt:
+          type: string
+          format: date-time
+        lineItems:
+          type: array
+          items:
+            $ref: "#/components/schemas/QuoteLineItem"
+        subtotal:
+          type: integer
+        total:
+          type: integer
+        delivery:
+          $ref: "#/components/schemas/QuoteDelivery"
+        executiveSummary:
+          type: string
+        scopeItems:
+          type: array
+          items:
+            type: string
+        validDays:
+          type: integer
+
     HealthStatus:
       type: object
       properties:

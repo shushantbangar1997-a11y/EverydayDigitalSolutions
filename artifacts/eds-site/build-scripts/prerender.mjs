@@ -76,6 +76,9 @@ const ROUTES = [
   // Locality pages (3 Chandigarh sectors, 3 Mohali phases, 2 Jalandhar localities)
   ...localityRoutes,
 
+  // Quote engine
+  { urlPath: "get-a-quote",                         url: "/get-a-quote" },
+
   // Free interactive tools
   { urlPath: "tools/app-cost-calculator",           url: "/tools/app-cost-calculator" },
   { urlPath: "tools/ai-voice-agent-roi-calculator", url: "/tools/ai-voice-agent-roi-calculator" },

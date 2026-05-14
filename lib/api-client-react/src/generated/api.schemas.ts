@@ -5,13 +5,25 @@
  * API specification for Everyday Digital Solutions
  * OpenAPI spec version: 0.1.0
  */
-export interface HealthStatus {
-  status: string;
-}
+export type QuoteProjectType =
+  (typeof QuoteProjectType)[keyof typeof QuoteProjectType];
 
-export interface ErrorResponse {
-  error: string;
-}
+export const QuoteProjectType = {
+  mobile_app_cross: "mobile_app_cross",
+  mobile_app_single: "mobile_app_single",
+  web_app: "web_app",
+  website: "website",
+  ai_automation: "ai_automation",
+  ai_voice_agent: "ai_voice_agent",
+} as const;
+
+export type QuoteScale = (typeof QuoteScale)[keyof typeof QuoteScale];
+
+export const QuoteScale = {
+  small: "small",
+  medium: "medium",
+  large: "large",
+} as const;
 
 export type Industry = (typeof Industry)[keyof typeof Industry];
 
@@ -24,6 +36,69 @@ export const Industry = {
   other: "other",
 } as const;
 
+export type Timeline = (typeof Timeline)[keyof typeof Timeline];
+
+export const Timeline = {
+  asap: "asap",
+  within_1_month: "within_1_month",
+  "1_to_3_months": "1_to_3_months",
+  "3_to_6_months": "3_to_6_months",
+  exploring: "exploring",
+} as const;
+
+export interface QuoteInput {
+  /** @nullable */
+  businessName?: string | null;
+  /** @minLength 2 */
+  contactName: string;
+  /** @minLength 6 */
+  whatsappNumber: string;
+  /** @nullable */
+  email?: string | null;
+  industry: Industry;
+  projectType: QuoteProjectType;
+  features: string[];
+  scale: QuoteScale;
+  timeline: Timeline;
+  /** @minLength 10 */
+  projectDescription: string;
+}
+
+export interface QuoteLineItem {
+  label: string;
+  amount: number;
+  /** @nullable */
+  note?: string | null;
+}
+
+export interface QuoteDelivery {
+  minDays: number;
+  maxDays: number;
+}
+
+export interface QuoteResult {
+  quoteRef: string;
+  /** @nullable */
+  businessName: string | null;
+  contactName: string;
+  generatedAt: string;
+  lineItems: QuoteLineItem[];
+  subtotal: number;
+  total: number;
+  delivery: QuoteDelivery;
+  executiveSummary: string;
+  scopeItems: string[];
+  validDays: number;
+}
+
+export interface HealthStatus {
+  status: string;
+}
+
+export interface ErrorResponse {
+  error: string;
+}
+
 export type BudgetBand = (typeof BudgetBand)[keyof typeof BudgetBand];
 
 export const BudgetBand = {
@@ -33,16 +108,6 @@ export const BudgetBand = {
   "8l_to_20l": "8l_to_20l",
   "20l_plus": "20l_plus",
   not_sure: "not_sure",
-} as const;
-
-export type Timeline = (typeof Timeline)[keyof typeof Timeline];
-
-export const Timeline = {
-  asap: "asap",
-  within_1_month: "within_1_month",
-  "1_to_3_months": "1_to_3_months",
-  "3_to_6_months": "3_to_6_months",
-  exploring: "exploring",
 } as const;
 
 export type LeadStatus = (typeof LeadStatus)[keyof typeof LeadStatus];

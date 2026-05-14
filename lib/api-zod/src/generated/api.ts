@@ -220,3 +220,69 @@ export const ListSubscribersResponseItem = zod.object({
   createdAt: zod.coerce.date(),
 });
 export const ListSubscribersResponse = zod.array(ListSubscribersResponseItem);
+
+/**
+ * Accepts project details, runs the pricing engine, calls AI for scope copy, and returns a full quote with line items and delivery estimate.
+ * @summary Generate an AI-powered project quote
+ */
+export const generateQuoteBodyContactNameMin = 2;
+
+export const generateQuoteBodyWhatsappNumberMin = 6;
+
+export const generateQuoteBodyProjectDescriptionMin = 10;
+
+export const GenerateQuoteBody = zod.object({
+  businessName: zod.string().nullish(),
+  contactName: zod.string().min(generateQuoteBodyContactNameMin),
+  whatsappNumber: zod.string().min(generateQuoteBodyWhatsappNumberMin),
+  email: zod.string().nullish(),
+  industry: zod.enum([
+    "salon_spa",
+    "real_estate",
+    "clinic_healthcare",
+    "restaurant_cafe",
+    "other_service",
+    "other",
+  ]),
+  projectType: zod.enum([
+    "mobile_app_cross",
+    "mobile_app_single",
+    "web_app",
+    "website",
+    "ai_automation",
+    "ai_voice_agent",
+  ]),
+  features: zod.array(zod.string()),
+  scale: zod.enum(["small", "medium", "large"]),
+  timeline: zod.enum([
+    "asap",
+    "within_1_month",
+    "1_to_3_months",
+    "3_to_6_months",
+    "exploring",
+  ]),
+  projectDescription: zod.string().min(generateQuoteBodyProjectDescriptionMin),
+});
+
+export const GenerateQuoteResponse = zod.object({
+  quoteRef: zod.string(),
+  businessName: zod.string().nullable(),
+  contactName: zod.string(),
+  generatedAt: zod.coerce.date(),
+  lineItems: zod.array(
+    zod.object({
+      label: zod.string(),
+      amount: zod.number(),
+      note: zod.string().nullish(),
+    }),
+  ),
+  subtotal: zod.number(),
+  total: zod.number(),
+  delivery: zod.object({
+    minDays: zod.number(),
+    maxDays: zod.number(),
+  }),
+  executiveSummary: zod.string(),
+  scopeItems: zod.array(zod.string()),
+  validDays: zod.number(),
+});

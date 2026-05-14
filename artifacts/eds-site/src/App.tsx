@@ -10,6 +10,7 @@ import OpenHumanaCaseStudy from "@/pages/work/open-humana";
 import Admin from "@/pages/admin";
 import RequestReview from "@/pages/admin/request-review";
 import AppCostGuide2026 from "@/pages/resources/app-cost-guide-2026";
+import GetAQuote from "@/pages/get-a-quote";
 
 import MobileAppDevelopment from "@/pages/services/mobile-app-development";
 import AIVoiceAgents from "@/pages/services/ai-voice-agents";
@@ -76,6 +77,8 @@ function Router() {
       <Route path="/jalandhar/model-town" component={JalandharModelTown} />
       <Route path="/jalandhar/civil-lines" component={JalandharCivilLines} />
       <Route path="/punjab" component={Punjab} />
+
+      <Route path="/get-a-quote" component={GetAQuote} />
 
       <Route path="/tools/app-cost-calculator" component={AppCostCalculator} />
       <Route path="/tools/ai-voice-agent-roi-calculator" component={AIVoiceAgentROICalculator} />
