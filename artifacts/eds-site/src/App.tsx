@@ -1,8 +1,14 @@
+import { lazy, Suspense, useState } from "react";
 import { Switch, Route, Router as WouterRouter } from "wouter";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
+import { canUseWebGL } from "@/lib/canUseWebGL";
 import NotFound from "@/pages/not-found";
+
+const AmbientCanvas = lazy(() =>
+  import("@/components/AmbientCanvas").then((m) => ({ default: m.AmbientCanvas }))
+);
 import Home from "@/pages/home";
 import Contact from "@/pages/contact";
 import QuasarCaseStudy from "@/pages/quasar-case-study";
@@ -97,9 +103,19 @@ function Router() {
 }
 
 function App() {
+  const [showAmbient] = useState<boolean>(() => {
+    if (typeof window === "undefined") return false;
+    return canUseWebGL();
+  });
+
   return (
     <QueryClientProvider client={queryClient}>
       <TooltipProvider>
+        {showAmbient && (
+          <Suspense fallback={null}>
+            <AmbientCanvas />
+          </Suspense>
+        )}
         <WouterRouter base={import.meta.env.BASE_URL.replace(/\/$/, "")}>
           <PageTransition>
             <Router />

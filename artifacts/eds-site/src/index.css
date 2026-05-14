@@ -144,6 +144,33 @@
   pointer-events: none;
 }
 
+/* ── Desktop-only specular sweep on scrolled navbar ── */
+@media (min-width: 768px) {
+  @media (prefers-reduced-motion: no-preference) {
+    .kn-header--scrolled::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        105deg,
+        transparent 28%,
+        rgba(255, 255, 255, 0.09) 48%,
+        transparent 68%
+      );
+      background-size: 300% 100%;
+      animation: glass-specular-sweep 9s ease-in-out infinite;
+      pointer-events: none;
+      z-index: 1;
+    }
+  }
+}
+
+@keyframes glass-specular-sweep {
+  0%   { background-position: 220% center; }
+  50%  { background-position: -100% center; }
+  100% { background-position: 220% center; }
+}
+
 .kn-container {
   max-width: 1280px;
   margin: 0 auto;

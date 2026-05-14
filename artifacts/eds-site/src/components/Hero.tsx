@@ -1,9 +1,21 @@
+import { lazy, Suspense, useState } from "react";
 import { Link } from "wouter";
 import { motion, useReducedMotion } from "framer-motion";
 import { Check } from "lucide-react";
+import { canUseWebGL } from "@/lib/canUseWebGL";
+import { useTilt } from "@/hooks/useTilt";
+
+const GlassLens = lazy(() =>
+  import("@/components/GlassLens").then((m) => ({ default: m.GlassLens }))
+);
 
 export function Hero() {
   const prefersReducedMotion = useReducedMotion();
+  const [showGlassLens] = useState<boolean>(() => {
+    if (typeof window === "undefined") return false;
+    return canUseWebGL();
+  });
+  const tiltRef = useTilt<HTMLDivElement>();
 
   const variants = {
     hidden: { opacity: 0, y: prefersReducedMotion ? 0 : 20 },
@@ -55,41 +67,52 @@ export function Hero() {
         <motion.div variants={variants} className="flex flex-col gap-6 lg:pl-10 lg:border-l border-border/40 pt-6 lg:pt-0 border-t lg:border-t-0 border-border/40 min-w-0">
           {/* Mini app preview — desktop only */}
           <div className="hidden lg:block">
-            <div className="glass-elevated rounded-xl p-5">
-              <div className="flex items-center justify-between mb-4">
-                <span className="text-[11px] font-medium text-muted-foreground uppercase tracking-widest">Quasar Salon · App</span>
-                <span className="flex h-2 w-2">
-                  <span className="relative inline-flex rounded-full h-2 w-2 bg-primary" />
-                </span>
-              </div>
-              <div className="space-y-2 mb-4">
-                <div className="flex items-center gap-2.5 p-2.5 bg-background rounded-md border border-border/40">
-                  <div className="w-6 h-6 rounded-full bg-primary/20 shrink-0" />
-                  <div className="flex-1 min-w-0">
-                    <div className="text-xs font-medium text-foreground">Appointment confirmed</div>
-                    <div className="text-[10px] text-muted-foreground">Today, 3:00 PM · Harpreet S.</div>
-                  </div>
-                  <Check className="w-3.5 h-3.5 text-primary shrink-0" />
+            <div
+              ref={tiltRef}
+              className="glass-elevated rounded-xl relative overflow-hidden"
+              style={{ transformStyle: "preserve-3d" }}
+            >
+              {showGlassLens && (
+                <Suspense fallback={null}>
+                  <GlassLens />
+                </Suspense>
+              )}
+              <div className="relative p-5" style={{ zIndex: 2 }}>
+                <div className="flex items-center justify-between mb-4">
+                  <span className="text-[11px] font-medium text-muted-foreground uppercase tracking-widest">Quasar Salon · App</span>
+                  <span className="flex h-2 w-2">
+                    <span className="relative inline-flex rounded-full h-2 w-2 bg-primary" />
+                  </span>
                 </div>
-                <div className="flex items-center gap-2.5 p-2.5 bg-background rounded-md border border-border/40 opacity-60">
-                  <div className="w-6 h-6 rounded-full bg-border shrink-0" />
-                  <div className="flex-1 min-w-0">
-                    <div className="text-xs text-foreground">New booking request</div>
-                    <div className="text-[10px] text-muted-foreground">Tomorrow, 11:00 AM</div>
+                <div className="space-y-2 mb-4">
+                  <div className="flex items-center gap-2.5 p-2.5 bg-background rounded-md border border-border/40">
+                    <div className="w-6 h-6 rounded-full bg-primary/20 shrink-0" />
+                    <div className="flex-1 min-w-0">
+                      <div className="text-xs font-medium text-foreground">Appointment confirmed</div>
+                      <div className="text-[10px] text-muted-foreground">Today, 3:00 PM · Harpreet S.</div>
+                    </div>
+                    <Check className="w-3.5 h-3.5 text-primary shrink-0" />
+                  </div>
+                  <div className="flex items-center gap-2.5 p-2.5 bg-background rounded-md border border-border/40 opacity-60">
+                    <div className="w-6 h-6 rounded-full bg-border shrink-0" />
+                    <div className="flex-1 min-w-0">
+                      <div className="text-xs text-foreground">New booking request</div>
+                      <div className="text-[10px] text-muted-foreground">Tomorrow, 11:00 AM</div>
+                    </div>
+                  </div>
+                  <div className="flex items-center gap-2.5 p-2.5 bg-background rounded-md border border-border/40 opacity-40">
+                    <div className="w-6 h-6 rounded-full bg-border shrink-0" />
+                    <div className="flex-1 min-w-0">
+                      <div className="text-xs text-foreground">Loyalty reward earned</div>
+                      <div className="text-[10px] text-muted-foreground">240 pts · Manpreet K.</div>
+                    </div>
                   </div>
                 </div>
-                <div className="flex items-center gap-2.5 p-2.5 bg-background rounded-md border border-border/40 opacity-40">
-                  <div className="w-6 h-6 rounded-full bg-border shrink-0" />
-                  <div className="flex-1 min-w-0">
-                    <div className="text-xs text-foreground">Loyalty reward earned</div>
-                    <div className="text-[10px] text-muted-foreground">240 pts · Manpreet K.</div>
-                  </div>
+                <div className="w-full py-2 bg-primary rounded-sm text-center text-[11px] font-bold text-black tracking-wide">
+                  Book Now
                 </div>
+                <p className="text-center text-[10px] text-muted-foreground mt-2">Shipped in 30 days · Launching May 2026</p>
               </div>
-              <div className="w-full py-2 bg-primary rounded-sm text-center text-[11px] font-bold text-black tracking-wide">
-                Book Now
-              </div>
-              <p className="text-center text-[10px] text-muted-foreground mt-2">Shipped in 30 days · Launching May 2026</p>
             </div>
           </div>
 
