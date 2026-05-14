@@ -135,11 +135,14 @@ export function GlassLens() {
     parent?.addEventListener("mousemove", onMouseMove);
 
     let start: number | null = null;
+    let pauseOffset = 0;        // shader-time accumulated while paused
     let rafId = 0;
+    let inView = true;          // observer hasn't fired yet → assume visible
+    let tabVisible = !document.hidden;
 
     const render = (ts: number) => {
       if (start === null) start = ts;
-      const t = (ts - start) / 1000;
+      const t = (ts - start) / 1000 - pauseOffset;
 
       const w = canvas.offsetWidth;
       const h = canvas.offsetHeight;
@@ -160,10 +163,49 @@ export function GlassLens() {
       rafId = requestAnimationFrame(render);
     };
 
+    // Track when render is paused so resuming doesn't jump the shader clock.
+    let pausedAt: number | null = null;
+    const stop = () => {
+      if (!rafId) return;
+      cancelAnimationFrame(rafId);
+      rafId = 0;
+      pausedAt = performance.now();
+    };
+    const go = () => {
+      if (rafId || !inView || !tabVisible) return;
+      if (pausedAt !== null && start !== null) {
+        pauseOffset += (performance.now() - pausedAt) / 1000;
+        pausedAt = null;
+      }
+      rafId = requestAnimationFrame(render);
+    };
+
+    // Pause when the canvas scrolls out of the viewport. Hero is small and
+    // disappears quickly, so this saves the shader on every page below it.
+    const io = new IntersectionObserver(
+      ([entry]) => {
+        inView = entry.isIntersecting;
+        if (inView) go();
+        else stop();
+      },
+      { threshold: 0 }
+    );
+    io.observe(canvas);
+
+    // Pause when the tab is hidden.
+    const onVisibility = () => {
+      tabVisible = !document.hidden;
+      if (tabVisible) go();
+      else stop();
+    };
+    document.addEventListener("visibilitychange", onVisibility);
+
     rafId = requestAnimationFrame(render);
 
     return () => {
       cancelAnimationFrame(rafId);
+      io.disconnect();
+      document.removeEventListener("visibilitychange", onVisibility);
       parent?.removeEventListener("mousemove", onMouseMove);
       gl.deleteBuffer(buf);
       gl.deleteShader(vert);
