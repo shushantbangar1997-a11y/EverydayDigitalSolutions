@@ -336,7 +336,16 @@ export default function GetAQuote() {
   const [processingStep, setProcessingStep] = useState(0);
   const [quote, setQuote] = useState<QuoteResult | null>(null);
   const [apiError, setApiError] = useState<string | null>(null);
+  const [pdfGateEmail, setPdfGateEmail] = useState("");
+  const [pdfGateSubmitting, setPdfGateSubmitting] = useState(false);
+  const [pdfGateError, setPdfGateError] = useState<string | null>(null);
+  const [pdfUnlocked, setPdfUnlocked] = useState(false);
   const timerRef = useRef<ReturnType<typeof setInterval> | null>(null);
+
+  // Seed gate email from whatever the user typed in the form
+  useEffect(() => {
+    if (step === 5 && form.email) setPdfGateEmail(form.email);
+  }, [step, form.email]);
 
   // Advance processing animation
   useEffect(() => {
@@ -383,6 +392,29 @@ export default function GetAQuote() {
   function next() {
     if (!validate(step)) return;
     setStep((s) => Math.min(s + 1, 5));
+  }
+
+  async function handlePdfDownload() {
+    if (!quote) return;
+    const email = pdfGateEmail.trim();
+    if (!email || !/^\S+@\S+\.\S+$/.test(email)) {
+      setPdfGateError("Enter a valid email address to unlock the PDF.");
+      return;
+    }
+    setPdfGateSubmitting(true);
+    setPdfGateError(null);
+    try {
+      await fetch("/api/subscribers", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email, name: form.contactName.trim() || undefined }),
+      });
+    } catch {
+      // fail-soft — unlock PDF even if capture fails
+    }
+    setPdfUnlocked(true);
+    setPdfGateSubmitting(false);
+    downloadProposalPdf(quote, form.industry as Industry, form.projectType as ProjectType);
   }
 
   async function generateQuote() {
@@ -543,14 +575,54 @@ export default function GetAQuote() {
             </div>
           </div>
 
-          {/* CTAs */}
+          {/* PDF email gate */}
+          <div className="bg-card border border-border/40 rounded-md p-6 sm:p-8 mb-4">
+            {!pdfUnlocked ? (
+              <>
+                <h2 className="text-xs font-bold uppercase tracking-widest text-muted-foreground mb-1">Download your proposal</h2>
+                <p className="text-sm text-muted-foreground mb-4">
+                  Enter your email to unlock the PDF. We will follow up within one working day.
+                </p>
+                <div className="flex flex-col sm:flex-row gap-3">
+                  <Input
+                    type="email"
+                    value={pdfGateEmail}
+                    onChange={(e) => { setPdfGateEmail(e.target.value); setPdfGateError(null); }}
+                    placeholder="your@email.com"
+                    className="flex-1"
+                    disabled={pdfGateSubmitting}
+                    onKeyDown={(e) => { if (e.key === "Enter") handlePdfDownload(); }}
+                  />
+                  <button
+                    onClick={handlePdfDownload}
+                    disabled={pdfGateSubmitting}
+                    className="inline-flex items-center justify-center gap-2 bg-primary text-black px-6 py-3 rounded-sm font-medium hover:bg-primary/90 transition-colors disabled:opacity-60 disabled:pointer-events-none whitespace-nowrap"
+                  >
+                    {pdfGateSubmitting
+                      ? "Preparing..."
+                      : <><Download className="w-4 h-4" /> Get my PDF</>}
+                  </button>
+                </div>
+                {pdfGateError && <p className="text-xs text-destructive mt-2">{pdfGateError}</p>}
+              </>
+            ) : (
+              <>
+                <div className="flex items-center gap-2 mb-3">
+                  <Check className="w-4 h-4 text-primary" />
+                  <span className="text-sm font-medium">Proposal unlocked</span>
+                </div>
+                <button
+                  onClick={() => downloadProposalPdf(quote, form.industry as Industry, form.projectType as ProjectType)}
+                  className="inline-flex items-center justify-center gap-2 bg-primary text-black px-6 py-3 rounded-sm font-medium hover:bg-primary/90 transition-colors"
+                >
+                  <Download className="w-4 h-4" /> Download PDF again
+                </button>
+              </>
+            )}
+          </div>
+
+          {/* Secondary CTAs */}
           <div className="flex flex-col sm:flex-row gap-3 mb-12">
-            <button
-              onClick={() => downloadProposalPdf(quote, form.industry as Industry, form.projectType as ProjectType)}
-              className="inline-flex items-center justify-center gap-2 bg-primary text-black px-6 py-3.5 rounded-sm font-medium hover:bg-primary/90 transition-colors"
-            >
-              <Download className="w-4 h-4" /> Download Proposal PDF
-            </button>
             <a
               href={waLink}
               target="_blank"
