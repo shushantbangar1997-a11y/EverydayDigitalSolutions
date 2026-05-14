@@ -1,6 +1,16 @@
 import { useEffect, useRef } from "react";
 import { prefersReducedMotion } from "@/lib/canUseWebGL";
 
+function readBodyBgColor(): string {
+  const style = getComputedStyle(document.body);
+  const bg = style.backgroundColor;
+  if (bg && bg !== "rgba(0, 0, 0, 0)" && bg !== "transparent") return bg;
+  const base = getComputedStyle(document.documentElement)
+    .getPropertyValue("--bg-base")
+    .trim();
+  return base || "#FAFAF8";
+}
+
 interface Orb {
   x: number;
   y: number;
@@ -29,6 +39,11 @@ export function AmbientCanvas() {
     const ctx = canvas.getContext("2d");
     if (!ctx) return;
 
+    // Capture + clear body background so the canvas is visible at z-index:-1
+    const prevBodyBg = document.body.style.backgroundColor;
+    const fillColor = readBodyBgColor();
+    document.body.style.backgroundColor = "transparent";
+
     const resize = () => {
       canvas.width = window.innerWidth;
       canvas.height = window.innerHeight;
@@ -48,7 +63,9 @@ export function AmbientCanvas() {
     const reduced = prefersReducedMotion();
 
     const draw = () => {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      // Fill page background first so canvas is fully opaque behind content
+      ctx.fillStyle = fillColor;
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
 
       for (const orb of orbs) {
         const grad = ctx.createRadialGradient(
@@ -80,6 +97,7 @@ export function AmbientCanvas() {
     return () => {
       cancelAnimationFrame(frameRef.current);
       window.removeEventListener("resize", resize);
+      document.body.style.backgroundColor = prevBodyBg;
     };
   }, []);
 

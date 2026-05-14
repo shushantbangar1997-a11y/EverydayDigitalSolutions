@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from "react";
+import { lazy, Suspense, useState, useEffect, useRef } from "react";
 import { Link } from "wouter";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
@@ -8,6 +8,11 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { Check, ArrowLeft, ArrowRight, Download, MessageCircle, FileText } from "lucide-react";
+import { canUseWebGL } from "@/lib/canUseWebGL";
+
+const GlassLens = lazy(() =>
+  import("@/components/GlassLens").then((m) => ({ default: m.GlassLens }))
+);
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 
@@ -329,6 +334,10 @@ const INIT: FormState = {
 };
 
 export default function GetAQuote() {
+  const [showGlassLens] = useState<boolean>(() => {
+    if (typeof window === "undefined") return false;
+    return canUseWebGL();
+  });
   const [step, setStep] = useState(0);
   const [form, setForm] = useState<FormState>(INIT);
   const [errors, setErrors] = useState<Record<string, string>>({});
@@ -525,10 +534,17 @@ export default function GetAQuote() {
               <p className="font-serif text-5xl text-black">{fmtFull(quote.total)}</p>
               <p className="text-xs text-black/60 mt-2">+ GST / applicable taxes</p>
             </div>
-            <div className="glass rounded-md p-8">
-              <p className="text-xs font-bold uppercase tracking-widest text-muted-foreground mb-2">Delivery Window</p>
-              <p className="font-serif text-5xl">{quote.delivery.minDays}–{quote.delivery.maxDays}</p>
-              <p className="text-xs text-muted-foreground mt-2">working days from signed agreement</p>
+            <div className="glass rounded-md p-8 relative overflow-hidden">
+              {showGlassLens && (
+                <Suspense fallback={null}>
+                  <GlassLens />
+                </Suspense>
+              )}
+              <div className="relative" style={{ zIndex: 2 }}>
+                <p className="text-xs font-bold uppercase tracking-widest text-muted-foreground mb-2">Delivery Window</p>
+                <p className="font-serif text-5xl">{quote.delivery.minDays}–{quote.delivery.maxDays}</p>
+                <p className="text-xs text-muted-foreground mt-2">working days from signed agreement</p>
+              </div>
             </div>
           </div>
 

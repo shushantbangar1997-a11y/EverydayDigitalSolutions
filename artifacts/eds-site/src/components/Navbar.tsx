@@ -1,10 +1,15 @@
-import { useEffect, useRef, useState } from "react";
+import { lazy, Suspense, useEffect, useRef, useState } from "react";
 import { Link } from "wouter";
 import gsap from "gsap";
 import { CustomEase } from "gsap/CustomEase";
 import { Sun, Moon } from "lucide-react";
 import { useTheme } from "@/hooks/useTheme";
 import { OptimizedImage } from "@/components/OptimizedImage";
+import { canUseWebGL } from "@/lib/canUseWebGL";
+
+const GlassLens = lazy(() =>
+  import("@/components/GlassLens").then((m) => ({ default: m.GlassLens }))
+);
 
 if (typeof window !== "undefined") {
   gsap.registerPlugin(CustomEase);
@@ -25,6 +30,10 @@ export function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const { isDark, toggle: toggleTheme } = useTheme();
+  const [showGlassLens] = useState<boolean>(() => {
+    if (typeof window === "undefined") return false;
+    return canUseWebGL();
+  });
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 30);
@@ -163,6 +172,11 @@ export function Navbar() {
       {/* ── Sticky Header ── */}
       <div className="site-header-wrapper">
         <header className={`kn-header${scrolled ? " kn-header--scrolled" : ""}`}>
+          {scrolled && showGlassLens && (
+            <Suspense fallback={null}>
+              <GlassLens />
+            </Suspense>
+          )}
           <div className="kn-container">
             <nav className="kn-nav-row">
               {/* Logo */}
