@@ -3,6 +3,7 @@ import { useCreateSubscriber } from "@workspace/api-client-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { FileDown, CheckCircle2 } from "lucide-react";
+import { tracker } from "@/lib/tracker";
 
 const GUIDE_PATH = "/resources/app-cost-guide-2026";
 
@@ -31,11 +32,10 @@ export function LeadMagnet({
       {
         onSuccess: () => {
           setSubmitted(true);
-          if (typeof window !== "undefined" && typeof (window as { plausible?: (e: string, o?: unknown) => void }).plausible === "function") {
-            (window as unknown as { plausible: (e: string, o?: unknown) => void }).plausible("AppCostGuideDownload", {
-              props: { source },
-            });
-          }
+          tracker.recordEvent("lead_magnet_download", {
+            element: "AppCostGuide",
+            metadata: { source },
+          });
           setTimeout(() => {
             if (typeof window !== "undefined") {
               window.open(GUIDE_PATH, "_blank", "noopener,noreferrer");

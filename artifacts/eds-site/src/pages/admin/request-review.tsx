@@ -3,6 +3,7 @@ import {
   useGetAdminSession,
   useListLeads,
 } from "@workspace/api-client-react";
+import { tracker } from "@/lib/tracker";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
 import { SEO } from "@/components/SEO";
@@ -186,9 +187,9 @@ function RequestReviewDashboard() {
                 target="_blank"
                 rel="noopener noreferrer"
                 onClick={() => {
-                  if (typeof window !== "undefined" && typeof (window as { plausible?: (e: string) => void }).plausible === "function") {
-                    (window as unknown as { plausible: (e: string) => void }).plausible("RequestReviewSent");
-                  }
+                  tracker.recordEvent("request_review_sent", {
+                    element: "admin.request_review.whatsapp",
+                  });
                 }}
                 className="inline-flex items-center btn-glass-primary rounded-full font-medium px-4 py-2 text-sm"
               >

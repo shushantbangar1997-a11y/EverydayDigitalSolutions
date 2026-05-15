@@ -9,6 +9,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { Check, ArrowLeft, ArrowRight, Download, MessageCircle, FileText } from "lucide-react";
 import { canUseWebGL } from "@/lib/canUseWebGL";
+import { tracker } from "@/lib/tracker";
 
 const GlassLens = lazy(() =>
   import("@/components/GlassLens").then((m) => ({ default: m.GlassLens }))
@@ -350,6 +351,21 @@ export default function GetAQuote() {
   const [pdfGateError, setPdfGateError] = useState<string | null>(null);
   const [pdfUnlocked, setPdfUnlocked] = useState(false);
   const timerRef = useRef<ReturnType<typeof setInterval> | null>(null);
+  const abandonedRef = useRef(false);
+
+  useEffect(() => {
+    tracker.recordEvent("form_view", { element: "quote_form" });
+    return () => {
+      if (!abandonedRef.current) {
+        tracker.recordEvent("form_abandon", {
+          element: "quote_form",
+          metadata: { lastStep: step },
+        });
+        abandonedRef.current = true;
+      }
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   // Seed gate email from whatever the user typed in the form
   useEffect(() => {
@@ -399,7 +415,17 @@ export default function GetAQuote() {
   }
 
   function next() {
-    if (!validate(step)) return;
+    if (!validate(step)) {
+      tracker.recordEvent("form_step_error", {
+        element: "quote_form",
+        metadata: { step },
+      });
+      return;
+    }
+    tracker.recordEvent("form_step_complete", {
+      element: "quote_form",
+      metadata: { step },
+    });
     setStep((s) => Math.min(s + 1, 5));
   }
 
@@ -433,6 +459,7 @@ export default function GetAQuote() {
     setApiError(null);
 
     try {
+      const sessionId = tracker.getSessionId();
       const body = {
         businessName: form.businessName.trim() || null,
         contactName: form.contactName.trim(),
@@ -444,6 +471,7 @@ export default function GetAQuote() {
         scale: form.scale as Scale,
         timeline: form.timeline as Timeline || "1_to_3_months",
         projectDescription: form.projectDescription.trim(),
+        ...(sessionId ? { sessionId } : {}),
       };
 
       const res = await fetch("/api/quote/generate", {
@@ -463,8 +491,20 @@ export default function GetAQuote() {
       await new Promise((r) => setTimeout(r, 1000));
       setQuote(data);
       setStep(5);
+      abandonedRef.current = true;
+      tracker.recordEvent("form_submit", {
+        element: "quote_form",
+        metadata: {
+          projectType: form.projectType,
+          industry: form.industry,
+          total: data.total,
+        },
+      });
     } catch (err) {
       setApiError(err instanceof Error ? err.message : "Something went wrong. Please try again.");
+      tracker.recordEvent("form_submit_error", {
+        element: "quote_form",
+      });
     } finally {
       setProcessing(false);
       if (timerRef.current) clearInterval(timerRef.current);

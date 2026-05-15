@@ -13,6 +13,9 @@ const AmbientCanvas = lazy(() =>
 );
 import Home from "@/pages/home";
 import Contact from "@/pages/contact";
+import Privacy from "@/pages/privacy";
+import Terms from "@/pages/terms";
+import Cookies from "@/pages/cookies";
 import QuasarCaseStudy from "@/pages/quasar-case-study";
 import OpenHumanaCaseStudy from "@/pages/work/open-humana";
 import Admin from "@/pages/admin";
@@ -54,14 +57,20 @@ import { StickyCTA } from "@/components/StickyCTA";
 import { ExitIntent } from "@/components/ExitIntent";
 import { WhatsAppFAB } from "@/components/WhatsAppFAB";
 import { PageTransition } from "@/components/PageTransition";
+import { ConsentBanner } from "@/components/ConsentBanner";
+import { useAnalytics } from "@/hooks/useAnalytics";
 
 const queryClient = new QueryClient();
 
 function Router() {
+  useAnalytics();
   return (
     <Switch>
       <Route path="/" component={Home} />
       <Route path="/contact" component={Contact} />
+      <Route path="/privacy" component={Privacy} />
+      <Route path="/terms" component={Terms} />
+      <Route path="/cookies" component={Cookies} />
       <Route path="/admin" component={Admin} />
       <Route path="/admin/request-review" component={RequestReview} />
       <Route path="/resources/app-cost-guide-2026" component={AppCostGuide2026} />
@@ -128,6 +137,7 @@ function App() {
           <ExitIntent />
           <WhatsAppFAB />
         </WouterRouter>
+        <ConsentBanner />
         <Toaster />
       </TooltipProvider>
     </QueryClientProvider>

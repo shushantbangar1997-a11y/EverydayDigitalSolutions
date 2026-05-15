@@ -12,9 +12,14 @@ node_modules
 replit.nix
 attached_assets
 
-# Services not needed for the eds-site build
-artifacts/api-server
+# The api-server is now bundled into the combined Dockerfile.
+# artifacts/api-server is required.
 artifacts/mockup-sandbox
+
+# Don't ship api-server's pre-built dist into the build context — it
+# gets rebuilt inside the image, and including the local dist could
+# pollute the context with stale builds.
+artifacts/api-server/dist
 
 # Build artefacts that will be regenerated
 artifacts/eds-site/dist

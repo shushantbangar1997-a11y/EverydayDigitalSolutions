@@ -7,6 +7,7 @@
     "hello": "tsx ./src/hello.ts",
     "generate-sitemap": "tsx ./src/generate-sitemap.ts",
     "check-alt-text": "tsx ./src/check-alt-text.ts",
+    "check-analytics": "tsx ./src/check-analytics.ts",
     "typecheck": "tsc -p tsconfig.json --noEmit"
   },
   "devDependencies": {

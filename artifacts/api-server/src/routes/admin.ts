@@ -55,6 +55,67 @@ router.get("/admin/leads", requireAdmin, async (_req, res): Promise<void> => {
   res.json(rows);
 });
 
+router.get("/admin/leads.csv", requireAdmin, async (_req, res): Promise<void> => {
+  const rows = await db.select().from(leadsTable).orderBy(desc(leadsTable.createdAt));
+  const headers = [
+    "id",
+    "createdAt",
+    "name",
+    "businessName",
+    "whatsappNumber",
+    "email",
+    "city",
+    "industry",
+    "problem",
+    "currentSolution",
+    "goalIn3Months",
+    "budget",
+    "timeline",
+    "status",
+    "notes",
+    "sessionId",
+    "whatsappNotificationSent",
+  ];
+  const escape = (v: unknown): string => {
+    if (v === null || v === undefined) return "";
+    const s = typeof v === "string" ? v : JSON.stringify(v);
+    if (/[",\n\r]/.test(s)) return `"${s.replace(/"/g, '""')}"`;
+    return s;
+  };
+  const lines = [headers.join(",")];
+  for (const r of rows) {
+    lines.push(
+      [
+        r.id,
+        r.createdAt.toISOString(),
+        r.name,
+        r.businessName,
+        r.whatsappNumber,
+        r.email,
+        r.city,
+        r.industry,
+        r.problem,
+        r.currentSolution,
+        r.goalIn3Months,
+        r.budget,
+        r.timeline,
+        r.status,
+        r.notes,
+        r.sessionId,
+        r.whatsappNotificationSent,
+      ]
+        .map(escape)
+        .join(","),
+    );
+  }
+  res.setHeader("Content-Type", "text/csv; charset=utf-8");
+  res.setHeader(
+    "Content-Disposition",
+    `attachment; filename="leads-${new Date().toISOString().slice(0, 10)}.csv"`,
+  );
+  res.send(lines.join("\n"));
+});
+
 router.patch(
   "/admin/leads/:id",
   requireAdmin,

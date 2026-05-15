@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useState, useRef } from "react";
 import { useCreateSubscriber } from "@workspace/api-client-react";
+import { tracker } from "@/lib/tracker";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
 import { SEO } from "@/components/SEO";
@@ -94,9 +95,30 @@ export default function AppCostCalculator() {
     if (typeof window === "undefined") return;
     const t = window.setTimeout(() => {
       firedRef.current = true;
-      if (typeof (window as { plausible?: (e: string) => void }).plausible === "function") {
-        (window as unknown as { plausible: (e: string) => void }).plausible("AppCostCalculatorUsed");
-      }
+      const base = APP_TYPE_BASE[appType].base;
+      const platformMult =
+        Array.from(platforms).reduce((sum, p) => sum + PLATFORM_MULTIPLIER[p].multiplier, 0) || 1;
+      const featuresCost = FEATURES.filter((f) => features.has(f.id)).reduce(
+        (sum, f) => sum + f.cost,
+        0,
+      );
+      const subtotal = (base + featuresCost) * platformMult;
+      const total = Math.round(subtotal * REGION_MULTIPLIER[region].multiplier);
+      void tracker.recordToolRun(
+        "app_cost",
+        {
+          appType,
+          platforms: Array.from(platforms),
+          features: Array.from(features),
+          region,
+        },
+        {
+          quoteAmount: total,
+          low: Math.round(total * 0.85),
+          high: Math.round(total * 1.15),
+        },
+        true,
+      );
     }, 5000);
     return () => window.clearTimeout(t);
   }, [appType, platforms, features, region]);
@@ -140,9 +162,9 @@ export default function AppCostCalculator() {
       {
         onSuccess: () => {
           setEmailSubmitted(true);
-          if (typeof window !== "undefined" && typeof (window as { plausible?: (e: string) => void }).plausible === "function") {
-            (window as unknown as { plausible: (e: string) => void }).plausible("AppCostCalculatorEmail");
-          }
+          tracker.recordEvent("tool_email_capture", {
+            element: "app_cost_calculator",
+          });
         },
         onError: () => setEmailError("Could not save your email. Please try again."),
       },

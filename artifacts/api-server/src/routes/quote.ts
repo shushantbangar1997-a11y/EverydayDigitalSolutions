@@ -1,6 +1,7 @@
 import { Router, type IRouter } from "express";
 import OpenAI from "openai";
 import { GenerateQuoteBody } from "@workspace/api-zod";
+import { db, toolRunsTable } from "@workspace/db";
 import { randomBytes } from "crypto";
 
 const router: IRouter = Router();
@@ -365,6 +366,26 @@ scopeItems must be exactly 6 items. Each is one sentence describing what will ac
   // ── 5. Response ───────────────────────────────────────────────────────────
 
   const quoteRef = `EDS-${new Date().getFullYear()}-${randomBytes(3).toString("hex").toUpperCase()}`;
+
+  const rawSessionId = (req.body as { sessionId?: unknown })?.sessionId;
+  const sessionId =
+    typeof rawSessionId === "string" &&
+    /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(
+      rawSessionId,
+    )
+      ? rawSessionId
+      : null;
+
+  void db
+    .insert(toolRunsTable)
+    .values({
+      sessionId,
+      tool: "quote_generator",
+      inputs: input as unknown as Record<string, unknown>,
+      output: { quoteRef, total, subtotal, minDays, maxDays, quoteAmount: total },
+      completed: true,
+    })
+    .catch((err) => req.log.warn({ err }, "Failed to log quote tool_run"));
 
   res.status(200).json({
     quoteRef,

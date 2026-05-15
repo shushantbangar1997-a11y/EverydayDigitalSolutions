@@ -59,10 +59,11 @@ function verifyToken(token: string | undefined): boolean {
 
 export function setAdminCookie(res: Response): void {
   const isProd = process.env["NODE_ENV"] === "production";
+  const crossOrigin = Boolean(process.env["CORS_ORIGIN"]);
   res.cookie(COOKIE_NAME, mintToken(), {
     httpOnly: true,
-    secure: isProd,
-    sameSite: "lax",
+    secure: isProd || crossOrigin,
+    sameSite: crossOrigin ? "none" : "lax",
     maxAge: MAX_AGE_MS,
     path: "/",
   });

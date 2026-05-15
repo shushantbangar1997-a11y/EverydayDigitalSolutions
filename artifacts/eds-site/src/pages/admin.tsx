@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { lazy, Suspense, useState } from "react";
 import { useQueryClient } from "@tanstack/react-query";
 import {
   useGetAdminSession,
@@ -17,6 +17,33 @@ import { Label } from "@/components/ui/label";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import { Lock, LogOut, RefreshCw, Check } from "lucide-react";
 import { SEO } from "@/components/SEO";
+
+// Admin views are lazy-loaded so they don't bloat the public bundle.
+const DashboardView = lazy(() =>
+  import("@/components/admin/DashboardView").then((m) => ({ default: m.DashboardView })),
+);
+const LiveView = lazy(() =>
+  import("@/components/admin/LiveView").then((m) => ({ default: m.LiveView })),
+);
+const SessionsView = lazy(() =>
+  import("@/components/admin/SessionsView").then((m) => ({ default: m.SessionsView })),
+);
+const GeographyView = lazy(() =>
+  import("@/components/admin/GeographyView").then((m) => ({ default: m.GeographyView })),
+);
+const DevicesView = lazy(() =>
+  import("@/components/admin/DevicesView").then((m) => ({ default: m.DevicesView })),
+);
+const SourcesView = lazy(() =>
+  import("@/components/admin/SourcesView").then((m) => ({ default: m.SourcesView })),
+);
+const ToolsView = lazy(() =>
+  import("@/components/admin/ToolsView").then((m) => ({ default: m.ToolsView })),
+);
+
+function AdminTabFallback() {
+  return <p className="text-sm text-muted-foreground">Loading…</p>;
+}
 
 const STATUSES = ["new", "contacted", "qualified", "closed_won", "closed_lost"] as const;
 
@@ -271,12 +298,49 @@ function Dashboard({ onLogout }: { onLogout: () => void }) {
         </div>
       </header>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <Tabs defaultValue="leads">
-          <TabsList>
+        <Tabs defaultValue="dashboard">
+          <TabsList className="flex flex-wrap h-auto gap-1">
+            <TabsTrigger value="dashboard">Dashboard</TabsTrigger>
+            <TabsTrigger value="live">Live</TabsTrigger>
+            <TabsTrigger value="sessions">Sessions</TabsTrigger>
+            <TabsTrigger value="geography">Geography</TabsTrigger>
+            <TabsTrigger value="devices">Devices</TabsTrigger>
+            <TabsTrigger value="sources">Sources</TabsTrigger>
+            <TabsTrigger value="tools">Tools</TabsTrigger>
             <TabsTrigger value="leads">Leads ({leads.data?.length ?? 0})</TabsTrigger>
             <TabsTrigger value="subscribers">Subscribers ({subs.data?.length ?? 0})</TabsTrigger>
           </TabsList>
+          <TabsContent value="dashboard" className="mt-6">
+            <Suspense fallback={<AdminTabFallback />}><DashboardView /></Suspense>
+          </TabsContent>
+          <TabsContent value="live" className="mt-6">
+            <Suspense fallback={<AdminTabFallback />}><LiveView /></Suspense>
+          </TabsContent>
+          <TabsContent value="sessions" className="mt-6">
+            <Suspense fallback={<AdminTabFallback />}><SessionsView /></Suspense>
+          </TabsContent>
+          <TabsContent value="geography" className="mt-6">
+            <Suspense fallback={<AdminTabFallback />}><GeographyView /></Suspense>
+          </TabsContent>
+          <TabsContent value="devices" className="mt-6">
+            <Suspense fallback={<AdminTabFallback />}><DevicesView /></Suspense>
+          </TabsContent>
+          <TabsContent value="sources" className="mt-6">
+            <Suspense fallback={<AdminTabFallback />}><SourcesView /></Suspense>
+          </TabsContent>
+          <TabsContent value="tools" className="mt-6">
+            <Suspense fallback={<AdminTabFallback />}><ToolsView /></Suspense>
+          </TabsContent>
           <TabsContent value="leads" className="mt-6 space-y-3">
+            <div className="flex items-center justify-end">
+              <a
+                href={`${(import.meta.env.VITE_API_BASE ?? "").replace(/\/$/, "")}/api/admin/leads.csv`}
+                className="text-xs text-muted-foreground hover:text-foreground inline-flex items-center gap-1 underline"
+                data-track="admin.exportLeadsCsv"
+              >
+                Export CSV
+              </a>
+            </div>
             {leads.isLoading && <p className="text-sm text-muted-foreground">Loading…</p>}
             {leads.data?.length === 0 && <p className="text-sm text-muted-foreground">No leads yet.</p>}
             {leads.data?.map((l) => <LeadRow key={l.id} lead={l} />)}
