@@ -1,8 +1,7 @@
 import { useMemo, useState } from "react";
-import {
-  useGetAdminSession,
-  useListLeads,
-} from "@workspace/api-client-react";
+import { useQuery } from "@tanstack/react-query";
+import { useGetAdminSession } from "@workspace/api-client-react";
+import { adminFetch, type LeadListResponse } from "@/lib/admin-fetch";
 import { tracker } from "@/lib/tracker";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
@@ -54,7 +53,11 @@ export default function RequestReview() {
 }
 
 function RequestReviewDashboard() {
-  const leads = useListLeads();
+  const leads = useQuery({
+    queryKey: ["admin", "leads", "request-review"],
+    queryFn: () =>
+      adminFetch<LeadListResponse>("/api/admin/leads?pageSize=100&sort=createdAt:desc"),
+  });
   const [selectedId, setSelectedId] = useState<string | null>(null);
   const [project, setProject] = useState("custom mobile app");
   const [reviewUrl, setReviewUrl] = useState(DEFAULT_GBP_REVIEW_URL);
@@ -63,7 +66,7 @@ function RequestReviewDashboard() {
 
   // Reviews are best asked of past customers — show only "closed_won" or "qualified" leads, plus all if list small.
   const candidates = useMemo(() => {
-    const all = leads.data ?? [];
+    const all = leads.data?.items ?? [];
     const past = all.filter((l) => l.status === "closed_won" || l.status === "qualified");
     return past.length > 0 ? past : all;
   }, [leads.data]);

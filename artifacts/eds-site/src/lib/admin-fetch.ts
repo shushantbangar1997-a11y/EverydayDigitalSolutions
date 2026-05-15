@@ -20,6 +20,65 @@ export async function adminFetch<T>(path: string): Promise<T> {
 
 export type Range = "today" | "7d" | "30d" | "all";
 
+export interface AdminLead {
+  id: string;
+  sessionId: string | null;
+  name: string;
+  businessName: string | null;
+  whatsappNumber: string;
+  email: string | null;
+  city: string;
+  industry: string;
+  industryDetails: Record<string, unknown>;
+  problem: string;
+  currentSolution: string | null;
+  goalIn3Months: string;
+  budget: string;
+  timeline: string;
+  status: string;
+  notes: string | null;
+  whatsappNotificationSent: boolean;
+  createdAt: string;
+}
+
+export interface LeadListResponse {
+  items: AdminLead[];
+  total: number;
+  page: number;
+  pageSize: number;
+}
+
+export interface LeadsQueryParams {
+  q?: string;
+  status?: string;
+  industry?: string;
+  city?: string;
+  budget?: string;
+  timeline?: string;
+  from?: string;
+  to?: string;
+  page?: number;
+  pageSize?: number;
+  sort?: "createdAt:desc" | "createdAt:asc";
+}
+
+export function buildLeadsQueryString(p: LeadsQueryParams): string {
+  const sp = new URLSearchParams();
+  if (p.q) sp.set("q", p.q);
+  if (p.status && p.status !== "all") sp.set("status", p.status);
+  if (p.industry) sp.set("industry", p.industry);
+  if (p.city) sp.set("city", p.city);
+  if (p.budget) sp.set("budget", p.budget);
+  if (p.timeline) sp.set("timeline", p.timeline);
+  if (p.from) sp.set("from", p.from);
+  if (p.to) sp.set("to", p.to);
+  if (p.page) sp.set("page", String(p.page));
+  if (p.pageSize) sp.set("pageSize", String(p.pageSize));
+  if (p.sort) sp.set("sort", p.sort);
+  const s = sp.toString();
+  return s ? `?${s}` : "";
+}
+
 export interface DashboardData {
   range: Range;
   kpi: {

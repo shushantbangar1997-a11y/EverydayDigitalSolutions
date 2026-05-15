@@ -20,7 +20,8 @@
     "openai": "^6.37.0",
     "pino": "^9",
     "pino-http": "^10",
-    "ua-parser-js": "^2.0.0"
+    "ua-parser-js": "^2.0.0",
+    "zod": "catalog:"
   },
   "devDependencies": {
     "@types/cookie-parser": "^1.4.10",

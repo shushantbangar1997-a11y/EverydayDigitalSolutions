@@ -1,7 +1,15 @@
-import { Router, type IRouter } from "express";
-import { eq, desc } from "drizzle-orm";
+import { Router, type IRouter, type Request } from "express";
+import { z } from "zod";
+import { and, asc, count, desc, eq, gte, ilike, lte, or, type SQL } from "drizzle-orm";
 import { db, leadsTable, subscribersTable } from "@workspace/db";
-import { AdminLoginBody, UpdateLeadBody } from "@workspace/api-zod";
+import {
+  AdminLoginBody,
+  UpdateLeadBody,
+  LeadStatus,
+  Industry,
+  Timeline,
+  BudgetBand,
+} from "@workspace/api-zod";
 import {
   verifyAdminPassword,
   setAdminCookie,
@@ -50,13 +58,98 @@ router.get("/admin/me", async (req, res): Promise<void> => {
   res.json({ authenticated: isAdminAuthed(req) });
 });
 
-router.get("/admin/leads", requireAdmin, async (_req, res): Promise<void> => {
-  const rows = await db.select().from(leadsTable).orderBy(desc(leadsTable.createdAt));
-  res.json(rows);
+const LeadsQuery = z.object({
+  q: z.string().trim().min(1).max(200).optional(),
+  status: z.union([z.nativeEnum(LeadStatus), z.literal("all")]).optional(),
+  industry: z.nativeEnum(Industry).optional(),
+  city: z.string().trim().min(1).max(100).optional(),
+  budget: z.nativeEnum(BudgetBand).optional(),
+  timeline: z.nativeEnum(Timeline).optional(),
+  from: z.coerce.date().optional(),
+  to: z.coerce.date().optional(),
+  page: z.coerce.number().int().min(1).default(1),
+  pageSize: z.coerce.number().int().min(1).max(100).default(25),
+  sort: z.enum(["createdAt:desc", "createdAt:asc"]).default("createdAt:desc"),
 });
 
-router.get("/admin/leads.csv", requireAdmin, async (_req, res): Promise<void> => {
-  const rows = await db.select().from(leadsTable).orderBy(desc(leadsTable.createdAt));
+function buildLeadPredicates(input: z.infer<typeof LeadsQuery>): SQL | undefined {
+  const conds: SQL[] = [];
+  if (input.q) {
+    const pattern = `%${input.q}%`;
+    const search = or(
+      ilike(leadsTable.name, pattern),
+      ilike(leadsTable.businessName, pattern),
+      ilike(leadsTable.email, pattern),
+      ilike(leadsTable.whatsappNumber, pattern),
+      ilike(leadsTable.city, pattern),
+    );
+    if (search) conds.push(search);
+  }
+  if (input.status && input.status !== "all") {
+    conds.push(eq(leadsTable.status, input.status));
+  }
+  if (input.industry) conds.push(eq(leadsTable.industry, input.industry));
+  if (input.city) conds.push(ilike(leadsTable.city, input.city));
+  if (input.budget) conds.push(eq(leadsTable.budget, input.budget));
+  if (input.timeline) conds.push(eq(leadsTable.timeline, input.timeline));
+  if (input.from) conds.push(gte(leadsTable.createdAt, input.from));
+  if (input.to) conds.push(lte(leadsTable.createdAt, input.to));
+  return conds.length ? and(...conds) : undefined;
+}
+
+function parseLeadsQuery(
+  req: Request,
+): { ok: true; value: z.infer<typeof LeadsQuery> } | { ok: false; error: string } {
+  const parsed = LeadsQuery.safeParse(req.query);
+  if (!parsed.success) return { ok: false, error: "Invalid query" };
+  if (parsed.data.from && parsed.data.to && parsed.data.from > parsed.data.to) {
+    return { ok: false, error: "`from` must be before `to`" };
+  }
+  return { ok: true, value: parsed.data };
+}
+
+router.get("/admin/leads", requireAdmin, async (req, res): Promise<void> => {
+  const parsed = parseLeadsQuery(req);
+  if (!parsed.ok) {
+    res.status(400).json({ error: parsed.error });
+    return;
+  }
+  const q = parsed.value;
+  const where = buildLeadPredicates(q);
+  const orderBy = q.sort === "createdAt:asc" ? asc(leadsTable.createdAt) : desc(leadsTable.createdAt);
+
+  const baseQuery = db.select().from(leadsTable);
+  const baseCount = db.select({ n: count() }).from(leadsTable);
+
+  const [items, totalRows] = await Promise.all([
+    (where ? baseQuery.where(where) : baseQuery)
+      .orderBy(orderBy)
+      .limit(q.pageSize)
+      .offset((q.page - 1) * q.pageSize),
+    where ? baseCount.where(where) : baseCount,
+  ]);
+
+  res.json({
+    items,
+    total: totalRows[0]?.n ?? 0,
+    page: q.page,
+    pageSize: q.pageSize,
+  });
+});
+
+router.get("/admin/leads.csv", requireAdmin, async (req, res): Promise<void> => {
+  const parsed = parseLeadsQuery(req);
+  if (!parsed.ok) {
+    res.status(400).json({ error: parsed.error });
+    return;
+  }
+  const q = parsed.value;
+  const where = buildLeadPredicates(q);
+  const orderBy = q.sort === "createdAt:asc" ? asc(leadsTable.createdAt) : desc(leadsTable.createdAt);
+
+  const baseQuery = db.select().from(leadsTable);
+  const rows = await (where ? baseQuery.where(where) : baseQuery).orderBy(orderBy);
+
   const headers = [
     "id",
     "createdAt",
