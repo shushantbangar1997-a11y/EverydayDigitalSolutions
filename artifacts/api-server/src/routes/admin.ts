@@ -1,6 +1,6 @@
 import { Router, type IRouter, type Request } from "express";
 import { z } from "zod";
-import { and, asc, count, desc, eq, gte, ilike, lte, or, type SQL } from "drizzle-orm";
+import { and, asc, count, desc, eq, gte, ilike, inArray, lte, or, type SQL } from "drizzle-orm";
 import { db, leadsTable, leadActivityTable, subscribersTable } from "@workspace/db";
 import {
   AdminLoginBody,
@@ -319,6 +319,69 @@ router.delete(
     res.status(204).send();
   },
 );
+
+const BulkLeadsBody = z.discriminatedUnion("action", [
+  z.object({
+    action: z.literal("set_status"),
+    ids: z.array(z.string().uuid()).min(1).max(200),
+    value: z.nativeEnum(LeadStatus),
+  }),
+  z.object({
+    action: z.literal("delete"),
+    ids: z.array(z.string().uuid()).min(1).max(200),
+  }),
+]);
+
+router.post("/admin/leads/bulk", requireAdmin, async (req, res): Promise<void> => {
+  const parsed = BulkLeadsBody.safeParse(req.body);
+  if (!parsed.success) {
+    res.status(400).json({ error: "Invalid input" });
+    return;
+  }
+  const { ids } = parsed.data;
+
+  const affected = await db.transaction(async (tx) => {
+    const existing = await tx
+      .select()
+      .from(leadsTable)
+      .where(inArray(leadsTable.id, ids));
+    if (existing.length === 0) return 0;
+
+    if (parsed.data.action === "set_status") {
+      const newStatus = parsed.data.value;
+      const changed = existing.filter((row) => row.status !== newStatus);
+      if (changed.length === 0) return existing.length;
+      await tx
+        .update(leadsTable)
+        .set({ status: newStatus })
+        .where(inArray(leadsTable.id, changed.map((r) => r.id)));
+      await tx.insert(leadActivityTable).values(
+        changed.map((r) => ({
+          leadId: r.id,
+          type: "status_changed",
+          fromValue: r.status,
+          toValue: newStatus,
+        })),
+      );
+      return existing.length;
+    }
+
+    // delete
+    await tx.insert(leadActivityTable).values(
+      existing.map((r) => ({
+        leadId: r.id,
+        type: "deleted",
+        leadSnapshot: r,
+      })),
+    );
+    await tx
+      .delete(leadsTable)
+      .where(inArray(leadsTable.id, existing.map((r) => r.id)));
+    return existing.length;
+  });
+
+  res.json({ affected });
+});
 
 router.get(
   "/admin/leads/:id/activity",

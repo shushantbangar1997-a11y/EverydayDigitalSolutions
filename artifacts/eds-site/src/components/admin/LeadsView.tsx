@@ -19,6 +19,7 @@ import {
 import { ToastAction } from "@/components/ui/toast";
 import { useToast } from "@/hooks/use-toast";
 import { Check, ChevronLeft, ChevronRight, Search, Trash2, X } from "lucide-react";
+import { Checkbox } from "@/components/ui/checkbox";
 import {
   adminFetch,
   adminMutate,
@@ -172,6 +173,76 @@ export function LeadsView() {
     queryKey,
     queryFn: () => adminFetch<LeadListResponse>(`/api/admin/leads${queryString}`),
     placeholderData: (prev) => prev,
+  });
+
+  const qc = useQueryClient();
+  const { toast } = useToast();
+  const [selected, setSelected] = useState<Set<string>>(new Set());
+  const [bulkStatus, setBulkStatus] = useState<LeadStatus>("contacted");
+  const [bulkDeleteOpen, setBulkDeleteOpen] = useState(false);
+
+  const pageIds = useMemo(() => q.data?.items.map((l) => l.id) ?? [], [q.data?.items]);
+  const visibleSelected = useMemo(
+    () => pageIds.filter((id) => selected.has(id)),
+    [pageIds, selected],
+  );
+  const allOnPageSelected = pageIds.length > 0 && visibleSelected.length === pageIds.length;
+  const someOnPageSelected = visibleSelected.length > 0 && !allOnPageSelected;
+
+  function toggleOne(id: string, checked: boolean) {
+    setSelected((prev) => {
+      const next = new Set(prev);
+      if (checked) next.add(id);
+      else next.delete(id);
+      return next;
+    });
+  }
+
+  function toggleAllOnPage(checked: boolean) {
+    setSelected((prev) => {
+      const next = new Set(prev);
+      for (const id of pageIds) {
+        if (checked) next.add(id);
+        else next.delete(id);
+      }
+      return next;
+    });
+  }
+
+  const bulkSetStatus = useMutation({
+    mutationFn: () =>
+      adminMutate("/api/admin/leads/bulk", "POST", {
+        action: "set_status",
+        ids: Array.from(selected),
+        value: bulkStatus,
+      }),
+    onSuccess: () => {
+      const n = selected.size;
+      setSelected(new Set());
+      qc.invalidateQueries({ queryKey: ["admin", "leads"] });
+      toast({ title: `Updated ${n} lead${n === 1 ? "" : "s"}`, description: `Set status to "${bulkStatus}".` });
+    },
+    onError: () => {
+      toast({ title: "Bulk update failed", variant: "destructive" });
+    },
+  });
+
+  const bulkDelete = useMutation({
+    mutationFn: () =>
+      adminMutate("/api/admin/leads/bulk", "POST", {
+        action: "delete",
+        ids: Array.from(selected),
+      }),
+    onSuccess: () => {
+      const n = selected.size;
+      setSelected(new Set());
+      setBulkDeleteOpen(false);
+      qc.invalidateQueries({ queryKey: ["admin", "leads"] });
+      toast({ title: `Deleted ${n} lead${n === 1 ? "" : "s"}` });
+    },
+    onError: () => {
+      toast({ title: "Bulk delete failed", variant: "destructive" });
+    },
   });
 
   function clearFilters() {
@@ -350,11 +421,101 @@ export function LeadsView() {
         <p className="text-sm text-destructive">Could not load leads.</p>
       )}
 
+      {pageIds.length > 0 && (
+        <div className="flex items-center gap-2 px-1">
+          <Checkbox
+            checked={allOnPageSelected ? true : someOnPageSelected ? "indeterminate" : false}
+            onCheckedChange={(c) => toggleAllOnPage(c === true)}
+            aria-label="Select all on page"
+          />
+          <span className="text-xs text-muted-foreground">
+            {selected.size > 0 ? `${selected.size} selected` : "Select all on page"}
+          </span>
+        </div>
+      )}
+
       <div className="space-y-3">
         {q.data?.items.map((l) => (
-          <LeadRow key={l.id} lead={l} />
+          <LeadRow
+            key={l.id}
+            lead={l}
+            selected={selected.has(l.id)}
+            onToggleSelected={(c) => toggleOne(l.id, c)}
+          />
         ))}
       </div>
+
+      {selected.size > 0 && (
+        <div className="sticky bottom-4 z-10 flex flex-wrap items-center gap-3 rounded-2xl border border-border bg-card/95 backdrop-blur p-3 shadow-lg">
+          <span className="text-sm font-medium text-foreground">
+            {selected.size} selected
+          </span>
+          <div className="flex items-center gap-2 ml-auto">
+            <select
+              value={bulkStatus}
+              onChange={(e) => setBulkStatus(e.target.value as LeadStatus)}
+              className={selectClass}
+              aria-label="Bulk status"
+            >
+              {STATUSES.map((s) => (
+                <option key={s} value={s}>
+                  {s}
+                </option>
+              ))}
+            </select>
+            <Button
+              size="sm"
+              onClick={() => bulkSetStatus.mutate()}
+              disabled={bulkSetStatus.isPending}
+              className="rounded-full"
+            >
+              {bulkSetStatus.isPending ? "Updating…" : "Set status"}
+            </Button>
+            <AlertDialog open={bulkDeleteOpen} onOpenChange={setBulkDeleteOpen}>
+              <AlertDialogTrigger asChild>
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  className="text-destructive hover:text-destructive rounded-full"
+                >
+                  <Trash2 className="w-4 h-4 mr-1.5" /> Delete
+                </Button>
+              </AlertDialogTrigger>
+              <AlertDialogContent>
+                <AlertDialogHeader>
+                  <AlertDialogTitle>
+                    Delete {selected.size} lead{selected.size === 1 ? "" : "s"}?
+                  </AlertDialogTitle>
+                  <AlertDialogDescription>
+                    This cannot be undone. Each deletion is recorded in the activity log.
+                  </AlertDialogDescription>
+                </AlertDialogHeader>
+                <AlertDialogFooter>
+                  <AlertDialogCancel disabled={bulkDelete.isPending}>Cancel</AlertDialogCancel>
+                  <AlertDialogAction
+                    onClick={(e) => {
+                      e.preventDefault();
+                      bulkDelete.mutate();
+                    }}
+                    disabled={bulkDelete.isPending}
+                    className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
+                  >
+                    {bulkDelete.isPending ? "Deleting…" : "Delete"}
+                  </AlertDialogAction>
+                </AlertDialogFooter>
+              </AlertDialogContent>
+            </AlertDialog>
+            <Button
+              variant="ghost"
+              size="sm"
+              onClick={() => setSelected(new Set())}
+              className="rounded-full"
+            >
+              Clear
+            </Button>
+          </div>
+        </div>
+      )}
 
       <div className="flex items-center justify-between pt-2">
         <Button
@@ -383,7 +544,15 @@ export function LeadsView() {
   );
 }
 
-function LeadRow({ lead }: { lead: AdminLead }) {
+function LeadRow({
+  lead,
+  selected,
+  onToggleSelected,
+}: {
+  lead: AdminLead;
+  selected: boolean;
+  onToggleSelected: (checked: boolean) => void;
+}) {
   const [open, setOpen] = useState(false);
   const [status, setStatus] = useState<LeadStatus>(lead.status as LeadStatus);
   const [notes, setNotes] = useState(lead.notes ?? "");
@@ -476,12 +645,18 @@ function LeadRow({ lead }: { lead: AdminLead }) {
   };
 
   return (
-    <div className="border border-border rounded-2xl bg-card">
-      <button
-        onClick={() => setOpen((o) => !o)}
-        className="w-full text-left p-4 flex flex-wrap items-center gap-3 hover:bg-muted/30 transition-colors"
-      >
-        <div className="flex-1 min-w-[200px]">
+    <div className={`border rounded-2xl bg-card ${selected ? "border-primary" : "border-border"}`}>
+      <div className="w-full p-4 flex flex-wrap items-center gap-3 hover:bg-muted/30 transition-colors">
+        <Checkbox
+          checked={selected}
+          onCheckedChange={(c) => onToggleSelected(c === true)}
+          aria-label={`Select ${lead.name}`}
+        />
+        <button
+          type="button"
+          onClick={() => setOpen((o) => !o)}
+          className="flex-1 min-w-[200px] text-left"
+        >
           <p className="font-medium text-foreground">
             {lead.name}
             {lead.businessName && (
@@ -491,21 +666,14 @@ function LeadRow({ lead }: { lead: AdminLead }) {
           <p className="text-xs text-muted-foreground mt-0.5">
             {lead.industry} · {lead.city} · {lead.budget} · {lead.timeline}
           </p>
-        </div>
+        </button>
         <span className={`text-xs font-medium px-2 py-1 rounded-full ${statusColor[lead.status] ?? ""}`}>
           {lead.status}
         </span>
         {lead.status === "new" && (
-          <span
-            role="button"
-            tabIndex={0}
+          <button
+            type="button"
             onClick={markContacted}
-            onKeyDown={(e) => {
-              if (e.key === "Enter" || e.key === " ") {
-                e.preventDefault();
-                markContacted(e);
-              }
-            }}
             aria-label="Mark as contacted"
             className={`inline-flex items-center gap-1 text-xs font-medium px-2 py-1 rounded-full border border-border hover:border-primary hover:text-primary transition-colors ${
               quickContactedMutation.isPending ? "opacity-50" : ""
@@ -513,12 +681,12 @@ function LeadRow({ lead }: { lead: AdminLead }) {
           >
             <Check className="w-3 h-3" />
             {quickContactedMutation.isPending ? "Saving…" : "Mark contacted"}
-          </span>
+          </button>
         )}
         <span className="text-xs text-muted-foreground tabular-nums">
           {new Date(lead.createdAt).toLocaleString()}
         </span>
-      </button>
+      </div>
       {open && (
         <div className="border-t border-border p-4 space-y-4">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
