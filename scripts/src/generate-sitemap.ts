@@ -53,6 +53,11 @@ const routes: SitemapEntry[] = [
   { path: "/blog/app-development-cost-india-2025",         changefreq: "monthly", priority: "0.7" },
   { path: "/blog/salon-booking-automation-case-study",     changefreq: "monthly", priority: "0.7" },
   { path: "/blog/business-automation-service-businesses-punjab", changefreq: "monthly", priority: "0.7" },
+
+  // Legal — included so they are reachable / indexable.
+  { path: "/privacy",                                       changefreq: "yearly",  priority: "0.3" },
+  { path: "/terms",                                         changefreq: "yearly",  priority: "0.3" },
+  { path: "/cookies",                                       changefreq: "yearly",  priority: "0.3" },
 ];
 
 function buildSitemap(entries: SitemapEntry[]): string {

@@ -2,6 +2,16 @@ import { useState, useEffect, useRef } from "react";
 import { motion, useReducedMotion } from "framer-motion";
 import { Smartphone, Mic, Zap } from "lucide-react";
 
+function unsplash(id: string, w: number): string {
+  return `https://images.unsplash.com/${id}?w=${w}&auto=format&fit=crop&q=75`;
+}
+
+function srcSet(id: string): string {
+  return [480, 768, 1024, 1440]
+    .map((w) => `${unsplash(id, w)} ${w}w`)
+    .join(", ");
+}
+
 const FEATURES = [
   {
     id: 1,
@@ -9,8 +19,7 @@ const FEATURES = [
     title: "Custom mobile apps your customers actually use",
     description:
       "Bookings, loyalty points, push notifications, and in-app payments — all under your brand. Built for iOS and Android. Deployed to both stores end-to-end.",
-    image:
-      "https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?w=640&auto=format&fit=crop&q=75",
+    photoId: "photo-1512941937669-90a1b58e7e9c",
     imageAlt: "Person using a mobile booking app on their phone",
   },
   {
@@ -19,8 +28,7 @@ const FEATURES = [
     title: "An AI that answers every call in under 60 seconds",
     description:
       "Hindi, English, and Punjabi voice agents handle inbound leads, outbound follow-ups, and appointment reminders — 24 hours a day, without adding headcount.",
-    image:
-      "https://images.unsplash.com/photo-1677442136019-21780ecad995?w=640&auto=format&fit=crop&q=75",
+    photoId: "photo-1677442136019-21780ecad995",
     imageAlt: "AI voice agent interface on screen",
   },
   {
@@ -29,8 +37,7 @@ const FEATURES = [
     title: "Automation that runs the ops your staff hate",
     description:
       "WhatsApp, CRM, email, and calendar — unified into one workflow. Custom AI agents trained on your processes. Fully managed so your team focuses on customers, not admin.",
-    image:
-      "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=640&auto=format&fit=crop&q=75",
+    photoId: "photo-1551288049-bebda4e38f71",
     imageAlt: "Business automation dashboard with analytics",
   },
 ];
@@ -158,12 +165,15 @@ export function FeatureShowcase() {
               className="relative rounded-2xl overflow-hidden border border-border/40 shadow-xl"
             >
               <img
-                src={feature.image}
+                src={unsplash(feature.photoId, 768)}
+                srcSet={srcSet(feature.photoId)}
+                sizes="(max-width: 768px) 100vw, 50vw"
                 alt={feature.imageAlt}
-                width={640}
-                height={430}
+                width={768}
+                height={515}
                 className="w-full h-auto object-cover"
                 loading="lazy"
+                decoding="async"
               />
             </motion.div>
           </div>

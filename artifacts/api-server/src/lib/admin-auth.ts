@@ -59,10 +59,11 @@ function verifyToken(token: string | undefined): boolean {
 
 export function setAdminCookie(res: Response): void {
   const isProd = process.env["NODE_ENV"] === "production";
+  const crossOrigin = Boolean(process.env["CORS_ORIGIN"]);
   res.cookie(COOKIE_NAME, mintToken(), {
     httpOnly: true,
-    secure: isProd,
-    sameSite: "lax",
+    secure: isProd || crossOrigin,
+    sameSite: crossOrigin ? "none" : "lax",
     maxAge: MAX_AGE_MS,
     path: "/",
   });
@@ -75,6 +76,21 @@ export function clearAdminCookie(res: Response): void {
 export function isAdminAuthed(req: Request): boolean {
   const cookies = (req as Request & { cookies?: Record<string, string> }).cookies ?? {};
   return verifyToken(cookies[COOKIE_NAME]);
+}
+
+/** Returns the expiry timestamp (ms since epoch) from the cookie, or null if invalid/missing. */
+export function getAdminSessionExpiresAt(req: Request): number | null {
+  const cookies = (req as Request & { cookies?: Record<string, string> }).cookies ?? {};
+  const token = cookies[COOKIE_NAME];
+  if (!token || typeof token !== "string") return null;
+  const idx = token.indexOf(".");
+  if (idx <= 0) return null;
+  const payload = token.slice(0, idx);
+  const sig = token.slice(idx + 1);
+  if (!timingSafeEqual(sig, hmac(payload))) return null;
+  const expiresAt = Number(payload);
+  if (!Number.isFinite(expiresAt) || expiresAt < Date.now()) return null;
+  return expiresAt;
 }
 
 export function requireAdmin(

@@ -478,6 +478,10 @@
     [data-float]:not(.glass):not(.glass-elevated):not(.btn-glass-primary):not(.btn-glass-neutral).glass-float-active {
       position: relative;
     }
+    /* Cursor specular on solid buttons. `mix-blend-mode: overlay` here used to
+       force a viewport-wide compositor re-paint on every mousemove (jank in
+       Brave + battery-saver paths). Alpha bumped to compensate for the lost
+       blend "punch" — visually near-identical, dramatically cheaper. */
     [data-float]:not(.glass):not(.glass-elevated):not(.btn-glass-primary):not(.btn-glass-neutral).glass-float-active::after {
       content: '';
       position: absolute;
@@ -485,13 +489,12 @@
       border-radius: inherit;
       background: radial-gradient(
         ellipse 90% 70% at var(--glass-x, 50%) var(--glass-y, 30%),
-        rgba(255, 255, 255, 0.26) 0%,
-        rgba(255, 255, 255, 0.06) 45%,
+        rgba(255, 255, 255, 0.42) 0%,
+        rgba(255, 255, 255, 0.10) 45%,
         transparent 80%
       );
       pointer-events: none;
       z-index: 1;
-      mix-blend-mode: overlay;
     }
   }
 }
@@ -504,4 +507,21 @@
   html {
     scroll-behavior: smooth;
   }
+}
+
+/* ─── Below-fold render skipping ─────────────────────────────────────────────
+   `content-visibility: auto` lets the browser skip layout, paint, and style
+   for these sections while they're off-screen. `contain-intrinsic-size` gives
+   it a reserved height so the scrollbar doesn't jump as sections come into
+   view. Hero is intentionally NOT in this list — it's always in view on load.
+   The on-scroll framer-motion entrance animations still trigger correctly:
+   IntersectionObserver fires against the reserved box, not the skipped paint.
+*/
+#services,
+#work,
+#process,
+#about,
+#faq {
+  content-visibility: auto;
+  contain-intrinsic-size: 1px 900px;
 }

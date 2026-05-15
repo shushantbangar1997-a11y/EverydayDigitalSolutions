@@ -5,8 +5,7 @@
  * API specification for Everyday Digital Solutions
  * OpenAPI spec version: 0.1.0
  */
-export type QuoteProjectType =
-  (typeof QuoteProjectType)[keyof typeof QuoteProjectType];
+export type QuoteProjectType = (typeof QuoteProjectType)[keyof typeof QuoteProjectType];
 
 export const QuoteProjectType = {
   mobile_app_cross: "mobile_app_cross",
@@ -204,4 +203,6 @@ export interface AdminLoginInput {
 
 export interface AdminSession {
   authenticated: boolean;
+  /** @nullable */
+  expiresAt?: string | null;
 }

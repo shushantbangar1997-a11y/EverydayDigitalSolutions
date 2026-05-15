@@ -1,0 +1,20 @@
+# Normalise line endings to LF on commit; check out as-is on Windows.
+* text=auto eol=lf
+
+# Binary / generated — never normalise
+*.png   binary
+*.jpg   binary
+*.jpeg  binary
+*.gif   binary
+*.webp  binary
+*.avif  binary
+*.ico   binary
+*.pdf   binary
+*.woff  binary
+*.woff2 binary
+*.dat   binary
+
+# Lockfiles — keep as-is, don't show in default diffs
+pnpm-lock.yaml -diff
+package-lock.json -diff
+yarn.lock -diff

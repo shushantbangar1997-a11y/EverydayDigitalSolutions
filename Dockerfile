@@ -18,6 +18,7 @@ COPY tsconfig.base.json tsconfig.json ./
 
 # ── Workspace packages ──
 COPY artifacts/eds-site ./artifacts/eds-site
+COPY artifacts/api-server ./artifacts/api-server
 COPY lib ./lib
 COPY scripts ./scripts
 
@@ -27,20 +28,31 @@ RUN mkdir -p ./attached_assets
 # Install all workspace deps (lockfile used as-is — no network resolution)
 RUN pnpm install --frozen-lockfile
 
-# Build from within the package directory so relative paths resolve correctly
+# Build the frontend
 WORKDIR /app/artifacts/eds-site
 RUN NODE_ENV=production pnpm run build
 
-# ── Stage 2: Serve ──────────────────────────────────────────────────────────
-FROM node:20-slim
+# Build the api-server (esbuild bundle)
+WORKDIR /app/artifacts/api-server
+RUN pnpm run build
 
-RUN npm install -g serve
+# ── Stage 2: Runtime ────────────────────────────────────────────────────────
+# The api-server serves /api/* dynamically AND the prerendered static site
+# (everything else falls through to index.html via SPA fallback).
+FROM node:20-slim
 
 WORKDIR /app
 
-COPY --from=builder /app/artifacts/eds-site/dist/public ./public
+# Copy the entire built workspace so geoip-lite's data files and any
+# externalized deps remain resolvable at runtime.
+COPY --from=builder /app /app
+
+ENV PUBLIC_DIR=/app/artifacts/eds-site/dist/public
+ENV NODE_ENV=production
+
+WORKDIR /app/artifacts/api-server
 
 EXPOSE 3000
 
-# Railway injects PORT at runtime; default to 3000 for local docker run
-CMD ["sh", "-c", "serve -s public -l ${PORT:-3000}"]
+# Railway injects PORT at runtime
+CMD ["node", "--enable-source-maps", "./dist/index.mjs"]

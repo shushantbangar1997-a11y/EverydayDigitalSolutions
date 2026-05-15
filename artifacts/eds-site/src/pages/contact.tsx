@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Link } from "wouter";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
@@ -6,6 +6,7 @@ import { SEO } from "@/components/SEO";
 import { site } from "@/lib/constants";
 import { Phone, Mail, MessageCircle, MapPin, Check, ArrowLeft, ArrowRight, CheckCircle2, Download } from "lucide-react";
 import { useCreateLead } from "@workspace/api-client-react";
+import { tracker } from "@/lib/tracker";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -315,6 +316,21 @@ export default function Contact() {
   const [submittedForm, setSubmittedForm] = useState<FormState | null>(null);
 
   const mutation = useCreateLead();
+  const abandonedRef = useRef(false);
+
+  useEffect(() => {
+    tracker.recordEvent("form_view", { element: "contact_form" });
+    return () => {
+      if (!abandonedRef.current && !submitted) {
+        tracker.recordEvent("form_abandon", {
+          element: "contact_form",
+          metadata: { lastStep: step },
+        });
+        abandonedRef.current = true;
+      }
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   function update<K extends keyof FormState>(key: K, value: FormState[K]) {
     setForm((f) => ({ ...f, [key]: value }));
@@ -352,7 +368,17 @@ export default function Contact() {
   }
 
   function next() {
-    if (!validateStep(step)) return;
+    if (!validateStep(step)) {
+      tracker.recordEvent("form_step_error", {
+        element: "contact_form",
+        metadata: { step, errors: Object.keys(errors) },
+      });
+      return;
+    }
+    tracker.recordEvent("form_step_complete", {
+      element: "contact_form",
+      metadata: { step },
+    });
     setStep((s) => Math.min(s + 1, STEP_LABELS.length - 1));
   }
 
@@ -365,6 +391,7 @@ export default function Contact() {
       setStep(4);
       return;
     }
+    const sessionId = tracker.getSessionId();
     mutation.mutate(
       {
         data: {
@@ -380,17 +407,27 @@ export default function Contact() {
           goalIn3Months: form.goalIn3Months.trim(),
           budget: form.budget as Budget,
           timeline: form.timeline as Timeline,
-        },
+          ...(sessionId ? { sessionId } : {}),
+        } as unknown as Parameters<typeof mutation.mutate>[0]["data"],
       },
       {
         onSuccess: () => {
           setSubmittedForm(form);
           setSubmitted(true);
-          if (typeof window !== "undefined" && typeof (window as { plausible?: (e: string, o?: unknown) => void }).plausible === "function") {
-            (window as unknown as { plausible: (e: string, o?: unknown) => void }).plausible("LeadSubmitted", {
-              props: { industry: form.industry, budget: form.budget, timeline: form.timeline, city: form.city },
-            });
-          }
+          tracker.recordEvent("form_submit", {
+            element: "contact_form",
+            metadata: {
+              industry: form.industry,
+              budget: form.budget,
+              timeline: form.timeline,
+              city: form.city,
+            },
+          });
+        },
+        onError: () => {
+          tracker.recordEvent("form_submit_error", {
+            element: "contact_form",
+          });
         },
       },
     );

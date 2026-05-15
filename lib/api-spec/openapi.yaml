@@ -143,20 +143,14 @@ paths:
               schema:
                 $ref: "#/components/schemas/AdminSession"
 
-  /admin/leads:
-    get:
-      operationId: listLeads
+  /admin/refresh:
+    post:
+      operationId: refreshAdminSession
       tags: [admin]
-      summary: List all leads (admin only)
+      summary: Re-issue the admin session cookie (extends expiry)
       responses:
-        "200":
-          description: List of leads
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: "#/components/schemas/Lead"
+        "204":
+          description: Cookie re-issued
         "401":
           description: Not authenticated
           content:
@@ -602,3 +596,6 @@ components:
       properties:
         authenticated:
           type: boolean
+        expiresAt:
+          type: ["string", "null"]
+          format: date-time

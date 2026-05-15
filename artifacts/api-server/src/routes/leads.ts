@@ -18,9 +18,19 @@ router.post("/leads", async (req, res): Promise<void> => {
 
   const input = parsed.data;
 
+  const rawSessionId = (req.body as { sessionId?: unknown })?.sessionId;
+  const sessionId =
+    typeof rawSessionId === "string" &&
+    /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(
+      rawSessionId,
+    )
+      ? rawSessionId
+      : null;
+
   const [row] = await db
     .insert(leadsTable)
     .values({
+      sessionId,
       name: input.name,
       businessName: input.businessName ?? null,
       whatsappNumber: input.whatsappNumber,

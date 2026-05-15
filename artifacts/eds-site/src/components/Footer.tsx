@@ -86,10 +86,21 @@ export function Footer() {
         </div>
 
         {/* Bottom bar */}
-        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
+        <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
           <p className="text-xs text-muted-foreground">
             © {new Date().getFullYear()} Everyday Digital Solutions. All rights reserved.
           </p>
+          <nav aria-label="Legal" className="flex flex-wrap items-center gap-4 text-xs">
+            <Link href="/privacy" className="text-muted-foreground hover:text-foreground transition-colors">
+              Privacy
+            </Link>
+            <Link href="/terms" className="text-muted-foreground hover:text-foreground transition-colors">
+              Terms
+            </Link>
+            <Link href="/cookies" className="text-muted-foreground hover:text-foreground transition-colors">
+              Cookies
+            </Link>
+          </nav>
           <p className="text-xs text-muted-foreground">
             AI &amp; Custom Software Studio · Mohali, Punjab, India
           </p>

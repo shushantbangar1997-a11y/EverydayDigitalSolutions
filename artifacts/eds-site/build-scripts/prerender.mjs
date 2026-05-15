@@ -88,6 +88,11 @@ const ROUTES = [
 
   // Blog posts — derived dynamically from blogPosts exported by entry-server
   ...blogRoutes,
+
+  // Legal — prerendered so crawlers and slow connections get content immediately
+  { urlPath: "privacy",                             url: "/privacy" },
+  { urlPath: "terms",                               url: "/terms" },
+  { urlPath: "cookies",                             url: "/cookies" },
 ];
 
 // Strip fallback <title> and <meta name="description"> from the template;

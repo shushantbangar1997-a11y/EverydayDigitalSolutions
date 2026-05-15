@@ -7,9 +7,13 @@ import {
   integer,
   timestamp,
 } from "drizzle-orm/pg-core";
+import { sessionsTable } from "./sessions";
 
 export const leadsTable = pgTable("leads", {
   id: uuid("id").primaryKey().defaultRandom(),
+  sessionId: uuid("session_id").references(() => sessionsTable.id, {
+    onDelete: "set null",
+  }),
   name: text("name").notNull(),
   businessName: text("business_name"),
   whatsappNumber: text("whatsapp_number").notNull(),

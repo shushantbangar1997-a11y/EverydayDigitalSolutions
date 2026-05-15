@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { useCreateSubscriber } from "@workspace/api-client-react";
+import { tracker } from "@/lib/tracker";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
 import { SEO } from "@/components/SEO";
@@ -73,9 +74,20 @@ export default function AIVoiceAgentROICalculator() {
     if (typeof window === "undefined") return;
     const t = window.setTimeout(() => {
       firedRef.current = true;
-      if (typeof (window as { plausible?: (e: string) => void }).plausible === "function") {
-        (window as unknown as { plausible: (e: string) => void }).plausible("AIVoiceROICalculatorUsed");
-      }
+      const lift = conversionLift(responseMinutes);
+      const currentRate = currentConversionPct / 100;
+      const newRate = Math.min(0.95, currentRate + lift);
+      const monthlyExtra = Math.round(monthlyLeads * (newRate - currentRate) * avgDealValue);
+      void tracker.recordToolRun(
+        "voice_roi",
+        { monthlyLeads, avgDealValue, responseMinutes, currentConversionPct },
+        {
+          additionalRevenuePerMonth: monthlyExtra,
+          additionalRevenuePerYear: monthlyExtra * 12,
+          quoteAmount: monthlyExtra * 12,
+        },
+        true,
+      );
     }, 5000);
     return () => window.clearTimeout(t);
   }, [monthlyLeads, avgDealValue, responseMinutes, currentConversionPct]);
@@ -120,9 +132,9 @@ export default function AIVoiceAgentROICalculator() {
       {
         onSuccess: () => {
           setEmailSubmitted(true);
-          if (typeof window !== "undefined" && typeof (window as { plausible?: (e: string) => void }).plausible === "function") {
-            (window as unknown as { plausible: (e: string) => void }).plausible("AIVoiceROICalculatorEmail");
-          }
+          tracker.recordEvent("tool_email_capture", {
+            element: "voice_roi_calculator",
+          });
         },
         onError: () => setEmailError("Could not save your email. Please try again."),
       },

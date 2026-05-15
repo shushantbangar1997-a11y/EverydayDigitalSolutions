@@ -8,4 +8,6 @@
 
 export interface AdminSession {
   authenticated: boolean;
+  /** @nullable */
+  expiresAt?: Date | null;
 }

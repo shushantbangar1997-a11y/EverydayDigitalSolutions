@@ -47,21 +47,8 @@ export const CreateLeadBody = zod.object({
   problem: zod.string().min(createLeadBodyProblemMin),
   currentSolution: zod.string().nullish(),
   goalIn3Months: zod.string().min(createLeadBodyGoalIn3MonthsMin),
-  budget: zod.enum([
-    "under_1l",
-    "1l_to_3l",
-    "3l_to_8l",
-    "8l_to_20l",
-    "20l_plus",
-    "not_sure",
-  ]),
-  timeline: zod.enum([
-    "asap",
-    "within_1_month",
-    "1_to_3_months",
-    "3_to_6_months",
-    "exploring",
-  ]),
+  budget: zod.enum(["under_1l", "1l_to_3l", "3l_to_8l", "8l_to_20l", "20l_plus", "not_sure"]),
+  timeline: zod.enum(["asap", "within_1_month", "1_to_3_months", "3_to_6_months", "exploring"]),
 });
 
 /**
@@ -96,58 +83,8 @@ export const AdminLoginBody = zod.object({
  */
 export const GetAdminSessionResponse = zod.object({
   authenticated: zod.boolean(),
+  expiresAt: zod.coerce.date().nullish(),
 });
-
-/**
- * @summary List all leads (admin only)
- */
-export const ListLeadsResponseItem = zod.object({
-  id: zod.string(),
-  name: zod.string(),
-  businessName: zod.string().nullish(),
-  whatsappNumber: zod.string(),
-  email: zod.string().nullish(),
-  city: zod.string(),
-  industry: zod.enum([
-    "salon_spa",
-    "real_estate",
-    "clinic_healthcare",
-    "restaurant_cafe",
-    "other_service",
-    "other",
-  ]),
-  industryDetails: zod.record(zod.string(), zod.unknown()),
-  problem: zod.string(),
-  currentSolution: zod.string().nullish(),
-  goalIn3Months: zod.string(),
-  budget: zod.enum([
-    "under_1l",
-    "1l_to_3l",
-    "3l_to_8l",
-    "8l_to_20l",
-    "20l_plus",
-    "not_sure",
-  ]),
-  timeline: zod.enum([
-    "asap",
-    "within_1_month",
-    "1_to_3_months",
-    "3_to_6_months",
-    "exploring",
-  ]),
-  status: zod.enum([
-    "new",
-    "contacted",
-    "qualified",
-    "closed_won",
-    "closed_lost",
-  ]),
-  notes: zod.string().nullish(),
-  whatsappNotificationSent: zod.boolean(),
-  createdAt: zod.coerce.date(),
-  updatedAt: zod.coerce.date(),
-});
-export const ListLeadsResponse = zod.array(ListLeadsResponseItem);
 
 /**
  * @summary Update lead status or notes (admin only)
@@ -157,9 +94,7 @@ export const UpdateLeadParams = zod.object({
 });
 
 export const UpdateLeadBody = zod.object({
-  status: zod
-    .enum(["new", "contacted", "qualified", "closed_won", "closed_lost"])
-    .optional(),
+  status: zod.enum(["new", "contacted", "qualified", "closed_won", "closed_lost"]).optional(),
   notes: zod.string().nullish(),
 });
 
@@ -182,28 +117,9 @@ export const UpdateLeadResponse = zod.object({
   problem: zod.string(),
   currentSolution: zod.string().nullish(),
   goalIn3Months: zod.string(),
-  budget: zod.enum([
-    "under_1l",
-    "1l_to_3l",
-    "3l_to_8l",
-    "8l_to_20l",
-    "20l_plus",
-    "not_sure",
-  ]),
-  timeline: zod.enum([
-    "asap",
-    "within_1_month",
-    "1_to_3_months",
-    "3_to_6_months",
-    "exploring",
-  ]),
-  status: zod.enum([
-    "new",
-    "contacted",
-    "qualified",
-    "closed_won",
-    "closed_lost",
-  ]),
+  budget: zod.enum(["under_1l", "1l_to_3l", "3l_to_8l", "8l_to_20l", "20l_plus", "not_sure"]),
+  timeline: zod.enum(["asap", "within_1_month", "1_to_3_months", "3_to_6_months", "exploring"]),
+  status: zod.enum(["new", "contacted", "qualified", "closed_won", "closed_lost"]),
   notes: zod.string().nullish(),
   whatsappNotificationSent: zod.boolean(),
   createdAt: zod.coerce.date(),
@@ -254,13 +170,7 @@ export const GenerateQuoteBody = zod.object({
   ]),
   features: zod.array(zod.string()),
   scale: zod.enum(["small", "medium", "large"]),
-  timeline: zod.enum([
-    "asap",
-    "within_1_month",
-    "1_to_3_months",
-    "3_to_6_months",
-    "exploring",
-  ]),
+  timeline: zod.enum(["asap", "within_1_month", "1_to_3_months", "3_to_6_months", "exploring"]),
   projectDescription: zod.string().min(generateQuoteBodyProjectDescriptionMin),
 });
 

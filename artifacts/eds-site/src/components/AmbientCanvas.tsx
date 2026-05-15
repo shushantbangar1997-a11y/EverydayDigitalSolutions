@@ -85,6 +85,7 @@ export function AmbientCanvas() {
     }));
 
     const reduced = prefersReducedMotion();
+    let paused = false;
 
     const draw = () => {
       // Page background fill — always uses the current theme colour
@@ -112,15 +113,30 @@ export function AmbientCanvas() {
         }
       }
 
-      if (!reduced) {
+      if (!reduced && !paused) {
         frameRef.current = requestAnimationFrame(draw);
       }
     };
 
     frameRef.current = requestAnimationFrame(draw);
 
+    // Pause the RAF loop while the tab is in the background. The canvas IS the
+    // page background (position: fixed, z: -1, body bg cleared) so we can't
+    // gate via IntersectionObserver — but tab-hidden gating still wins big.
+    const onVisibility = () => {
+      if (document.hidden) {
+        paused = true;
+        cancelAnimationFrame(frameRef.current);
+      } else if (paused) {
+        paused = false;
+        if (!reduced) frameRef.current = requestAnimationFrame(draw);
+      }
+    };
+    document.addEventListener("visibilitychange", onVisibility);
+
     return () => {
       cancelAnimationFrame(frameRef.current);
+      document.removeEventListener("visibilitychange", onVisibility);
       observer.disconnect();
       window.removeEventListener("resize", resize);
       document.body.style.backgroundColor = prevBodyBg;

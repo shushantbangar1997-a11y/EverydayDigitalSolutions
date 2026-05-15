@@ -107,11 +107,28 @@ export function LiquidGlassFilter() {
     _feImg  = feImgRef.current;
     _feDisp = feDispRef.current;
 
-    if (!_mapURL) _mapURL = buildDisplacementMap();
-    if (_feImg && _mapURL) {
-      _feImg.setAttributeNS("http://www.w3.org/1999/xlink", "href", _mapURL);
-    }
-    return () => { _filter = _feImg = _feDisp = null; };
+    // Defer the (expensive) 192x192 SDF generation until the browser is idle.
+    // We only need it on first hover; until then there's nothing to display.
+    const ric =
+      (window as Window & {
+        requestIdleCallback?: (cb: () => void, opts?: { timeout: number }) => number;
+      }).requestIdleCallback ??
+      ((cb: () => void) => window.setTimeout(cb, 1));
+
+    const handle = ric(() => {
+      if (!_mapURL) _mapURL = buildDisplacementMap();
+      if (_feImg && _mapURL) {
+        _feImg.setAttributeNS("http://www.w3.org/1999/xlink", "href", _mapURL);
+      }
+    }, { timeout: 2000 });
+
+    return () => {
+      const cancel = (window as Window & {
+        cancelIdleCallback?: (h: number) => void;
+      }).cancelIdleCallback;
+      if (cancel && typeof handle === "number") cancel(handle);
+      _filter = _feImg = _feDisp = null;
+    };
   }, []);
 
   return (
