@@ -47,10 +47,12 @@ app.use("/api", router);
 // containing the Vite-built frontend. If unset (dev), this whole block no-ops.
 const publicDir = process.env["PUBLIC_DIR"];
 if (publicDir && fs.existsSync(publicDir)) {
+  // index: "index.html" lets express.static serve prerendered routes
+  // like /cookies/ (which has its own dist/public/cookies/index.html).
   app.use(
     express.static(publicDir, {
       maxAge: "1d",
-      index: false,
+      index: "index.html",
     }),
   );
   const indexHtml = path.join(publicDir, "index.html");
