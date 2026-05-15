@@ -5,4 +5,5 @@ export * from "./events";
 export * from "./tool-runs";
 export * from "./consents";
 export * from "./leads";
+export * from "./lead-activity";
 export * from "./subscribers";

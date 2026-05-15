@@ -1,7 +1,7 @@
 import { Router, type IRouter, type Request } from "express";
 import { z } from "zod";
 import { and, asc, count, desc, eq, gte, ilike, lte, or, type SQL } from "drizzle-orm";
-import { db, leadsTable, subscribersTable } from "@workspace/db";
+import { db, leadsTable, leadActivityTable, subscribersTable } from "@workspace/db";
 import {
   AdminLoginBody,
   UpdateLeadBody,
@@ -209,12 +209,17 @@ router.get("/admin/leads.csv", requireAdmin, async (req, res): Promise<void> => 
   res.send(lines.join("\n"));
 });
 
+function getPathId(req: Request): string | null {
+  const raw = Array.isArray(req.params.id) ? req.params.id[0] : req.params.id;
+  return typeof raw === "string" && raw.length > 0 ? raw : null;
+}
+
 router.patch(
   "/admin/leads/:id",
   requireAdmin,
   async (req, res): Promise<void> => {
-    const rawId = Array.isArray(req.params.id) ? req.params.id[0] : req.params.id;
-    if (typeof rawId !== "string" || rawId.length === 0) {
+    const rawId = getPathId(req);
+    if (!rawId) {
       res.status(400).json({ error: "Invalid id" });
       return;
     }
@@ -233,11 +238,43 @@ router.patch(
       return;
     }
 
-    const [row] = await db
-      .update(leadsTable)
-      .set(updates)
-      .where(eq(leadsTable.id, rawId))
-      .returning();
+    const row = await db.transaction(async (tx) => {
+      const [existing] = await tx
+        .select()
+        .from(leadsTable)
+        .where(eq(leadsTable.id, rawId))
+        .limit(1);
+      if (!existing) return null;
+
+      const [updated] = await tx
+        .update(leadsTable)
+        .set(updates)
+        .where(eq(leadsTable.id, rawId))
+        .returning();
+      if (!updated) return null;
+
+      const activities: { type: string; fromValue: string | null; toValue: string | null }[] = [];
+      if (parsed.data.status !== undefined && existing.status !== updated.status) {
+        activities.push({
+          type: "status_changed",
+          fromValue: existing.status,
+          toValue: updated.status,
+        });
+      }
+      if (parsed.data.notes !== undefined && (existing.notes ?? "") !== (updated.notes ?? "")) {
+        activities.push({
+          type: "notes_changed",
+          fromValue: existing.notes ?? null,
+          toValue: updated.notes ?? null,
+        });
+      }
+      if (activities.length > 0) {
+        await tx
+          .insert(leadActivityTable)
+          .values(activities.map((a) => ({ leadId: rawId, ...a })));
+      }
+      return updated;
+    });
 
     if (!row) {
       res.status(404).json({ error: "Lead not found" });
@@ -245,6 +282,66 @@ router.patch(
     }
 
     res.json(row);
+  },
+);
+
+router.delete(
+  "/admin/leads/:id",
+  requireAdmin,
+  async (req, res): Promise<void> => {
+    const rawId = getPathId(req);
+    if (!rawId) {
+      res.status(400).json({ error: "Invalid id" });
+      return;
+    }
+
+    const ok = await db.transaction(async (tx) => {
+      const [existing] = await tx
+        .select()
+        .from(leadsTable)
+        .where(eq(leadsTable.id, rawId))
+        .limit(1);
+      if (!existing) return false;
+
+      await tx.insert(leadActivityTable).values({
+        leadId: rawId,
+        type: "deleted",
+        leadSnapshot: existing,
+      });
+      await tx.delete(leadsTable).where(eq(leadsTable.id, rawId));
+      return true;
+    });
+
+    if (!ok) {
+      res.status(404).json({ error: "Lead not found" });
+      return;
+    }
+    res.status(204).send();
+  },
+);
+
+router.get(
+  "/admin/leads/:id/activity",
+  requireAdmin,
+  async (req, res): Promise<void> => {
+    const rawId = getPathId(req);
+    if (!rawId) {
+      res.status(400).json({ error: "Invalid id" });
+      return;
+    }
+    const rows = await db
+      .select({
+        id: leadActivityTable.id,
+        type: leadActivityTable.type,
+        fromValue: leadActivityTable.fromValue,
+        toValue: leadActivityTable.toValue,
+        createdAt: leadActivityTable.createdAt,
+      })
+      .from(leadActivityTable)
+      .where(eq(leadActivityTable.leadId, rawId))
+      .orderBy(desc(leadActivityTable.createdAt))
+      .limit(100);
+    res.json({ items: rows });
   },
 );
 

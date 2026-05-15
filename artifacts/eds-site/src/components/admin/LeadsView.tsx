@@ -1,15 +1,30 @@
 import { useEffect, useMemo, useRef, useState } from "react";
-import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useUpdateLead, type LeadStatus } from "@workspace/api-client-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
-import { Check, ChevronLeft, ChevronRight, Search, X } from "lucide-react";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
+import { ToastAction } from "@/components/ui/toast";
+import { useToast } from "@/hooks/use-toast";
+import { Check, ChevronLeft, ChevronRight, Search, Trash2, X } from "lucide-react";
 import {
   adminFetch,
+  adminMutate,
   buildLeadsQueryString,
   type AdminLead,
+  type LeadActivityResponse,
   type LeadListResponse,
   type LeadsQueryParams,
 } from "@/lib/admin-fetch";
@@ -337,7 +352,7 @@ export function LeadsView() {
 
       <div className="space-y-3">
         {q.data?.items.map((l) => (
-          <LeadRow key={l.id} lead={l} queryKey={queryKey} />
+          <LeadRow key={l.id} lead={l} />
         ))}
       </div>
 
@@ -368,19 +383,19 @@ export function LeadsView() {
   );
 }
 
-function LeadRow({
-  lead,
-  queryKey,
-}: {
-  lead: AdminLead;
-  queryKey: readonly unknown[];
-}) {
+function LeadRow({ lead }: { lead: AdminLead }) {
   const [open, setOpen] = useState(false);
   const [status, setStatus] = useState<LeadStatus>(lead.status as LeadStatus);
   const [notes, setNotes] = useState(lead.notes ?? "");
+  const [confirmDeleteOpen, setConfirmDeleteOpen] = useState(false);
   const qc = useQueryClient();
+  const { toast } = useToast();
   const updateMutation = useUpdateLead();
   const quickContactedMutation = useUpdateLead();
+  const undoMutation = useUpdateLead();
+  const deleteMutation = useMutation({
+    mutationFn: () => adminMutate(`/api/admin/leads/${lead.id}`, "DELETE"),
+  });
 
   function invalidate() {
     qc.invalidateQueries({ queryKey: ["admin", "leads"] });
@@ -393,17 +408,63 @@ function LeadRow({
     );
   }
 
+  function undoContacted() {
+    undoMutation.mutate(
+      { id: lead.id, data: { status: lead.status as LeadStatus, notes: lead.notes ?? "" } },
+      {
+        onSuccess: () => {
+          setStatus(lead.status as LeadStatus);
+          invalidate();
+        },
+      },
+    );
+  }
+
   function markContacted(e: React.MouseEvent | React.KeyboardEvent) {
     e.stopPropagation();
+    const previousStatus = lead.status as LeadStatus;
     quickContactedMutation.mutate(
       { id: lead.id, data: { status: "contacted", notes: lead.notes ?? "" } },
       {
         onSuccess: () => {
           setStatus("contacted");
           invalidate();
+          toast({
+            title: "Marked as contacted",
+            description: `${lead.name} — status changed from "${previousStatus}".`,
+            action: (
+              <ToastAction altText="Undo" onClick={undoContacted}>
+                Undo
+              </ToastAction>
+            ),
+          });
+        },
+        onError: () => {
+          toast({
+            title: "Could not update lead",
+            description: "Try again in a moment.",
+            variant: "destructive",
+          });
         },
       },
     );
+  }
+
+  function confirmDelete() {
+    deleteMutation.mutate(undefined, {
+      onSuccess: () => {
+        invalidate();
+        setConfirmDeleteOpen(false);
+        toast({ title: "Lead deleted", description: `${lead.name} was removed.` });
+      },
+      onError: () => {
+        toast({
+          title: "Could not delete lead",
+          description: "Try again in a moment.",
+          variant: "destructive",
+        });
+      },
+    });
   }
 
   const statusColor: Record<string, string> = {
@@ -413,9 +474,6 @@ function LeadRow({
     closed_won: "bg-emerald-500/15 text-emerald-600",
     closed_lost: "bg-muted text-muted-foreground",
   };
-
-  // Suppress unused-key warning; queryKey is reserved for Phase 2 (activity panel).
-  void queryKey;
 
   return (
     <div className="border border-border rounded-2xl bg-card">
@@ -530,11 +588,104 @@ function LeadRow({
               />
             </div>
           </div>
-          <Button onClick={save} disabled={updateMutation.isPending} className="rounded-full">
-            {updateMutation.isPending ? "Saving..." : "Save"}
-          </Button>
+          <div className="flex items-center justify-between gap-3">
+            <Button onClick={save} disabled={updateMutation.isPending} className="rounded-full">
+              {updateMutation.isPending ? "Saving..." : "Save"}
+            </Button>
+            <AlertDialog open={confirmDeleteOpen} onOpenChange={setConfirmDeleteOpen}>
+              <AlertDialogTrigger asChild>
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  className="text-destructive hover:text-destructive rounded-full"
+                >
+                  <Trash2 className="w-4 h-4 mr-1.5" /> Delete
+                </Button>
+              </AlertDialogTrigger>
+              <AlertDialogContent>
+                <AlertDialogHeader>
+                  <AlertDialogTitle>Delete this lead?</AlertDialogTitle>
+                  <AlertDialogDescription>
+                    {lead.name}
+                    {lead.businessName ? ` · ${lead.businessName}` : ""} will be removed
+                    permanently. The deletion is recorded in the activity log, but the lead
+                    record itself cannot be recovered.
+                  </AlertDialogDescription>
+                </AlertDialogHeader>
+                <AlertDialogFooter>
+                  <AlertDialogCancel disabled={deleteMutation.isPending}>Cancel</AlertDialogCancel>
+                  <AlertDialogAction
+                    onClick={(e) => {
+                      e.preventDefault();
+                      confirmDelete();
+                    }}
+                    disabled={deleteMutation.isPending}
+                    className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
+                  >
+                    {deleteMutation.isPending ? "Deleting…" : "Delete"}
+                  </AlertDialogAction>
+                </AlertDialogFooter>
+              </AlertDialogContent>
+            </AlertDialog>
+          </div>
+          <LeadActivityPanel leadId={lead.id} />
         </div>
       )}
     </div>
   );
+}
+
+function LeadActivityPanel({ leadId }: { leadId: string }) {
+  const q = useQuery({
+    queryKey: ["admin", "lead-activity", leadId],
+    queryFn: () => adminFetch<LeadActivityResponse>(`/api/admin/leads/${leadId}/activity`),
+  });
+
+  return (
+    <div className="pt-4 border-t border-border">
+      <p className="text-xs font-bold uppercase tracking-widest text-muted-foreground mb-2">
+        Activity
+      </p>
+      {q.isLoading && <p className="text-xs text-muted-foreground">Loading activity…</p>}
+      {q.isError && <p className="text-xs text-destructive">Could not load activity.</p>}
+      {q.data && q.data.items.length === 0 && (
+        <p className="text-xs text-muted-foreground">No changes recorded yet.</p>
+      )}
+      <ol className="space-y-1.5">
+        {q.data?.items.map((it) => (
+          <li key={it.id} className="text-xs text-foreground flex items-start gap-2">
+            <span className="text-muted-foreground tabular-nums shrink-0 w-32">
+              {new Date(it.createdAt).toLocaleString()}
+            </span>
+            <span className="flex-1">
+              {formatActivity(it.type, it.fromValue, it.toValue)}
+            </span>
+          </li>
+        ))}
+      </ol>
+    </div>
+  );
+}
+
+function formatActivity(
+  type: string,
+  fromValue: string | null,
+  toValue: string | null,
+): string {
+  if (type === "status_changed") {
+    return `Status: ${fromValue ?? "—"} → ${toValue ?? "—"}`;
+  }
+  if (type === "notes_changed") {
+    const from = fromValue ? `"${truncate(fromValue, 40)}"` : "empty";
+    const to = toValue ? `"${truncate(toValue, 40)}"` : "empty";
+    return `Notes: ${from} → ${to}`;
+  }
+  if (type === "deleted") {
+    return "Lead deleted";
+  }
+  return type;
+}
+
+function truncate(s: string, n: number): string {
+  return s.length > n ? `${s.slice(0, n)}…` : s;
 }
