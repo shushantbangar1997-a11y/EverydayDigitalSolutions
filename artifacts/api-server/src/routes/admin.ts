@@ -15,6 +15,7 @@ import {
   setAdminCookie,
   clearAdminCookie,
   isAdminAuthed,
+  getAdminSessionExpiresAt,
   requireAdmin,
   checkLoginLockout,
   recordLoginFailure,
@@ -55,7 +56,17 @@ router.post("/admin/logout", async (_req, res): Promise<void> => {
 });
 
 router.get("/admin/me", async (req, res): Promise<void> => {
-  res.json({ authenticated: isAdminAuthed(req) });
+  const authenticated = isAdminAuthed(req);
+  const expiresAtMs = authenticated ? getAdminSessionExpiresAt(req) : null;
+  res.json({
+    authenticated,
+    expiresAt: expiresAtMs ? new Date(expiresAtMs).toISOString() : null,
+  });
+});
+
+router.post("/admin/refresh", requireAdmin, async (_req, res): Promise<void> => {
+  setAdminCookie(res);
+  res.status(204).send();
 });
 
 const LeadsQuery = z.object({

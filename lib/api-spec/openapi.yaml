@@ -143,6 +143,21 @@ paths:
               schema:
                 $ref: "#/components/schemas/AdminSession"
 
+  /admin/refresh:
+    post:
+      operationId: refreshAdminSession
+      tags: [admin]
+      summary: Re-issue the admin session cookie (extends expiry)
+      responses:
+        "204":
+          description: Cookie re-issued
+        "401":
+          description: Not authenticated
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+
   /admin/leads/{id}:
     patch:
       operationId: updateLead
@@ -581,3 +596,6 @@ components:
       properties:
         authenticated:
           type: boolean
+        expiresAt:
+          type: ["string", "null"]
+          format: date-time

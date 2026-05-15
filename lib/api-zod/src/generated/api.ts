@@ -83,6 +83,7 @@ export const AdminLoginBody = zod.object({
  */
 export const GetAdminSessionResponse = zod.object({
   authenticated: zod.boolean(),
+  expiresAt: zod.coerce.date().nullish(),
 });
 
 /**

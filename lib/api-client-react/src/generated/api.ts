@@ -512,6 +512,73 @@ export function useGetAdminSession<
 }
 
 /**
+ * @summary Re-issue the admin session cookie (extends expiry)
+ */
+export const getRefreshAdminSessionUrl = () => {
+  return `/api/admin/refresh`;
+};
+
+export const refreshAdminSession = async (options?: RequestInit): Promise<void> => {
+  return customFetch<void>(getRefreshAdminSessionUrl(), {
+    ...options,
+    method: "POST",
+  });
+};
+
+export const getRefreshAdminSessionMutationOptions = <
+  TError = ErrorType<ErrorResponse>,
+  TContext = unknown,
+>(options?: {
+  mutation?: UseMutationOptions<
+    Awaited<ReturnType<typeof refreshAdminSession>>,
+    TError,
+    void,
+    TContext
+  >;
+  request?: SecondParameter<typeof customFetch>;
+}): UseMutationOptions<Awaited<ReturnType<typeof refreshAdminSession>>, TError, void, TContext> => {
+  const mutationKey = ["refreshAdminSession"];
+  const { mutation: mutationOptions, request: requestOptions } = options
+    ? options.mutation && "mutationKey" in options.mutation && options.mutation.mutationKey
+      ? options
+      : { ...options, mutation: { ...options.mutation, mutationKey } }
+    : { mutation: { mutationKey }, request: undefined };
+
+  const mutationFn: MutationFunction<
+    Awaited<ReturnType<typeof refreshAdminSession>>,
+    void
+  > = () => {
+    return refreshAdminSession(requestOptions);
+  };
+
+  return { mutationFn, ...mutationOptions };
+};
+
+export type RefreshAdminSessionMutationResult = NonNullable<
+  Awaited<ReturnType<typeof refreshAdminSession>>
+>;
+
+export type RefreshAdminSessionMutationError = ErrorType<ErrorResponse>;
+
+/**
+ * @summary Re-issue the admin session cookie (extends expiry)
+ */
+export const useRefreshAdminSession = <
+  TError = ErrorType<ErrorResponse>,
+  TContext = unknown,
+>(options?: {
+  mutation?: UseMutationOptions<
+    Awaited<ReturnType<typeof refreshAdminSession>>,
+    TError,
+    void,
+    TContext
+  >;
+  request?: SecondParameter<typeof customFetch>;
+}): UseMutationResult<Awaited<ReturnType<typeof refreshAdminSession>>, TError, void, TContext> => {
+  return useMutation(getRefreshAdminSessionMutationOptions(options));
+};
+
+/**
  * @summary Update lead status or notes (admin only)
  */
 export const getUpdateLeadUrl = (id: string) => {

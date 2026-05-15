@@ -203,4 +203,6 @@ export interface AdminLoginInput {
 
 export interface AdminSession {
   authenticated: boolean;
+  /** @nullable */
+  expiresAt?: string | null;
 }

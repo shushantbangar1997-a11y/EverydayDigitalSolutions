@@ -29,6 +29,7 @@ import {
   type LeadListResponse,
   type LeadsQueryParams,
 } from "@/lib/admin-fetch";
+import { ListSkeleton } from "@/components/admin/Skeletons";
 
 const STATUSES = ["new", "contacted", "qualified", "closed_won", "closed_lost"] as const;
 const INDUSTRIES = [
@@ -420,6 +421,8 @@ export function LeadsView() {
       {q.isError && (
         <p className="text-sm text-destructive">Could not load leads.</p>
       )}
+
+      {q.isLoading && <ListSkeleton rows={pageSize > 8 ? 8 : pageSize} />}
 
       {pageIds.length > 0 && (
         <div className="flex items-center gap-2 px-1">

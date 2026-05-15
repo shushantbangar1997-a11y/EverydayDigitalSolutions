@@ -1,18 +1,25 @@
-import { lazy, Suspense, useState } from "react";
+import { lazy, Suspense, useEffect, useState } from "react";
 import { useQueryClient } from "@tanstack/react-query";
 import {
   useGetAdminSession,
   useAdminLogin,
   useAdminLogout,
   useListSubscribers,
+  useRefreshAdminSession,
   getGetAdminSessionQueryKey,
 } from "@workspace/api-client-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
-import { Lock, LogOut, RefreshCw } from "lucide-react";
+import { Lock, LogOut, RefreshCw, Moon, Sun, Clock } from "lucide-react";
 import { SEO } from "@/components/SEO";
+import { useTheme } from "@/hooks/useTheme";
+import {
+  useAdminSessionExpiry,
+  formatRemaining,
+} from "@/lib/useAdminSessionExpiry";
+import { ListSkeleton, TableSkeleton } from "@/components/admin/Skeletons";
 
 // Admin views are lazy-loaded so they don't bloat the public bundle.
 const DashboardView = lazy(() =>
@@ -39,10 +46,6 @@ const ToolsView = lazy(() =>
 const LeadsView = lazy(() =>
   import("@/components/admin/LeadsView").then((m) => ({ default: m.LeadsView })),
 );
-
-function AdminTabFallback() {
-  return <p className="text-sm text-muted-foreground">Loading…</p>;
-}
 
 function LoginForm({ onSuccess }: { onSuccess: () => void }) {
   const [password, setPassword] = useState("");
@@ -92,10 +95,61 @@ function LoginForm({ onSuccess }: { onSuccess: () => void }) {
   );
 }
 
-function Dashboard({ onLogout }: { onLogout: () => void }) {
+function SessionExpiryBanner({
+  expiresAt,
+  onExpired,
+}: {
+  expiresAt: string | null | undefined;
+  onExpired: () => void;
+}) {
+  const { msRemaining, isExpiringSoon, isExpired } = useAdminSessionExpiry(expiresAt);
+  const qc = useQueryClient();
+  const refresh = useRefreshAdminSession();
+
+  useEffect(() => {
+    if (isExpired) onExpired();
+  }, [isExpired, onExpired]);
+
+  if (!isExpiringSoon || msRemaining == null) return null;
+
+  return (
+    <div className="bg-amber-500/10 border-b border-amber-500/30">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-2 flex items-center gap-3 text-xs sm:text-sm">
+        <Clock className="w-4 h-4 text-amber-600 shrink-0" />
+        <span className="text-foreground flex-1">
+          Session expires in {formatRemaining(msRemaining)}.
+        </span>
+        <Button
+          variant="outline"
+          size="sm"
+          onClick={() =>
+            refresh.mutate(undefined, {
+              onSettled: () => {
+                qc.invalidateQueries({ queryKey: getGetAdminSessionQueryKey() });
+              },
+            })
+          }
+          disabled={refresh.isPending}
+          className="rounded-full h-7"
+        >
+          {refresh.isPending ? "Refreshing…" : "Stay signed in"}
+        </Button>
+      </div>
+    </div>
+  );
+}
+
+function Dashboard({
+  expiresAt,
+  onLogout,
+}: {
+  expiresAt: string | null | undefined;
+  onLogout: () => void;
+}) {
   const qc = useQueryClient();
   const subs = useListSubscribers();
   const logout = useAdminLogout();
+  const { isDark, toggle } = useTheme();
 
   function refresh() {
     qc.invalidateQueries({ queryKey: ["admin"] });
@@ -113,12 +167,21 @@ function Dashboard({ onLogout }: { onLogout: () => void }) {
 
   return (
     <main className="min-h-[100dvh] bg-background">
+      <SessionExpiryBanner expiresAt={expiresAt} onExpired={doLogout} />
       <header className="border-b border-border bg-card">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex items-center justify-between gap-4">
           <h1 className="font-serif text-xl text-foreground">Admin Dashboard</h1>
           <div className="flex items-center gap-2">
             <Button variant="ghost" size="sm" asChild>
               <a href="/admin/request-review">Request review</a>
+            </Button>
+            <Button
+              variant="ghost"
+              size="sm"
+              onClick={toggle}
+              aria-label={isDark ? "Switch to light mode" : "Switch to dark mode"}
+            >
+              {isDark ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4" />}
             </Button>
             <Button variant="ghost" size="sm" onClick={refresh}>
               <RefreshCw className="w-4 h-4 mr-1.5" /> Refresh
@@ -131,55 +194,61 @@ function Dashboard({ onLogout }: { onLogout: () => void }) {
       </header>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <Tabs defaultValue="dashboard">
-          <TabsList className="flex flex-wrap h-auto gap-1">
-            <TabsTrigger value="dashboard">Dashboard</TabsTrigger>
-            <TabsTrigger value="live">Live</TabsTrigger>
-            <TabsTrigger value="sessions">Sessions</TabsTrigger>
-            <TabsTrigger value="geography">Geography</TabsTrigger>
-            <TabsTrigger value="devices">Devices</TabsTrigger>
-            <TabsTrigger value="sources">Sources</TabsTrigger>
-            <TabsTrigger value="tools">Tools</TabsTrigger>
-            <TabsTrigger value="leads">Leads</TabsTrigger>
-            <TabsTrigger value="subscribers">Subscribers ({subs.data?.length ?? 0})</TabsTrigger>
-          </TabsList>
+          <div className="overflow-x-auto -mx-4 px-4 sm:mx-0 sm:px-0">
+            <TabsList className="flex md:flex-wrap h-auto gap-1 w-max md:w-auto">
+              <TabsTrigger value="dashboard">Dashboard</TabsTrigger>
+              <TabsTrigger value="live">Live</TabsTrigger>
+              <TabsTrigger value="sessions">Sessions</TabsTrigger>
+              <TabsTrigger value="geography">Geography</TabsTrigger>
+              <TabsTrigger value="devices">Devices</TabsTrigger>
+              <TabsTrigger value="sources">Sources</TabsTrigger>
+              <TabsTrigger value="tools">Tools</TabsTrigger>
+              <TabsTrigger value="leads">Leads</TabsTrigger>
+              <TabsTrigger value="subscribers">Subscribers ({subs.data?.length ?? 0})</TabsTrigger>
+            </TabsList>
+          </div>
           <TabsContent value="dashboard" className="mt-6">
-            <Suspense fallback={<AdminTabFallback />}><DashboardView /></Suspense>
+            <Suspense fallback={<ListSkeleton rows={4} />}><DashboardView /></Suspense>
           </TabsContent>
           <TabsContent value="live" className="mt-6">
-            <Suspense fallback={<AdminTabFallback />}><LiveView /></Suspense>
+            <Suspense fallback={<ListSkeleton rows={4} />}><LiveView /></Suspense>
           </TabsContent>
           <TabsContent value="sessions" className="mt-6">
-            <Suspense fallback={<AdminTabFallback />}><SessionsView /></Suspense>
+            <Suspense fallback={<ListSkeleton rows={6} />}><SessionsView /></Suspense>
           </TabsContent>
           <TabsContent value="geography" className="mt-6">
-            <Suspense fallback={<AdminTabFallback />}><GeographyView /></Suspense>
+            <Suspense fallback={<ListSkeleton rows={5} />}><GeographyView /></Suspense>
           </TabsContent>
           <TabsContent value="devices" className="mt-6">
-            <Suspense fallback={<AdminTabFallback />}><DevicesView /></Suspense>
+            <Suspense fallback={<ListSkeleton rows={5} />}><DevicesView /></Suspense>
           </TabsContent>
           <TabsContent value="sources" className="mt-6">
-            <Suspense fallback={<AdminTabFallback />}><SourcesView /></Suspense>
+            <Suspense fallback={<ListSkeleton rows={5} />}><SourcesView /></Suspense>
           </TabsContent>
           <TabsContent value="tools" className="mt-6">
-            <Suspense fallback={<AdminTabFallback />}><ToolsView /></Suspense>
+            <Suspense fallback={<ListSkeleton rows={4} />}><ToolsView /></Suspense>
           </TabsContent>
           <TabsContent value="leads" className="mt-6">
-            <Suspense fallback={<AdminTabFallback />}><LeadsView /></Suspense>
+            <Suspense fallback={<ListSkeleton rows={6} />}><LeadsView /></Suspense>
           </TabsContent>
           <TabsContent value="subscribers" className="mt-6">
-            {subs.isLoading && <p className="text-sm text-muted-foreground">Loading…</p>}
-            {subs.data?.length === 0 && <p className="text-sm text-muted-foreground">No subscribers yet.</p>}
-            <div className="border border-border rounded-2xl bg-card overflow-hidden">
-              {subs.data?.map((s) => (
-                <div key={s.id} className="px-4 py-3 border-b last:border-0 border-border flex items-center justify-between gap-3 text-sm">
-                  <span className="text-foreground">{s.email}</span>
-                  <span className="text-xs text-muted-foreground">{s.source}</span>
-                  <span className="text-xs text-muted-foreground tabular-nums">
-                    {new Date(s.createdAt).toLocaleString()}
-                  </span>
-                </div>
-              ))}
-            </div>
+            {subs.isLoading && <TableSkeleton rows={5} />}
+            {!subs.isLoading && subs.data?.length === 0 && (
+              <p className="text-sm text-muted-foreground">No subscribers yet.</p>
+            )}
+            {!subs.isLoading && subs.data && subs.data.length > 0 && (
+              <div className="border border-border rounded-2xl bg-card overflow-hidden">
+                {subs.data.map((s) => (
+                  <div key={s.id} className="px-4 py-3 border-b last:border-0 border-border flex items-center justify-between gap-3 text-sm">
+                    <span className="text-foreground">{s.email}</span>
+                    <span className="text-xs text-muted-foreground">{s.source}</span>
+                    <span className="text-xs text-muted-foreground tabular-nums">
+                      {new Date(s.createdAt).toLocaleString()}
+                    </span>
+                  </div>
+                ))}
+              </div>
+            )}
           </TabsContent>
         </Tabs>
       </div>
@@ -203,7 +272,7 @@ export default function Admin() {
           <p className="text-sm text-muted-foreground">Loading…</p>
         </main>
       ) : session.data?.authenticated ? (
-        <Dashboard onLogout={refreshSession} />
+        <Dashboard expiresAt={session.data.expiresAt} onLogout={refreshSession} />
       ) : (
         <LoginForm onSuccess={refreshSession} />
       )}
