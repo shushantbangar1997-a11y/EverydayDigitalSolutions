@@ -147,10 +147,10 @@ export default function Privacy() {
             <li><strong>Correction</strong> — ask us to fix anything wrong.</li>
             <li><strong>Deletion</strong> — ask us to erase it (we will delete
               within 30 days unless we are legally required to retain it).</li>
-            <li><strong>Withdraw consent</strong> — for analytics, click
-              &ldquo;Decline&rdquo; on the consent banner (clears it from
-              localStorage). For tracking cookies already set, see{" "}
-              <Link href="/cookies">Cookies</Link>.</li>
+            <li><strong>Withdraw consent</strong> — visit our{" "}
+              <Link href="/cookies">Cookies</Link> page and click
+              &ldquo;Opt out of analytics&rdquo;. You can also enable
+              Do-Not-Track in your browser; we respect it.</li>
             <li><strong>Grievance</strong> — write to{" "}
               <a href={`mailto:${site.email}`}>{site.email}</a> and we will
               respond within 15 business days.</li>

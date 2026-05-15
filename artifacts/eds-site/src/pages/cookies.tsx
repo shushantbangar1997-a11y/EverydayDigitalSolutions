@@ -1,8 +1,10 @@
+import { useState } from "react";
 import { Link } from "wouter";
-import { ArrowLeft } from "lucide-react";
+import { ArrowLeft, Check } from "lucide-react";
 import { SEO } from "@/components/SEO";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
+import { tracker, getConsentState } from "@/lib/tracker";
 
 const LAST_UPDATED = "May 14, 2026";
 
@@ -50,6 +52,20 @@ const COOKIES: CookieRow[] = [
 ];
 
 export default function Cookies() {
+  const [optedOut, setOptedOut] = useState(() => getConsentState() === "denied");
+
+  function optOut() {
+    tracker.declineConsent();
+    setOptedOut(true);
+  }
+
+  function optIn() {
+    // Clearing the localStorage flag returns the visitor to the implicit-consent
+    // default. Tracking will resume on the next page navigation.
+    if (typeof localStorage !== "undefined") localStorage.removeItem("eds_consent");
+    setOptedOut(false);
+  }
+
   return (
     <>
       <SEO
@@ -122,19 +138,44 @@ export default function Cookies() {
           </div>
 
           <h2>How to opt out</h2>
-          <p>If you do not want us to set the analytics cookie:</p>
-          <ol>
-            <li>
-              Click <strong>Decline</strong> on the consent banner that
-              appears on your first visit. (If you have already accepted,
-              clear <code>eds_consent</code> from your browser&apos;s
-              localStorage and reload — the banner will reappear.)
-            </li>
-            <li>
-              You can also send a Do-Not-Track signal via your browser
-              settings; we respect it and skip all analytics if it is set.
-            </li>
-          </ol>
+          <p>
+            Click the button below to disable first-party analytics on this
+            browser. We&apos;ll stop sending session, pageview, and event data
+            to our database — though existing entries up to this moment stay
+            until they age out per our retention policy.
+          </p>
+          <div className="not-prose my-6">
+            {optedOut ? (
+              <div className="flex items-center justify-between gap-3 rounded-2xl border border-emerald-500/30 bg-emerald-500/5 p-4 text-sm">
+                <p className="flex items-center gap-2 text-emerald-700 dark:text-emerald-400">
+                  <Check className="w-4 h-4" />
+                  Analytics disabled on this browser.
+                </p>
+                <button
+                  type="button"
+                  onClick={optIn}
+                  className="text-xs text-muted-foreground hover:text-foreground underline underline-offset-2"
+                >
+                  Re-enable
+                </button>
+              </div>
+            ) : (
+              <button
+                type="button"
+                onClick={optOut}
+                className="rounded-full border border-border bg-card hover:bg-muted/40 px-5 py-2 text-sm font-medium transition-colors"
+                data-track="cookies.optOut"
+              >
+                Opt out of analytics
+              </button>
+            )}
+          </div>
+          <p>
+            You can also send a Do-Not-Track signal via your browser settings;
+            we respect it and skip all analytics if it is set. Clearing your
+            browser&apos;s site data for this domain will also remove every
+            cookie we have set.
+          </p>
 
           <h2>How to delete cookies we have already set</h2>
           <p>

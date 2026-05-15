@@ -1,14 +1,14 @@
 import { useEffect } from "react";
 import { useLocation } from "wouter";
-import { tracker, getConsentState } from "@/lib/tracker";
+import { tracker } from "@/lib/tracker";
 
 export function useAnalytics(): void {
   const [location] = useLocation();
 
   useEffect(() => {
-    if (getConsentState() === "granted") {
-      void tracker.start();
-    }
+    // tracker.start() is a no-op if the visitor explicitly opted out
+    // (eds_consent=denied in localStorage) or if their browser has DNT set.
+    void tracker.start();
   }, []);
 
   useEffect(() => {

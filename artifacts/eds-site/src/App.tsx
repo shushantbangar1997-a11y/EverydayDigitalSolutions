@@ -57,7 +57,6 @@ import { StickyCTA } from "@/components/StickyCTA";
 import { ExitIntent } from "@/components/ExitIntent";
 import { WhatsAppFAB } from "@/components/WhatsAppFAB";
 import { PageTransition } from "@/components/PageTransition";
-import { ConsentBanner } from "@/components/ConsentBanner";
 import { useAnalytics } from "@/hooks/useAnalytics";
 
 const queryClient = new QueryClient();
@@ -137,7 +136,6 @@ function App() {
           <ExitIntent />
           <WhatsAppFAB />
         </WouterRouter>
-        <ConsentBanner />
         <Toaster />
       </TooltipProvider>
     </QueryClientProvider>

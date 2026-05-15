@@ -116,11 +116,17 @@ class Tracker {
     return this.sessionId !== null;
   }
 
-  /** Start tracking. Called after consent is granted (or on load if already granted). */
+  /**
+   * Start tracking.
+   *
+   * Privacy posture: first-party only, no third-party sharing — we treat the
+   * unknown state as implicit consent (Plausible/Fathom model). Browser-level
+   * Do-Not-Track is still respected, and explicit "denied" stops everything.
+   */
   async start(): Promise<void> {
     if (typeof window === "undefined") return;
     if (this.sessionPromise) return void (await this.sessionPromise);
-    if (getConsentState() !== "granted") return;
+    if (getConsentState() === "denied") return;
     if (isDntEnabled()) return;
 
     this.sessionPromise = this.startSession();
@@ -281,7 +287,7 @@ class Tracker {
 
   private async ensureReady(): Promise<void> {
     if (this.sessionId) return;
-    if (getConsentState() === "granted" && !isDntEnabled()) {
+    if (getConsentState() !== "denied" && !isDntEnabled()) {
       await this.start();
     }
   }
